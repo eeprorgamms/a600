@@ -15,10 +15,6 @@
     background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
   }
   
-  .gradient-gold {
-    background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
-  }
-  
   .gradient-card {
     background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
     backdrop-filter: blur(10px);
@@ -33,7 +29,7 @@
   }
   
   .text-gradient-blue {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #06b6d4, #3b82f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -80,7 +76,7 @@
   }
 
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(245, 175, 25, 0.3); }
-    50% { box-shadow: 0 0 40px rgba(245, 175, 25, 0.6); }
+    0%, 100% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(6, 182, 212, 0.6); }
   }
 }
