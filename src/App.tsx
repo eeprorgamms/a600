@@ -61,7 +61,6 @@ function App() {
 
   const services = [
     {
-      icon: '🚿',
       title: 'Ручная мойка',
       description: 'Бережная ручная мойка кузова специализированными средствами. Удаляем соль, реагенты, пыль, смолу без царапин на ЛКП.',
       features: ['Двухфазная мойка', 'Бесконтактная пена', 'Безопасные губки', 'Сушка микрофиброй'],
@@ -69,7 +68,6 @@ function App() {
       duration: '20-40 мин'
     },
     {
-      icon: '🧽',
       title: 'Химчистка салона',
       description: 'Глубокая очистка всех поверхностей салона. Работаем с кожей, тканью, алькантарой. Удаление пятен и запахов.',
       features: ['Чистка сидений', 'Потолок и двери', 'Багажник', 'Удаление запахов'],
@@ -77,7 +75,6 @@ function App() {
       duration: '3-5 часов'
     },
     {
-      icon: '✨',
       title: 'Полировка кузова',
       description: 'Восстановление блеска лакокрасочного покрытия. Удаление мелких царапин, «паутинки» и потускнений.',
       features: ['Абразивная полировка', 'Финишная полировка', 'Восстановление блеска', 'Защитный слой'],
@@ -85,7 +82,6 @@ function App() {
       duration: '3-6 часов'
     },
     {
-      icon: '🛡️',
       title: 'Обработка воском',
       description: 'Защитное восковое покрытие кузова. Защита от выгорания краски, сколов и коррозии. Эффект гидрофобности.',
       features: ['Защита ЛКП', 'Гидрофобный эффект', 'Блеск и глубина цвета', 'Защита на 2-3 месяца'],
@@ -93,7 +89,6 @@ function App() {
       duration: '30-60 мин'
     },
     {
-      icon: '🔧',
       title: 'Детейлинг',
       description: 'Комплексный уход за автомобилем с применением профессиональных составов. Полная очистка и защита всех поверхностей.',
       features: ['Детальная мойка', 'Очистка глиной', 'Обработка пластика', 'Защита резины'],
@@ -101,7 +96,6 @@ function App() {
       duration: '2-4 часа'
     },
     {
-      icon: '🖤',
       title: 'Чернение резины',
       description: 'Обработка шин и резиновых элементов специальным составом для насыщенного чёрного цвета и защиты.',
       features: ['Насыщенный цвет', 'Защита от растрескивания', 'Долгий эффект', 'Уход за пластиком'],
@@ -210,12 +204,9 @@ function App() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-gray-950/95 backdrop-blur-lg shadow-lg shadow-black/20' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center font-bold text-lg">
-                A5
-              </div>
-              <span className="text-xl font-bold">А<span className="text-sky-400">500</span></span>
-            </div>
+            <a href="#hero" className="text-2xl font-black tracking-tight">
+              А<span className="text-sky-400">500</span>
+            </a>
 
             <div className="hidden lg:flex items-center space-x-8">
               {navItems.map(item => (
@@ -278,25 +269,18 @@ function App() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-blue-950/30 to-gray-950"></div>
           <div className="absolute inset-0 opacity-30" style={{
-            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(56, 189, 248, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 50%)'
+            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(56, 189, 248, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)'
           }}></div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl float-animation"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl float-animation" style={{ animationDelay: '3s' }}></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass mb-8">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-            <span className="text-sm text-gray-300">Работаем ежедневно 09:00 — 23:00</span>
-          </div>
-
           {/* Большой логотип А500 */}
-          <div className="mb-6">
+          <div className="mb-8">
             <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black leading-none tracking-tight">
               <span className="bg-gradient-to-b from-white via-sky-100 to-sky-400 bg-clip-text text-transparent drop-shadow-2xl">А</span>
               <span className="bg-gradient-to-r from-sky-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">500</span>
             </h1>
-            <div className="flex items-center justify-center space-x-3 mt-2">
+            <div className="flex items-center justify-center space-x-3 mt-4">
               <div className="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-sky-400"></div>
               <p className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-300 uppercase tracking-[0.3em]">
                 Автомойка · Детейлинг
@@ -305,10 +289,9 @@ function App() {
             </div>
           </div>
           
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto mb-10 mt-6">
+          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto mb-10">
             Ручная мойка, химчистка, полировка и обработка воском. 
-            Бережный уход за вашим автомобилем с применением профессиональной автохимии. 
-            Работаем до 23:00 без выходных!
+            Бережный уход за вашим автомобилем с применением профессиональной автохимии.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
@@ -328,12 +311,6 @@ function App() {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
         </div>
       </section>
 
@@ -358,7 +335,6 @@ function App() {
                 className="group gradient-card rounded-2xl p-6 hover:border-sky-500/30 transition-all duration-300 cursor-pointer hover:transform hover:scale-[1.02]"
                 onClick={() => setSelectedService(selectedService === i ? null : i)}
               >
-                <div className="text-4xl mb-4">{service.icon}</div>
                 <h3 className="text-xl font-bold mb-2 group-hover:text-sky-400 transition-colors">{service.title}</h3>
                 <p className="text-gray-400 text-sm mb-4">{service.description}</p>
                 
@@ -459,12 +435,12 @@ function App() {
 
               <div className="grid grid-cols-2 gap-4 mb-8">
                 {[
-                  'Работаем до 23:00',
-                  'Без выходных',
                   'Профессиональная химия',
                   'Без царапин на ЛКП',
                   'Удобная парковка',
-                  'м. Говорово — 0.7 км'
+                  'м. Говорово — 0.7 км',
+                  'Опытные мастера',
+                  'Гарантия качества'
                 ].map((item, i) => (
                   <div key={i} className="flex items-center space-x-2">
                     <CheckIcon />
@@ -489,24 +465,6 @@ function App() {
                   className="w-full h-[400px] lg:h-[500px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="glass rounded-xl p-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-xl">
-                        💧
-                      </div>
-                      <div>
-                        <div className="font-bold">Работаем до 23:00</div>
-                        <div className="text-sm text-gray-400">Без выходных и перерывов</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="absolute -top-4 -right-4 glass rounded-xl p-4 float-animation">
-                <div className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">09-23</div>
-                <div className="text-xs text-gray-400">часов работы</div>
               </div>
             </div>
           </div>
@@ -771,10 +729,10 @@ function App() {
             Приезжайте <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">прямо сейчас!</span>
           </h2>
           <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
-            Работаем до 23:00 без выходных. Позвоните и мы подберём удобное время для мойки вашего автомобиля.
+            Позвоните или оставьте заявку — мы подберём удобное время для мойки вашего автомобиля.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="tel:+79295884094" className="px-8 py-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-xl text-lg font-bold text-white hover:shadow-xl hover:shadow-sky-500/30 transition-all transform hover:scale-105 pulse-glow flex items-center space-x-2">
+            <a href="tel:+79295884094" className="px-8 py-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-xl text-lg font-bold text-white hover:shadow-xl hover:shadow-sky-500/30 transition-all transform hover:scale-105 flex items-center space-x-2">
               <PhoneIcon />
               <span>Позвонить</span>
             </a>
@@ -797,7 +755,7 @@ function App() {
                 <span className="text-xl font-bold">А<span className="text-sky-400">500</span></span>
               </div>
               <p className="text-gray-400 text-sm">
-                Автомойка и детейлинг-центр на Боровском шоссе. Работаем ежедневно с 9:00 до 23:00.
+                Автомойка и детейлинг-центр на Боровском шоссе.
               </p>
             </div>
             
@@ -830,7 +788,6 @@ function App() {
                 <li><a href="tel:+79299555587" className="hover:text-sky-400 transition-colors">+7 (929) 955-55-87</a></li>
                 <li>Боровское шоссе, 6к1</li>
                 <li>м. Говорово</li>
-                <li>Пн-Вс: 09:00 — 23:00</li>
               </ul>
             </div>
           </div>
@@ -844,13 +801,6 @@ function App() {
         </div>
       </footer>
 
-      {/* Floating call button */}
-      <a
-        href="tel:+79295884094"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-sky-500/30 hover:scale-110 transition-transform"
-      >
-        <PhoneIcon />
-      </a>
     </div>
   );
 }
