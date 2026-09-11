@@ -289,14 +289,23 @@ function App() {
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
             <span className="text-sm text-gray-300">Работаем ежедневно 09:00 — 23:00</span>
           </div>
+
+          {/* Большой логотип А500 */}
+          <div className="mb-6">
+            <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black leading-none tracking-tight">
+              <span className="bg-gradient-to-b from-white via-sky-100 to-sky-400 bg-clip-text text-transparent drop-shadow-2xl">А</span>
+              <span className="bg-gradient-to-r from-sky-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">500</span>
+            </h1>
+            <div className="flex items-center justify-center space-x-3 mt-2">
+              <div className="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-sky-400"></div>
+              <p className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-300 uppercase tracking-[0.3em]">
+                Автомойка · Детейлинг
+              </p>
+              <div className="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-sky-400"></div>
+            </div>
+          </div>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-            Автомойка
-            <br />
-            <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">и детейлинг</span>
-          </h1>
-          
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto mb-10">
+          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto mb-10 mt-6">
             Ручная мойка, химчистка, полировка и обработка воском. 
             Бережный уход за вашим автомобилем с применением профессиональной автохимии. 
             Работаем до 23:00 без выходных!
@@ -557,7 +566,14 @@ function App() {
 
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {reviews.map((review, i) => (
-              <div key={i} className="gradient-card rounded-2xl p-6 hover:border-sky-500/20 transition-all">
+              <a
+                key={i}
+                href="https://yandex.ru/maps/org/a500/73889912604/reviews/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gradient-card rounded-2xl p-6 hover:border-sky-500/40 transition-all cursor-pointer group block"
+                title="Читать все отзывы на Яндекс.Картах"
+              >
                 <div className="flex items-center space-x-1 mb-3">
                   {[...Array(review.rating)].map((_, j) => <StarIcon key={j} />)}
                 </div>
@@ -572,10 +588,29 @@ function App() {
                       <div className="text-xs text-gray-500">{review.car}</div>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500">{review.date}</span>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-gray-500">{review.date}</span>
+                    <svg className="w-4 h-4 text-gray-500 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
+              </a>
             ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <a
+              href="https://yandex.ru/maps/org/a500/73889912604/reviews/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-xl font-medium hover:bg-white/10 transition-all group"
+            >
+              <span>Все отзывы на Яндекс.Картах</span>
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
           </div>
         </div>
       </section>
