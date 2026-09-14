@@ -54,9 +54,9 @@ const Home = () => {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=700&h=500&fit=crop"
-                alt="Автомойка А500"
-                className="rounded-2xl shadow-2xl card-hover"
+                src="https://image.qwenlm.ai/generated-images/561d129e-77f1-419c-a26f-166d3cc955ee/_result.png"
+                alt="Автомойка А500 — детейлинг премиум автомобилей"
+                className="rounded-2xl shadow-2xl card-hover w-full h-auto"
               />
             </div>
           </div>

@@ -14,14 +14,7 @@ const Contacts = () => {
     setFormData({ name: '', phone: '', service: '', car: '', message: '' });
   };
 
-  const services = [
-    'Ручная мойка',
-    'Химчистка салона',
-    'Полировка кузова',
-    'Обработка воском',
-    'Детейлинг',
-    'Чернение резины'
-  ];
+
 
   return (
     <div>
@@ -82,17 +75,11 @@ const Contacts = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">Услуга</label>
                     <input
                       type="text"
-                      list="services-list"
                       value={formData.service}
                       onChange={e => setFormData({...formData, service: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
-                      placeholder="Начните вводить или выберите из списка"
+                      placeholder="Например: Ручная мойка, Химчистка, Полировка"
                     />
-                    <datalist id="services-list">
-                      {services.map((s, i) => (
-                        <option key={i} value={s} />
-                      ))}
-                    </datalist>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Марка авто</label>
