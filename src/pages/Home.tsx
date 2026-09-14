@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useInView } from '../hooks/useInView';
 import AnimatedCounter from '../components/AnimatedCounter';
-import BeforeAfterSlider from '../components/BeforeAfterSlider';
 
 const Home = () => {
   const { ref: heroRef, isInView: heroVisible } = useInView();
@@ -193,22 +192,6 @@ const Home = () => {
               </svg>
             </a>
           </div>
-        </div>
-      </section>
-
-      {/* Before/After Section */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Результаты нашей работы</h2>
-            <p className="text-lg text-gray-600">Потяните ползунок, чтобы увидеть разницу</p>
-          </div>
-          <BeforeAfterSlider
-            beforeImage="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=800&h=600&fit=crop"
-            afterImage="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop"
-            beforeLabel="До полировки"
-            afterLabel="После полировки"
-          />
         </div>
       </section>
 
