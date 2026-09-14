@@ -164,16 +164,36 @@ const About = () => {
               </div>
             </div>
 
-            <div className="rounded-xl overflow-hidden shadow-lg card-hover">
-              <iframe
-                src="https://yandex.ru/map-widget/v1/?ll=37.402218%2C55.659749&z=17&pt=37.402218,55.659749,pm2blm"
-                width="100%"
-                height="400"
-                frameBorder="0"
-                style={{ border: 0 }}
-                title="А500 на карте"
-              ></iframe>
+            <div className="rounded-xl overflow-hidden shadow-lg card-hover relative group">
+              <a 
+                href="https://yandex.ru/maps/org/a500/73889912604/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <iframe
+                  src="https://yandex.ru/map-widget/v1/?ll=37.402218%2C55.659749&z=17&pt=37.402218,55.659749,pm2blm"
+                  width="100%"
+                  height="400"
+                  frameBorder="0"
+                  style={{ border: 0, pointerEvents: 'none' }}
+                  title="А500 на карте"
+                ></iframe>
+                <div className="absolute inset-0 bg-blue-700/0 group-hover:bg-blue-700/10 transition-colors flex items-center justify-center">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white px-4 py-2 rounded-lg shadow-lg font-medium text-blue-700 text-sm">
+                    Открыть в Яндекс.Картах →
+                  </div>
+                </div>
+              </a>
             </div>
+            <a 
+              href="https://yandex.ru/maps/org/a500/73889912604/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-center text-blue-700 hover:text-blue-800 hover:underline transition-colors font-medium text-sm"
+            >
+              Открыть страницу А500 в Яндекс.Картах →
+            </a>
           </div>
         </div>
       </section>
