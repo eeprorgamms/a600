@@ -119,6 +119,63 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Brands Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">С какими авто работаем</h2>
+            <p className="text-lg text-gray-600">Профессиональный уход за автомобилями любых марок</p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+            {['BMW', 'Mercedes', 'Audi', 'Toyota', 'Kia', 'Hyundai', 'Volkswagen', 'Porsche'].map((brand, i) => (
+              <div
+                key={i}
+                className="bg-gray-50 rounded-xl p-6 flex items-center justify-center card-hover group"
+                style={{ transitionDelay: `${i * 50}ms` }}
+              >
+                <span className="text-lg font-bold text-gray-700 group-hover:text-blue-700 transition-colors">
+                  {brand}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Chemistry Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Используемая химия</h2>
+            <p className="text-lg text-gray-600">Работаем только с проверенными профессиональными брендами</p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            {[
+              { name: 'Koch Chemie', desc: 'Профессиональная автохимия из Германии' },
+              { name: 'Meguiar\'s', desc: 'Премиальные средства для ухода' },
+              { name: '3D', desc: 'Инновационные составы для детейлинга' },
+              { name: 'Labocosmetica', desc: 'Итальянская косметика для авто' },
+            ].map((brand, i) => (
+              <div
+                key={i}
+                className="bg-white rounded-xl p-6 text-center card-hover group"
+                style={{ transitionDelay: `${i * 100}ms` }}
+              >
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <span className="text-2xl font-bold text-blue-700">{brand.name[0]}</span>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
+                  {brand.name}
+                </h3>
+                <p className="text-sm text-gray-600">{brand.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-700 to-blue-600 gradient-animate">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
