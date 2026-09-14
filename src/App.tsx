@@ -7,8 +7,8 @@ const StarIcon = () => (
 );
 
 const CheckIcon = () => (
-  <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  <svg className="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
   </svg>
 );
 
@@ -33,153 +33,122 @@ const ClockIcon = () => (
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
   const [scrollY, setScrollY] = useState(0);
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [formData, setFormData] = useState({ name: '', phone: '', service: '', car: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [activeWash, setActiveWash] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-      const sections = ['hero', 'services', 'pricing', 'about', 'gallery', 'reviews', 'contacts'];
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
+    const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const services = [
     {
-      title: 'Ручная мойка',
+      title: 'РУЧНАЯ МОЙКА',
       description: 'Бережная ручная мойка кузова специализированными средствами. Удаляем соль, реагенты, пыль, смолу без царапин на ЛКП.',
       features: ['Двухфазная мойка', 'Бесконтактная пена', 'Безопасные губки', 'Сушка микрофиброй'],
-      price: 'от 500 ₽',
-      duration: '20-40 мин'
+      price: '500₽',
+      duration: '20-40 МИН'
     },
     {
-      title: 'Химчистка салона',
+      title: 'ХИМЧИСТКА САЛОНА',
       description: 'Глубокая очистка всех поверхностей салона. Работаем с кожей, тканью, алькантарой. Удаление пятен и запахов.',
       features: ['Чистка сидений', 'Потолок и двери', 'Багажник', 'Удаление запахов'],
-      price: 'от 4 000 ₽',
-      duration: '3-5 часов'
+      price: '4 000₽',
+      duration: '3-5 ЧАСОВ'
     },
     {
-      title: 'Полировка кузова',
+      title: 'ПОЛИРОВКА',
       description: 'Восстановление блеска лакокрасочного покрытия. Удаление мелких царапин, «паутинки» и потускнений.',
       features: ['Абразивная полировка', 'Финишная полировка', 'Восстановление блеска', 'Защитный слой'],
-      price: 'от 5 000 ₽',
-      duration: '3-6 часов'
+      price: '5 000₽',
+      duration: '3-6 ЧАСОВ'
     },
     {
-      title: 'Обработка воском',
+      title: 'ВОСК',
       description: 'Защитное восковое покрытие кузова. Защита от выгорания краски, сколов и коррозии. Эффект гидрофобности.',
       features: ['Защита ЛКП', 'Гидрофобный эффект', 'Блеск и глубина цвета', 'Защита на 2-3 месяца'],
-      price: 'от 1 000 ₽',
-      duration: '30-60 мин'
+      price: '1 000₽',
+      duration: '30-60 МИН'
     },
     {
-      title: 'Детейлинг',
+      title: 'ДЕТЕЙЛИНГ',
       description: 'Комплексный уход за автомобилем с применением профессиональных составов. Полная очистка и защита всех поверхностей.',
       features: ['Детальная мойка', 'Очистка глиной', 'Обработка пластика', 'Защита резины'],
-      price: 'от 3 000 ₽',
-      duration: '2-4 часа'
+      price: '3 000₽',
+      duration: '2-4 ЧАСА'
     },
     {
-      title: 'Чернение резины',
+      title: 'ЧЕРНЕНИЕ',
       description: 'Обработка шин и резиновых элементов специальным составом для насыщенного чёрного цвета и защиты.',
       features: ['Насыщенный цвет', 'Защита от растрескивания', 'Долгий эффект', 'Уход за пластиком'],
-      price: 'от 300 ₽',
-      duration: '10-15 мин'
+      price: '300₽',
+      duration: '10-15 МИН'
     }
   ];
 
   const washPackages = [
     {
-      name: 'Экспресс',
-      price: '500 ₽',
-      duration: '20 мин',
+      name: 'ЭКСПРЕСС',
+      price: '500₽',
+      duration: '20 МИН',
       features: ['Бесконтактная мойка кузова', 'Ополаскивание', 'Сушка кузова', 'Протирка стёкол'],
-      popular: false
+      color: 'bg-white'
     },
     {
-      name: 'Стандарт',
-      price: '900 ₽',
-      duration: '40 мин',
+      name: 'СТАНДАРТ',
+      price: '900₽',
+      duration: '40 МИН',
       features: ['Бесконтактная мойка', 'Ручная мойка губкой', 'Мойка дисков', 'Чернение резины', 'Протирка стёкол', 'Сушка микрофиброй'],
-      popular: true
+      color: 'bg-yellow-400'
     },
     {
-      name: 'Премиум',
-      price: '1 500 ₽',
-      duration: '1 час',
+      name: 'ПРЕМИУМ',
+      price: '1 500₽',
+      duration: '1 ЧАС',
       features: ['Всё из «Стандарт»', 'Обработка воском', 'Обработка пластика салона', 'Ароматизатор', 'Защита резины', 'Протирка порогов'],
-      popular: false
+      color: 'bg-white'
     },
     {
-      name: 'Детейлинг',
-      price: '3 000 ₽',
-      duration: '2-3 часа',
+      name: 'ДЕТЕЙЛИНГ',
+      price: '3 000₽',
+      duration: '2-3 ЧАСА',
       features: ['Всё из «Премиум»', 'Очистка глиной', 'Детальная мойка дисков', 'Обработка кожи/пластика', 'Защитное покрытие', 'Финальная проверка'],
-      popular: false
+      color: 'bg-white'
     }
   ];
 
   const reviews = [
     {
-      name: 'Артём К.',
-      car: 'Toyota Camry',
+      name: 'АРТЁМ К.',
+      car: 'TOYOTA CAMRY',
       text: 'Моемся тут регулярно уже полгода. Всегда качественно, быстро и недорого. Ребята знают своё дело, кузов после мойки как новый!',
       rating: 5,
-      date: '1 неделю назад'
+      date: '1 НЕДЕЛЮ НАЗАД'
     },
     {
-      name: 'Елена М.',
-      car: 'Kia Sportage',
+      name: 'ЕЛЕНА М.',
+      car: 'KIA SPORTAGE',
       text: 'Делала химчистку салона после зимы. Результат потрясающий! Все пятна убрали, салон пахнет свежестью. Очень довольна!',
       rating: 5,
-      date: '2 недели назад'
+      date: '2 НЕДЕЛИ НАЗАД'
     },
     {
-      name: 'Сергей В.',
-      car: 'Hyundai Tucson',
+      name: 'СЕРГЕЙ В.',
+      car: 'HYUNDAI TUCSON',
       text: 'Отличный сервис! Полировка вернула машине заводской блеск. Цены адекватные, работают аккуратно. Рекомендую!',
       rating: 5,
-      date: '3 недели назад'
+      date: '3 НЕДЕЛИ НАЗАД'
     },
     {
-      name: 'Ольга Д.',
-      car: 'Volkswagen Polo',
+      name: 'ОЛЬГА Д.',
+      car: 'VOLKSWAGEN POLO',
       text: 'Приехала на комплексную мойку с воском. Машина блестит, вода скатывается каплями. Очень довольна результатом!',
       rating: 4,
-      date: '1 месяц назад'
+      date: '1 МЕСЯЦ НАЗАД'
     }
-  ];
-
-  const galleryImages = [
-    { url: 'https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=600&h=400&fit=crop', title: 'Полировка кузова' },
-    { url: 'https://images.unsplash.com/photo-1605515298946-d0573716f0a5?w=600&h=400&fit=crop', title: 'Химчистка салона' },
-    { url: 'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=600&h=400&fit=crop', title: 'Ручная мойка' },
-    { url: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=600&h=400&fit=crop', title: 'Детейлинг' },
-    { url: 'https://images.unsplash.com/photo-1507136366951-c53783aee57a?w=600&h=400&fit=crop', title: 'Защитное покрытие' },
-    { url: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop', title: 'Восковая обработка' },
-  ];
-
-  const stats = [
-    { number: '14', label: 'Часов работы в день' },
-    { number: '7', label: 'Дней в неделю' },
-    { number: '500+', label: 'Довольных клиентов' },
-    { number: '4.0', label: 'Рейтинг на картах' }
   ];
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -190,22 +159,21 @@ function App() {
   };
 
   const navItems = [
-    { id: 'services', label: 'Услуги' },
-    { id: 'pricing', label: 'Цены' },
-    { id: 'about', label: 'О нас' },
-    { id: 'gallery', label: 'Работы' },
-    { id: 'reviews', label: 'Отзывы' },
-    { id: 'contacts', label: 'Контакты' },
+    { id: 'services', label: 'УСЛУГИ' },
+    { id: 'pricing', label: 'ЦЕНЫ' },
+    { id: 'about', label: 'О НАС' },
+    { id: 'reviews', label: 'ОТЗЫВЫ' },
+    { id: 'contacts', label: 'КОНТАКТЫ' },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-white text-black font-mono">
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-gray-950/95 backdrop-blur-lg shadow-lg shadow-black/20' : 'bg-transparent'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-yellow-400 border-b-4 border-black' : 'bg-white border-b-4 border-black'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            <a href="#hero" className="text-2xl font-black tracking-tight">
-              А<span className="text-sky-400">500</span>
+          <div className="flex items-center justify-between h-20">
+            <a href="#hero" className="text-3xl font-black tracking-tight">
+              А<span className="text-red-600">500</span>
             </a>
 
             <div className="hidden lg:flex items-center space-x-8">
@@ -213,7 +181,7 @@ function App() {
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className={`text-sm font-medium transition-colors hover:text-sky-400 ${activeSection === item.id ? 'text-sky-400' : 'text-gray-300'}`}
+                  className="text-sm font-bold uppercase hover:text-red-600 transition-colors"
                 >
                   {item.label}
                 </a>
@@ -221,21 +189,21 @@ function App() {
             </div>
 
             <div className="hidden lg:flex items-center space-x-4">
-              <a href="tel:+79295884094" className="flex items-center space-x-2 text-sm text-gray-300 hover:text-white transition-colors">
+              <a href="tel:+79295884094" className="flex items-center space-x-2 text-sm font-bold">
                 <PhoneIcon />
                 <span>+7 (929) 588-40-94</span>
               </a>
-              <a href="#contacts" className="px-5 py-2.5 bg-gradient-to-r from-sky-400 to-blue-600 rounded-lg text-sm font-semibold text-white hover:shadow-lg hover:shadow-sky-500/25 transition-all">
-                Записаться
+              <a href="#contacts" className="px-6 py-3 bg-black text-white font-black uppercase border-4 border-black hover:bg-red-600 transition-colors">
+                ЗАПИСАТЬСЯ
               </a>
             </div>
 
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden p-2 text-gray-300">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden p-2">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 6h16M4 12h16M4 18h16" />
                 )}
               </svg>
             </button>
@@ -243,119 +211,90 @@ function App() {
         </div>
 
         {isMenuOpen && (
-          <div className="lg:hidden bg-gray-900/98 backdrop-blur-lg border-t border-gray-800">
+          <div className="lg:hidden bg-yellow-400 border-t-4 border-black">
             <div className="px-4 py-4 space-y-3">
               {navItems.map(item => (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block px-4 py-2 text-gray-300 hover:text-sky-400 transition-colors"
+                  className="block px-4 py-2 font-bold uppercase hover:text-red-600 transition-colors"
                 >
                   {item.label}
                 </a>
               ))}
-              <a href="tel:+79295884094" className="flex items-center space-x-2 px-4 py-2 text-sky-400">
-                <PhoneIcon />
-                <span>+7 (929) 588-40-94</span>
-              </a>
             </div>
           </div>
         )}
       </nav>
 
       {/* Hero Section */}
-      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-blue-950/30 to-gray-950"></div>
-          <div className="absolute inset-0 opacity-30" style={{
-            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(56, 189, 248, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)'
-          }}></div>
-        </div>
-
+      <section id="hero" className="relative min-h-screen flex items-center justify-center pt-20 bg-yellow-400 border-b-4 border-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Большой логотип А500 */}
           <div className="mb-8">
-            <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black leading-none tracking-tight">
-              <span className="bg-gradient-to-b from-white via-sky-100 to-sky-400 bg-clip-text text-transparent drop-shadow-2xl">А</span>
-              <span className="bg-gradient-to-r from-sky-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">500</span>
+            <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black leading-none tracking-tighter">
+              <span className="inline-block bg-black text-white px-4 py-2 border-8 border-black">А</span>
+              <span className="inline-block bg-red-600 text-white px-4 py-2 border-8 border-black ml-2">500</span>
             </h1>
-            <div className="flex items-center justify-center space-x-3 mt-4">
-              <div className="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-sky-400"></div>
-              <p className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-300 uppercase tracking-[0.3em]">
+            <div className="mt-6 bg-black text-yellow-400 py-4 px-8 inline-block border-4 border-black">
+              <p className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-wider">
                 Автомойка · Детейлинг
               </p>
-              <div className="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-sky-400"></div>
             </div>
           </div>
           
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto mb-10">
-            Ручная мойка, химчистка, полировка и обработка воском. 
-            Бережный уход за вашим автомобилем с применением профессиональной автохимии.
+          <p className="text-xl sm:text-2xl font-bold max-w-3xl mx-auto mb-10 mt-8 bg-white p-6 border-4 border-black">
+            РУЧНАЯ МОЙКА • ХИМЧИСТКА • ПОЛИРОВКА • ВОСК
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <a href="#contacts" className="px-8 py-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-xl text-lg font-bold text-white hover:shadow-xl hover:shadow-sky-500/30 transition-all transform hover:scale-105">
-              Записаться на мойку
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="#contacts" className="px-10 py-5 bg-black text-white text-xl font-black uppercase border-4 border-black hover:bg-red-600 transition-colors">
+              ЗАПИСАТЬСЯ СЕЙЧАС
             </a>
-            <a href="#pricing" className="px-8 py-4 glass rounded-xl text-lg font-medium text-white hover:bg-white/10 transition-all">
-              Посмотреть цены →
+            <a href="#pricing" className="px-10 py-5 bg-white text-black text-xl font-black uppercase border-4 border-black hover:bg-yellow-400 transition-colors">
+              СМОТРЕТЬ ЦЕНЫ
             </a>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {stats.map((stat, i) => (
-              <div key={i} className="text-center p-4">
-                <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent mb-1">{stat.number}</div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 lg:py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900/50 to-gray-950"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="text-sky-400 text-sm font-semibold uppercase tracking-wider">Наши услуги</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 mb-4">
-              Полный уход за <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">вашим авто</span>
+      <section id="services" className="py-20 bg-white border-b-4 border-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 bg-black text-white p-8 border-4 border-black">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase">
+              НАШИ УСЛУГИ
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-              От экспресс-мойки до комплексного детейлинга — мы позаботимся о каждой детали вашего автомобиля
-            </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, i) => (
               <div
                 key={i}
-                className="group gradient-card rounded-2xl p-6 hover:border-sky-500/30 transition-all duration-300 cursor-pointer hover:transform hover:scale-[1.02]"
+                className="group bg-white border-4 border-black p-6 hover:bg-yellow-400 transition-colors cursor-pointer"
                 onClick={() => setSelectedService(selectedService === i ? null : i)}
               >
-                <h3 className="text-xl font-bold mb-2 group-hover:text-sky-400 transition-colors">{service.title}</h3>
-                <p className="text-gray-400 text-sm mb-4">{service.description}</p>
+                <h3 className="text-2xl font-black mb-3 uppercase">{service.title}</h3>
+                <p className="text-sm mb-4 font-bold">{service.description}</p>
                 
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sky-400 font-bold text-lg">{service.price}</span>
-                  <span className="text-xs text-gray-500 flex items-center space-x-1">
-                    <ClockIcon />
-                    <span>{service.duration}</span>
-                  </span>
+                <div className="flex items-center justify-between mb-4 bg-black text-white p-3">
+                  <span className="font-black text-xl">{service.price}</span>
+                  <span className="text-xs font-bold">{service.duration}</span>
                 </div>
 
                 {selectedService === i && (
-                  <div className="border-t border-gray-700 pt-4 mt-4 space-y-2">
+                  <div className="border-t-4 border-black pt-4 mt-4 space-y-2">
                     {service.features.map((feature, j) => (
                       <div key={j} className="flex items-center space-x-2">
-                        <CheckIcon />
-                        <span className="text-sm text-gray-300">{feature}</span>
+                        <div className="w-6 h-6 bg-black flex items-center justify-center">
+                          <CheckIcon />
+                        </div>
+                        <span className="text-sm font-bold">{feature}</span>
                       </div>
                     ))}
-                    <a href="#contacts" className="inline-block mt-4 px-4 py-2 bg-sky-400/10 border border-sky-400/30 rounded-lg text-sky-400 text-sm font-medium hover:bg-sky-400/20 transition-colors">
-                      Записаться →
+                    <a href="#contacts" className="inline-block mt-4 px-4 py-2 bg-red-600 text-white font-black uppercase border-4 border-black hover:bg-black transition-colors">
+                      ЗАПИСАТЬСЯ
                     </a>
                   </div>
                 )}
@@ -366,71 +305,64 @@ function App() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 lg:py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900/30 to-gray-950"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="text-sky-400 text-sm font-semibold uppercase tracking-wider">Комплексы мойки</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 mb-4">
-              Выберите <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">свой пакет</span>
+      <section id="pricing" className="py-20 bg-yellow-400 border-b-4 border-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 bg-black text-white p-8 border-4 border-black">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase">
+              КОМПЛЕКСЫ МОЙКИ
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-              Фиксированные цены без скрытых доплат. Точная стоимость зависит от класса автомобиля
-            </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {washPackages.map((pkg, i) => (
               <div
                 key={i}
-                className={`gradient-card rounded-2xl p-6 relative overflow-hidden transition-all hover:transform hover:scale-[1.02] ${pkg.popular ? 'border-sky-500/50 ring-1 ring-sky-500/20' : 'hover:border-gray-600'}`}
+                className={`${pkg.color} border-4 border-black p-6 relative ${i === 1 ? 'bg-yellow-400' : ''}`}
               >
-                {pkg.popular && (
-                  <div className="absolute top-0 right-0 px-3 py-1 bg-gradient-to-r from-sky-400 to-blue-600 text-xs font-bold text-white rounded-bl-lg">
-                    ПОПУЛЯРНЫЙ
+                {i === 1 && (
+                  <div className="absolute -top-4 -right-4 bg-red-600 text-white px-4 py-2 font-black text-sm uppercase border-4 border-black">
+                    ХИТ
                   </div>
                 )}
-                <div className="text-center mb-6">
-                  <h3 className="text-xl font-bold mb-2">{pkg.name}</h3>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent mb-1">{pkg.price}</div>
-                  <div className="text-xs text-gray-500">~ {pkg.duration}</div>
+                <div className="mb-6">
+                  <h3 className="text-2xl font-black mb-2 uppercase">{pkg.name}</h3>
+                  <div className="text-4xl font-black mb-1">{pkg.price}</div>
+                  <div className="text-xs font-bold">{pkg.duration}</div>
                 </div>
                 <ul className="space-y-3 mb-8">
                   {pkg.features.map((feature, j) => (
-                    <li key={j} className="flex items-center space-x-2 text-sm text-gray-300">
-                      <CheckIcon />
+                    <li key={j} className="flex items-center space-x-2 text-sm font-bold">
+                      <div className="w-5 h-5 bg-black flex items-center justify-center flex-shrink-0">
+                        <CheckIcon />
+                      </div>
                       <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
-                <a href="#contacts" className={`block text-center px-4 py-3 rounded-xl text-sm font-medium transition-all ${pkg.popular ? 'bg-gradient-to-r from-sky-400 to-blue-600 text-white hover:shadow-lg hover:shadow-sky-500/25' : 'border border-gray-600 hover:bg-white/5'}`}>
-                  Выбрать
+                <a href="#contacts" className="block text-center px-4 py-3 bg-black text-white font-black uppercase border-4 border-black hover:bg-red-600 transition-colors">
+                  ВЫБРАТЬ
                 </a>
               </div>
             ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <p className="text-gray-500 text-sm">* Цены указаны для легковых автомобилей. Для внедорожников и минивэнов — наценка 20-30%</p>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="about" className="py-20 bg-white border-b-4 border-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-sky-400 text-sm font-semibold uppercase tracking-wider">О нас</span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 mb-6">
-                Чистота и <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">забота</span> о вашем авто
-              </h2>
-              <p className="text-gray-400 text-lg mb-6">
-                <strong className="text-white">А500</strong> — это автомойка и детейлинг-центр на Боровском шоссе. Мы используем специализированные средства, которые бережно удаляют соль, химические реагенты, пыль, смолу и другие виды загрязнений.
+              <div className="mb-8 bg-black text-white p-8 border-4 border-black">
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase">
+                  О НАС
+                </h2>
+              </div>
+              <p className="text-lg mb-6 font-bold">
+                <strong className="bg-yellow-400 px-2">А500</strong> — это автомойка и детейлинг-центр на Боровском шоссе. Мы используем специализированные средства, которые бережно удаляют соль, химические реагенты, пыль, смолу и другие виды загрязнений.
               </p>
-              <p className="text-gray-400 text-lg mb-8">
-                Наши сотрудники применяют приспособления, которые <strong className="text-white">не оставляют царапин на ЛКП</strong>. Мы поможем подобрать автохимию для защиты кузова от выгорания краски, сколов и коррозии.
+              <p className="text-lg mb-8 font-bold">
+                Наши сотрудники применяют приспособления, которые <strong className="bg-red-600 text-white px-2">не оставляют царапин на ЛКП</strong>.
               </p>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
@@ -442,116 +374,61 @@ function App() {
                   'Опытные мастера',
                   'Гарантия качества'
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center space-x-2">
-                    <CheckIcon />
-                    <span className="text-sm text-gray-300">{item}</span>
+                  <div key={i} className="flex items-center space-x-2 bg-yellow-400 p-3 border-4 border-black">
+                    <div className="w-6 h-6 bg-black flex items-center justify-center flex-shrink-0">
+                      <CheckIcon />
+                    </div>
+                    <span className="text-sm font-bold">{item}</span>
                   </div>
                 ))}
               </div>
 
-              <a href="#contacts" className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-sky-400 to-blue-600 rounded-xl font-semibold text-white hover:shadow-lg hover:shadow-sky-500/25 transition-all">
-                <span>Записаться на мойку</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+              <a href="#contacts" className="inline-flex items-center space-x-2 px-8 py-4 bg-black text-white font-black uppercase border-4 border-black hover:bg-red-600 transition-colors">
+                <span>ЗАПИСАТЬСЯ</span>
               </a>
             </div>
 
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-sky-500/10">
+              <div className="border-8 border-black">
                 <img
                   src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=700&h=500&fit=crop"
                   alt="Автомойка А500"
-                  className="w-full h-[400px] lg:h-[500px] object-cover"
+                  className="w-full h-[500px] object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery Section */}
-      <section id="gallery" className="py-20 lg:py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900/30 to-gray-950"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="text-sky-400 text-sm font-semibold uppercase tracking-wider">Наши работы</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 mb-4">
-              Результат <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">говорит сам</span>
-            </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-              Посмотрите, как мы заботимся об автомобилях наших клиентов
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {galleryImages.map((img, i) => (
-              <div key={i} className="group relative rounded-xl overflow-hidden cursor-pointer aspect-[4/3]">
-                <img
-                  src={img.url}
-                  alt={img.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-4 left-4">
-                    <h3 className="font-bold text-lg">{img.title}</h3>
-                    <p className="text-sm text-gray-300">А500</p>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
       {/* Reviews Section */}
-      <section id="reviews" className="py-20 lg:py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900/30 to-gray-950"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="text-sky-400 text-sm font-semibold uppercase tracking-wider">Отзывы</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 mb-4">
-              Что говорят <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">клиенты</span>
+      <section id="reviews" className="py-20 bg-black text-white border-b-4 border-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 bg-yellow-400 text-black p-8 border-4 border-yellow-400">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase">
+              ОТЗЫВЫ
             </h2>
-            <div className="flex items-center justify-center space-x-2 mt-4">
-              <div className="flex space-x-1">
-                {[...Array(4)].map((_, i) => <StarIcon key={i} />)}
-              </div>
-              <span className="text-gray-400 text-sm">4.0 — оценка на Яндекс.Картах</span>
-            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6">
             {reviews.map((review, i) => (
               <a
                 key={i}
                 href="https://yandex.ru/maps/org/a500/73889912604/reviews/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="gradient-card rounded-2xl p-6 hover:border-sky-500/40 transition-all cursor-pointer group block"
-                title="Читать все отзывы на Яндекс.Картах"
+                className="bg-white text-black border-4 border-white hover:border-yellow-400 transition-colors p-6 block group"
               >
                 <div className="flex items-center space-x-1 mb-3">
                   {[...Array(review.rating)].map((_, j) => <StarIcon key={j} />)}
                 </div>
-                <p className="text-gray-300 mb-4 text-sm leading-relaxed">"{review.text}"</p>
+                <p className="mb-4 font-bold">"{review.text}"</p>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center font-bold text-white text-sm">
-                      {review.name[0]}
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm">{review.name}</div>
-                      <div className="text-xs text-gray-500">{review.car}</div>
-                    </div>
+                  <div>
+                    <div className="font-black">{review.name}</div>
+                    <div className="text-xs font-bold">{review.car}</div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xs text-gray-500">{review.date}</span>
-                    <svg className="w-4 h-4 text-gray-500 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </div>
+                  <span className="text-xs font-bold">{review.date}</span>
                 </div>
               </a>
             ))}
@@ -562,148 +439,129 @@ function App() {
               href="https://yandex.ru/maps/org/a500/73889912604/reviews/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-xl font-medium hover:bg-white/10 transition-all group"
+              className="inline-flex items-center space-x-2 px-8 py-4 bg-yellow-400 text-black font-black uppercase border-4 border-yellow-400 hover:bg-white transition-colors"
             >
-              <span>Все отзывы на Яндекс.Картах</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <span>ВСЕ ОТЗЫВЫ НА ЯНДЕКС.КАРТАХ</span>
             </a>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contacts" className="py-20 lg:py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900/50 to-gray-950"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="text-sky-400 text-sm font-semibold uppercase tracking-wider">Контакты</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 mb-4">
-              Запишитесь <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">прямо сейчас</span>
+      <section id="contacts" className="py-20 bg-white border-b-4 border-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 bg-black text-white p-8 border-4 border-black">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase">
+              КОНТАКТЫ
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-              Позвоните нам или оставьте заявку — мы подберём удобное время
-            </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            <div className="gradient-card rounded-2xl p-8">
+          <div className="grid lg:grid-cols-2 gap-12">
+            <div className="border-4 border-black p-8">
               {formSubmitted ? (
                 <div className="text-center py-12">
-                  <div className="text-5xl mb-4">✅</div>
-                  <h3 className="text-2xl font-bold mb-2">Заявка отправлена!</h3>
-                  <p className="text-gray-400">Мы свяжемся с вами в ближайшее время</p>
+                  <div className="text-6xl mb-4">✓</div>
+                  <h3 className="text-3xl font-black mb-2 uppercase">ОТПРАВЛЕНО!</h3>
+                  <p className="font-bold">МЫ СВЯЖЕМСЯ С ВАМИ</p>
                 </div>
               ) : (
                 <form onSubmit={handleFormSubmit} className="space-y-5">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Ваше имя</label>
+                    <label className="block text-sm font-black mb-2 uppercase">Имя</label>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
-                      className="w-full px-4 py-3 bg-white/5 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none transition-all"
-                      placeholder="Александр"
+                      className="w-full px-4 py-3 border-4 border-black font-bold focus:outline-none focus:border-red-600"
+                      placeholder="АЛЕКСАНДР"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Телефон</label>
+                    <label className="block text-sm font-black mb-2 uppercase">Телефон</label>
                     <input
                       type="tel"
                       required
                       value={formData.phone}
                       onChange={e => setFormData({...formData, phone: e.target.value})}
-                      className="w-full px-4 py-3 bg-white/5 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none transition-all"
+                      className="w-full px-4 py-3 border-4 border-black font-bold focus:outline-none focus:border-red-600"
                       placeholder="+7 (999) 123-45-67"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Услуга</label>
+                    <label className="block text-sm font-black mb-2 uppercase">Услуга</label>
                     <select
                       value={formData.service}
                       onChange={e => setFormData({...formData, service: e.target.value})}
-                      className="w-full px-4 py-3 bg-white/5 border border-gray-700 rounded-xl text-white focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none transition-all"
+                      className="w-full px-4 py-3 border-4 border-black font-bold focus:outline-none focus:border-red-600"
                     >
-                      <option value="" className="bg-gray-900">Выберите услугу</option>
+                      <option value="">ВЫБЕРИТЕ УСЛУГУ</option>
                       {services.map((s, i) => (
-                        <option key={i} value={s.title} className="bg-gray-900">{s.title}</option>
+                        <option key={i} value={s.title}>{s.title}</option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Марка авто</label>
+                    <label className="block text-sm font-black mb-2 uppercase">Авто</label>
                     <input
                       type="text"
                       value={formData.car}
                       onChange={e => setFormData({...formData, car: e.target.value})}
-                      className="w-full px-4 py-3 bg-white/5 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none transition-all"
-                      placeholder="Toyota Camry"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Комментарий</label>
-                    <textarea
-                      rows={3}
-                      value={formData.message}
-                      onChange={e => setFormData({...formData, message: e.target.value})}
-                      className="w-full px-4 py-3 bg-white/5 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none transition-all resize-none"
-                      placeholder="Удобное время, пожелания..."
+                      className="w-full px-4 py-3 border-4 border-black font-bold focus:outline-none focus:border-red-600"
+                      placeholder="TOYOTA CAMRY"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full px-6 py-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-xl font-bold text-white hover:shadow-lg hover:shadow-sky-500/25 transition-all transform hover:scale-[1.02]"
+                    className="w-full px-6 py-4 bg-black text-white font-black uppercase border-4 border-black hover:bg-red-600 transition-colors"
                   >
-                    Отправить заявку
+                    ОТПРАВИТЬ ЗАЯВКУ
                   </button>
                 </form>
               )}
             </div>
 
             <div className="space-y-6">
-              <div className="gradient-card rounded-2xl p-6">
+              <div className="border-4 border-black p-6">
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-xl bg-sky-400/10 flex items-center justify-center text-sky-400">
+                  <div className="w-12 h-12 bg-yellow-400 border-4 border-black flex items-center justify-center">
                     <PhoneIcon />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">Телефоны</h3>
-                    <a href="tel:+79295884094" className="text-gray-400 hover:text-sky-400 transition-colors block">+7 (929) 588-40-94</a>
-                    <a href="tel:+79299555587" className="text-gray-400 hover:text-sky-400 transition-colors block">+7 (929) 955-55-87</a>
+                    <h3 className="font-black mb-1 uppercase">Телефоны</h3>
+                    <a href="tel:+79295884094" className="font-bold block hover:text-red-600">+7 (929) 588-40-94</a>
+                    <a href="tel:+79299555587" className="font-bold block hover:text-red-600">+7 (929) 955-55-87</a>
                   </div>
                 </div>
               </div>
 
-              <div className="gradient-card rounded-2xl p-6">
+              <div className="border-4 border-black p-6">
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-xl bg-sky-400/10 flex items-center justify-center text-sky-400">
+                  <div className="w-12 h-12 bg-yellow-400 border-4 border-black flex items-center justify-center">
                     <LocationIcon />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">Адрес</h3>
-                    <p className="text-gray-400">г. Москва, Боровское шоссе, 6к1</p>
-                    <p className="text-sm text-gray-500 mt-1">м. Говорово — 0.7 км • ЗАО, Солнцево</p>
+                    <h3 className="font-black mb-1 uppercase">Адрес</h3>
+                    <p className="font-bold">Москва, Боровское шоссе, 6к1</p>
+                    <p className="text-sm font-bold">м. Говорово — 0.7 км</p>
                   </div>
                 </div>
               </div>
 
-              <div className="gradient-card rounded-2xl p-6">
+              <div className="border-4 border-black p-6">
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-xl bg-sky-400/10 flex items-center justify-center text-sky-400">
+                  <div className="w-12 h-12 bg-yellow-400 border-4 border-black flex items-center justify-center">
                     <ClockIcon />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">Режим работы</h3>
-                    <p className="text-gray-400">Пн — Вс: 09:00 — 23:00</p>
-                    <p className="text-sm text-gray-500 mt-1">Без выходных и перерывов</p>
+                    <h3 className="font-black mb-1 uppercase">Режим работы</h3>
+                    <p className="font-bold">Пн — Вс: 09:00 — 23:00</p>
+                    <p className="text-sm font-bold">Без выходных</p>
                   </div>
                 </div>
               </div>
 
-              {/* Map */}
-              <div className="gradient-card rounded-2xl overflow-hidden">
+              <div className="border-4 border-black overflow-hidden">
                 <iframe
                   src="https://yandex.ru/map-widget/v1/?ll=37.402218%2C55.659749&z=17&pt=37.402218,55.659749,pm2blm"
                   width="100%"
@@ -718,89 +576,55 @@ function App() {
         </div>
       </section>
 
-      {/* CTA Banner */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-cyan-500/10"></div>
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'radial-gradient(circle at 30% 50%, rgba(56, 189, 248, 0.2) 0%, transparent 50%)'
-        }}></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-            Приезжайте <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">прямо сейчас!</span>
-          </h2>
-          <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
-            Позвоните или оставьте заявку — мы подберём удобное время для мойки вашего автомобиля.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="tel:+79295884094" className="px-8 py-4 bg-gradient-to-r from-sky-400 to-blue-600 rounded-xl text-lg font-bold text-white hover:shadow-xl hover:shadow-sky-500/30 transition-all transform hover:scale-105 flex items-center space-x-2">
-              <PhoneIcon />
-              <span>Позвонить</span>
-            </a>
-            <a href="#contacts" className="px-8 py-4 glass rounded-xl text-lg font-medium hover:bg-white/10 transition-all">
-              Оставить заявку
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="border-t border-gray-800 py-12">
+      <footer className="bg-black text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center font-bold text-lg">
-                  A5
-                </div>
-                <span className="text-xl font-bold">А<span className="text-sky-400">500</span></span>
+              <div className="text-3xl font-black mb-4">
+                А<span className="text-red-600">500</span>
               </div>
-              <p className="text-gray-400 text-sm">
+              <p className="text-sm font-bold">
                 Автомойка и детейлинг-центр на Боровском шоссе.
               </p>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4">Услуги</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#services" className="hover:text-sky-400 transition-colors">Ручная мойка</a></li>
-                <li><a href="#services" className="hover:text-sky-400 transition-colors">Химчистка</a></li>
-                <li><a href="#services" className="hover:text-sky-400 transition-colors">Полировка</a></li>
-                <li><a href="#services" className="hover:text-sky-400 transition-colors">Обработка воском</a></li>
-                <li><a href="#services" className="hover:text-sky-400 transition-colors">Детейлинг</a></li>
+              <h4 className="font-black mb-4 uppercase">Услуги</h4>
+              <ul className="space-y-2 text-sm font-bold">
+                <li><a href="#services" className="hover:text-yellow-400">Ручная мойка</a></li>
+                <li><a href="#services" className="hover:text-yellow-400">Химчистка</a></li>
+                <li><a href="#services" className="hover:text-yellow-400">Полировка</a></li>
+                <li><a href="#services" className="hover:text-yellow-400">Воск</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4">Навигация</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#services" className="hover:text-sky-400 transition-colors">Услуги</a></li>
-                <li><a href="#pricing" className="hover:text-sky-400 transition-colors">Цены</a></li>
-                <li><a href="#about" className="hover:text-sky-400 transition-colors">О нас</a></li>
-                <li><a href="#reviews" className="hover:text-sky-400 transition-colors">Отзывы</a></li>
-                <li><a href="#contacts" className="hover:text-sky-400 transition-colors">Контакты</a></li>
+              <h4 className="font-black mb-4 uppercase">Навигация</h4>
+              <ul className="space-y-2 text-sm font-bold">
+                <li><a href="#services" className="hover:text-yellow-400">Услуги</a></li>
+                <li><a href="#pricing" className="hover:text-yellow-400">Цены</a></li>
+                <li><a href="#about" className="hover:text-yellow-400">О нас</a></li>
+                <li><a href="#contacts" className="hover:text-yellow-400">Контакты</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4">Контакты</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="tel:+79295884094" className="hover:text-sky-400 transition-colors">+7 (929) 588-40-94</a></li>
-                <li><a href="tel:+79299555587" className="hover:text-sky-400 transition-colors">+7 (929) 955-55-87</a></li>
+              <h4 className="font-black mb-4 uppercase">Контакты</h4>
+              <ul className="space-y-2 text-sm font-bold">
+                <li><a href="tel:+79295884094" className="hover:text-yellow-400">+7 (929) 588-40-94</a></li>
+                <li><a href="tel:+79299555587" className="hover:text-yellow-400">+7 (929) 955-55-87</a></li>
                 <li>Боровское шоссе, 6к1</li>
                 <li>м. Говорово</li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between">
-            <p className="text-sm text-gray-500">© 2024 А500 — Автомойка и детейлинг. Все права защищены.</p>
-            <div className="flex space-x-4 mt-4 md:mt-0">
-              <a href="https://yandex.ru/maps/org/a500/73889912604/" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:text-sky-400 transition-colors">Яндекс.Карты</a>
-            </div>
+          <div className="border-t-4 border-yellow-400 pt-8 text-center">
+            <p className="text-sm font-bold">© 2024 А500 — АВТОМОЙКА И ДЕТЕЙЛИНГ</p>
           </div>
         </div>
       </footer>
-
     </div>
   );
 }
