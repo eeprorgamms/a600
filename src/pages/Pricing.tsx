@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useInView } from '../hooks/useInView';
+import CostCalculator from '../components/CostCalculator';
 
 const Pricing = () => {
   const { ref: heroRef, isInView: heroVisible } = useInView();
@@ -115,19 +116,26 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* Additional Services */}
+      {/* Cost Calculator */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <CostCalculator />
+        </div>
+      </section>
+
+      {/* Additional Services */}
+      <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Дополнительные услуги</h2>
             <p className="text-gray-600">Отдельные услуги по уходу за автомобилем</p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-gray-50 rounded-xl shadow-sm overflow-hidden">
             {additionalServices.map((service, i) => (
               <div
                 key={i}
-                className={`flex items-center justify-between p-6 hover:bg-gray-50 transition-colors ${
+                className={`flex items-center justify-between p-6 hover:bg-white transition-colors ${
                   i !== additionalServices.length - 1 ? 'border-b border-gray-100' : ''
                 }`}
               >

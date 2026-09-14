@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import ScrollToTop from './ScrollToTop';
+import Loader from './Loader';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -232,6 +233,7 @@ const FloatingButtons = () => {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-white">
+      <Loader />
       <ScrollToTop />
       <Header />
       <main className="pt-20">

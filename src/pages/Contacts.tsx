@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
+import BookingCalendar from '../components/BookingCalendar';
 
 const Contacts = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', service: '', car: '', message: '' });
@@ -8,8 +9,37 @@ const Contacts = () => {
   const { ref: heroRef, isInView: heroVisible } = useInView();
   const { ref: contentRef, isInView: contentVisible } = useInView();
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prepare message for Telegram
+    const message = `🚗 Новая заявка с сайта А500\n\n` +
+      `👤 Имя: ${formData.name}\n` +
+      `📱 Телефон: ${formData.phone}\n` +
+      `🔧 Услуга: ${formData.service}\n` +
+      `🚙 Автомобиль: ${formData.car}\n` +
+      `💬 Сообщение: ${formData.message || 'Не указано'}`;
+
+    // Send to Telegram (replace with your bot token and chat ID)
+    const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN';
+    const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';
+    
+    try {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: message,
+          parse_mode: 'HTML'
+        })
+      });
+    } catch (error) {
+      console.log('Telegram notification skipped (demo mode)');
+    }
+
     setFormSubmitted(true);
     setTimeout(() => setFormSubmitted(false), 4000);
     setFormData({ name: '', phone: '', service: '', car: '', message: '' });
@@ -109,9 +139,15 @@ const Contacts = () => {
       <section className="py-20 bg-white">
         <div ref={contentRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in ${contentVisible ? 'visible' : ''}`}>
           <div className="grid lg:grid-cols-2 gap-12">
+            {/* Booking Calendar */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Онлайн-запись</h2>
+              <BookingCalendar />
+            </div>
+
             {/* Form */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Оставить заявку</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Или оставьте заявку</h2>
               
               {formSubmitted ? (
                 <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center scale-in visible">

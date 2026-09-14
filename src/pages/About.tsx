@@ -1,4 +1,6 @@
 import { useInView } from '../hooks/useInView';
+import FAQ from '../components/FAQ';
+import AnimatedCounter from '../components/AnimatedCounter';
 
 const About = () => {
   const { ref: heroRef, isInView: heroVisible } = useInView();
@@ -81,27 +83,46 @@ const About = () => {
         <div ref={statsRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in ${statsVisible ? 'visible' : ''}`}>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold text-white mb-2">14</div>
+              <div className="text-4xl font-bold text-white mb-2">
+                <AnimatedCounter end={14} suffix="" />
+              </div>
               <div className="text-blue-200">Часов работы в день</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-white mb-2">7</div>
+              <div className="text-4xl font-bold text-white mb-2">
+                <AnimatedCounter end={7} suffix="" />
+              </div>
               <div className="text-blue-200">Дней в неделю</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-white mb-2">500+</div>
+              <div className="text-4xl font-bold text-white mb-2">
+                <AnimatedCounter end={500} suffix="+" />
+              </div>
               <div className="text-blue-200">Довольных клиентов</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-white mb-2">4.0</div>
+              <div className="text-4xl font-bold text-white mb-2">
+                <AnimatedCounter end={4} suffix=".0" />
+              </div>
               <div className="text-blue-200">Рейтинг на картах</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Location */}
+      {/* FAQ Section */}
       <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Часто задаваемые вопросы</h2>
+            <p className="text-lg text-gray-600">Ответы на популярные вопросы наших клиентов</p>
+          </div>
+          <FAQ />
+        </div>
+      </section>
+
+      {/* Location */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Наше расположение</h2>
@@ -110,7 +131,7 @@ const About = () => {
 
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="space-y-6">
-              <div className="bg-gray-50 rounded-xl p-6 card-hover">
+              <div className="bg-white rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,7 +154,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6 card-hover">
+              <div className="bg-white rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,7 +169,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6 card-hover">
+              <div className="bg-white rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
