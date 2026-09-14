@@ -157,7 +157,7 @@ const Footer = () => {
               <li><a href="tel:+79299555587" className="hover:text-blue-400 transition-colors">+7 (929) 955-55-87</a></li>
               <li>
                 <a 
-                  href="https://yandex.ru/maps/?ll=37.402218%2C55.659749&z=16&pt=37.402218,55.659749"
+                  href="https://yandex.ru/maps/org/a500/73889912604/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-400 transition-colors"

@@ -121,7 +121,7 @@ const About = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Адрес</h3>
                     <a 
-                      href="https://yandex.ru/maps/?ll=37.402218%2C55.659749&z=16&pt=37.402218,55.659749"
+                      href="https://yandex.ru/maps/org/a500/73889912604/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-700 hover:text-blue-800 hover:underline transition-colors"
