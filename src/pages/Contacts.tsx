@@ -56,7 +56,7 @@ const Contacts = () => {
                       required
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                       placeholder="Александр"
                     />
                   </div>
@@ -67,7 +67,7 @@ const Contacts = () => {
                       required
                       value={formData.phone}
                       onChange={e => setFormData({...formData, phone: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                       placeholder="+7 (999) 123-45-67"
                     />
                   </div>
@@ -77,7 +77,7 @@ const Contacts = () => {
                       type="text"
                       value={formData.service}
                       onChange={e => setFormData({...formData, service: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                       placeholder="Например: Ручная мойка, Химчистка, Полировка"
                     />
                   </div>
@@ -87,7 +87,7 @@ const Contacts = () => {
                       type="text"
                       value={formData.car}
                       onChange={e => setFormData({...formData, car: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                       placeholder="Toyota Camry"
                     />
                   </div>
@@ -97,7 +97,7 @@ const Contacts = () => {
                       rows={3}
                       value={formData.message}
                       onChange={e => setFormData({...formData, message: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all resize-none"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all resize-none"
                       placeholder="Удобное время, пожелания..."
                     />
                   </div>
