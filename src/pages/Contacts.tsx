@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
 
 const Contacts = () => {
-  const [formData, setFormData] = useState({ name: '', phone: '+7', service: '', car: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', service: '', car: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { ref: heroRef, isInView: heroVisible } = useInView();
   const { ref: contentRef, isInView: contentVisible } = useInView();
@@ -11,18 +11,23 @@ const Contacts = () => {
     e.preventDefault();
     setFormSubmitted(true);
     setTimeout(() => setFormSubmitted(false), 4000);
-    setFormData({ name: '', phone: '+7', service: '', car: '', message: '' });
+    setFormData({ name: '', phone: '', service: '', car: '', message: '' });
   };
 
   const formatPhone = (value: string) => {
     // Убираем все символы кроме цифр
     const digits = value.replace(/\D/g, '');
     
-    // Если начинается с 8, заменяем на 7
+    // Если цифр нет, возвращаем пустую строку
+    if (digits.length === 0) {
+      return '';
+    }
+    
+    // Нормализуем: если начинается с 8, заменяем на 7
     let normalizedDigits = digits;
-    if (digits.startsWith('8') && digits.length > 1) {
+    if (digits.startsWith('8')) {
       normalizedDigits = '7' + digits.slice(1);
-    } else if (!digits.startsWith('7') && digits.length > 0) {
+    } else if (!digits.startsWith('7')) {
       normalizedDigits = '7' + digits;
     }
     
@@ -49,6 +54,14 @@ const Contacts = () => {
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    
+    // Если пользователь пытается стереть до "+7" или меньше, очищаем поле
+    const digits = value.replace(/\D/g, '');
+    if (digits.length <= 1) {
+      setFormData({...formData, phone: ''});
+      return;
+    }
+    
     const formatted = formatPhone(value);
     setFormData({...formData, phone: formatted});
   };
@@ -107,7 +120,7 @@ const Contacts = () => {
                       value={formData.phone}
                       onChange={handlePhoneChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
-                      placeholder="+7 (___) ___-__-__"
+                      placeholder="Введите номер телефона"
                     />
                   </div>
                   <div>

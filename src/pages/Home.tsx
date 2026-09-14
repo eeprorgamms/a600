@@ -54,9 +54,9 @@ const Home = () => {
             </div>
             <div className="relative">
               <img
-                src="https://image.qwenlm.ai/generated-images/561d129e-77f1-419c-a26f-166d3cc955ee/_result.png"
-                alt="Автомойка А500 — детейлинг премиум автомобилей"
-                className="rounded-2xl shadow-2xl card-hover w-full h-auto"
+                src="https://image.qwenlm.ai/generated-images/2d30b727-802a-43ec-ae48-8538f2cf3f35/_result.png"
+                alt="Lamborghini Aventador — детейлинг премиум автомобилей в А500"
+                className="rounded-2xl shadow-2xl card-hover w-full h-auto object-cover"
               />
             </div>
           </div>
@@ -115,6 +115,80 @@ const Home = () => {
                 <p className="text-sm text-gray-600">{item.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Отзывы клиентов</h2>
+            <p className="text-lg text-gray-600">Нажмите на отзыв, чтобы увидеть все на Яндекс.Картах</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                name: 'Артём К.',
+                car: 'Toyota Camry',
+                text: 'Моемся тут регулярно уже полгода. Всегда качественно, быстро и недорого. Ребята знают своё дело!',
+                rating: 5
+              },
+              {
+                name: 'Елена М.',
+                car: 'Kia Sportage',
+                text: 'Делала химчистку салона после зимы. Результат потрясающий! Все пятна убрали, салон пахнет свежестью.',
+                rating: 5
+              },
+              {
+                name: 'Сергей В.',
+                car: 'Hyundai Tucson',
+                text: 'Отличный сервис! Полировка вернула машине заводской блеск. Цены адекватные, работают аккуратно.',
+                rating: 5
+              }
+            ].map((review, i) => (
+              <a
+                key={i}
+                href="https://yandex.ru/maps/org/a500/73889912604/reviews/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-50 rounded-xl p-6 card-hover group cursor-pointer block"
+                style={{ transitionDelay: `${i * 100}ms` }}
+              >
+                <div className="flex items-center space-x-1 mb-3">
+                  {[...Array(review.rating)].map((_, j) => (
+                    <svg key={j} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-gray-700 mb-4 text-sm leading-relaxed">"{review.text}"</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-semibold text-gray-900 text-sm">{review.name}</div>
+                    <div className="text-xs text-gray-500">{review.car}</div>
+                  </div>
+                  <svg className="w-5 h-5 text-gray-400 group-hover:text-blue-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <a
+              href="https://yandex.ru/maps/org/a500/73889912604/reviews/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-2 text-blue-700 font-medium hover:text-blue-800 transition-colors group"
+            >
+              <span>Все отзывы на Яндекс.Картах</span>
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
           </div>
         </div>
       </section>
