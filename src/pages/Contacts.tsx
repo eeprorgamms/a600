@@ -14,6 +14,16 @@ const Contacts = () => {
     setFormData({ name: '', phone: '', service: '', car: '', message: '' });
   };
 
+  const isDeletingRef = { current: false };
+
+  const handlePhoneKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' || e.key === 'Delete') {
+      isDeletingRef.current = true;
+    } else {
+      isDeletingRef.current = false;
+    }
+  };
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     
@@ -23,45 +33,57 @@ const Contacts = () => {
     // Если поле пустое, очищаем
     if (digits.length === 0) {
       setFormData({...formData, phone: ''});
+      isDeletingRef.current = false;
       return;
     }
     
-    // Получаем предыдущее количество цифр
-    const prevDigits = formData.phone.replace(/\D/g, '');
-    const isDeleting = digits.length < prevDigits.length;
-    
-    // Если пользователь стирает и осталось только "7" или меньше, очищаем поле
-    if (isDeleting && digits.length <= 1) {
-      setFormData({...formData, phone: ''});
+    // Если пользователь стирает — не форматируем, просто даём стирать
+    if (isDeletingRef.current) {
+      // Если осталось только "7" или меньше — очищаем поле полностью
+      if (digits.length <= 1) {
+        setFormData({...formData, phone: ''});
+      } else {
+        // Просто форматируем то, что осталось
+        const formatted = formatPhoneValue(digits);
+        setFormData({...formData, phone: formatted});
+      }
+      isDeletingRef.current = false;
       return;
     }
     
+    // При вводе — форматируем нормально
+    const formatted = formatPhoneValue(digits);
+    setFormData({...formData, phone: formatted});
+  };
+
+  const formatPhoneValue = (digits: string) => {
     // Нормализуем: если начинается с 8, заменяем на 7
-    if (digits.startsWith('8')) {
-      digits = '7' + digits.slice(1);
-    } else if (!digits.startsWith('7')) {
-      digits = '7' + digits;
+    let normalized = digits;
+    if (normalized.startsWith('8')) {
+      normalized = '7' + normalized.slice(1);
+    } else if (!normalized.startsWith('7')) {
+      normalized = '7' + normalized;
     }
     
     // Ограничиваем до 11 цифр
-    digits = digits.slice(0, 11);
+    normalized = normalized.slice(0, 11);
     
     // Форматируем в +7 (XXX) XXX-XX-XX
     let formatted = '+7';
-    if (digits.length > 1) {
-      formatted += ' (' + digits.slice(1, 4);
+    if (normalized.length > 1) {
+      formatted += ' (' + normalized.slice(1, 4);
     }
-    if (digits.length >= 4) {
-      formatted += ') ' + digits.slice(4, 7);
+    if (normalized.length >= 4) {
+      formatted += ') ' + normalized.slice(4, 7);
     }
-    if (digits.length >= 7) {
-      formatted += '-' + digits.slice(7, 9);
+    if (normalized.length >= 7) {
+      formatted += '-' + normalized.slice(7, 9);
     }
-    if (digits.length >= 9) {
-      formatted += '-' + digits.slice(9, 11);
+    if (normalized.length >= 9) {
+      formatted += '-' + normalized.slice(9, 11);
     }
     
-    setFormData({...formData, phone: formatted});
+    return formatted;
   };
 
 
@@ -117,6 +139,7 @@ const Contacts = () => {
                       required
                       value={formData.phone}
                       onChange={handlePhoneChange}
+                      onKeyDown={handlePhoneKeyDown}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                       placeholder="Введите номер телефона"
                     />
