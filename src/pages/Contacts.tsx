@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useInView } from '../hooks/useInView';
 
 const Contacts = () => {
@@ -6,54 +6,14 @@ const Contacts = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { ref: heroRef, isInView: heroVisible } = useInView();
   const { ref: contentRef, isInView: contentVisible } = useInView();
+  const prevPhoneRef = useRef('');
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
     setTimeout(() => setFormSubmitted(false), 4000);
     setFormData({ name: '', phone: '', service: '', car: '', message: '' });
-  };
-
-  const isDeletingRef = { current: false };
-
-  const handlePhoneKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' || e.key === 'Delete') {
-      isDeletingRef.current = true;
-    } else {
-      isDeletingRef.current = false;
-    }
-  };
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    
-    // Убираем все символы кроме цифр
-    let digits = value.replace(/\D/g, '');
-    
-    // Если поле пустое, очищаем
-    if (digits.length === 0) {
-      setFormData({...formData, phone: ''});
-      isDeletingRef.current = false;
-      return;
-    }
-    
-    // Если пользователь стирает — не форматируем, просто даём стирать
-    if (isDeletingRef.current) {
-      // Если осталось только "7" или меньше — очищаем поле полностью
-      if (digits.length <= 1) {
-        setFormData({...formData, phone: ''});
-      } else {
-        // Просто форматируем то, что осталось
-        const formatted = formatPhoneValue(digits);
-        setFormData({...formData, phone: formatted});
-      }
-      isDeletingRef.current = false;
-      return;
-    }
-    
-    // При вводе — форматируем нормально
-    const formatted = formatPhoneValue(digits);
-    setFormData({...formData, phone: formatted});
+    prevPhoneRef.current = '';
   };
 
   const formatPhoneValue = (digits: string) => {
@@ -84,6 +44,36 @@ const Contacts = () => {
     }
     
     return formatted;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    // Убираем все символы кроме цифр
+    const digits = value.replace(/\D/g, '');
+    
+    // Если поле пустое, очищаем
+    if (digits.length === 0) {
+      setFormData({...formData, phone: ''});
+      prevPhoneRef.current = '';
+      return;
+    }
+    
+    // Сравниваем с предыдущим значением
+    const prevDigits = prevPhoneRef.current.replace(/\D/g, '');
+    const isDeleting = digits.length < prevDigits.length;
+    
+    // Если стираем и осталось только "7" или меньше — очищаем полностью
+    if (isDeleting && digits.length <= 1) {
+      setFormData({...formData, phone: ''});
+      prevPhoneRef.current = '';
+      return;
+    }
+    
+    // Форматируем значение
+    const formatted = formatPhoneValue(digits);
+    setFormData({...formData, phone: formatted});
+    prevPhoneRef.current = formatted;
   };
 
 
@@ -139,7 +129,6 @@ const Contacts = () => {
                       required
                       value={formData.phone}
                       onChange={handlePhoneChange}
-                      onKeyDown={handlePhoneKeyDown}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                       placeholder="Введите номер телефона"
                     />
