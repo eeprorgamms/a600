@@ -14,55 +14,53 @@ const Contacts = () => {
     setFormData({ name: '', phone: '', service: '', car: '', message: '' });
   };
 
-  const formatPhone = (value: string) => {
-    // Убираем все символы кроме цифр
-    const digits = value.replace(/\D/g, '');
-    
-    // Если цифр нет, возвращаем пустую строку
-    if (digits.length === 0) {
-      return '';
-    }
-    
-    // Нормализуем: если начинается с 8, заменяем на 7
-    let normalizedDigits = digits;
-    if (digits.startsWith('8')) {
-      normalizedDigits = '7' + digits.slice(1);
-    } else if (!digits.startsWith('7')) {
-      normalizedDigits = '7' + digits;
-    }
-    
-    // Ограничиваем до 11 цифр
-    normalizedDigits = normalizedDigits.slice(0, 11);
-    
-    // Форматируем в +7 (XXX) XXX-XX-XX
-    let formatted = '+7';
-    if (normalizedDigits.length > 1) {
-      formatted += ' (' + normalizedDigits.slice(1, 4);
-    }
-    if (normalizedDigits.length >= 4) {
-      formatted += ') ' + normalizedDigits.slice(4, 7);
-    }
-    if (normalizedDigits.length >= 7) {
-      formatted += '-' + normalizedDigits.slice(7, 9);
-    }
-    if (normalizedDigits.length >= 9) {
-      formatted += '-' + normalizedDigits.slice(9, 11);
-    }
-    
-    return formatted;
-  };
-
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     
-    // Если пользователь пытается стереть до "+7" или меньше, очищаем поле
-    const digits = value.replace(/\D/g, '');
-    if (digits.length <= 1) {
+    // Убираем все символы кроме цифр
+    let digits = value.replace(/\D/g, '');
+    
+    // Если поле пустое, очищаем
+    if (digits.length === 0) {
       setFormData({...formData, phone: ''});
       return;
     }
     
-    const formatted = formatPhone(value);
+    // Получаем предыдущее количество цифр
+    const prevDigits = formData.phone.replace(/\D/g, '');
+    const isDeleting = digits.length < prevDigits.length;
+    
+    // Если пользователь стирает и осталось только "7" или меньше, очищаем поле
+    if (isDeleting && digits.length <= 1) {
+      setFormData({...formData, phone: ''});
+      return;
+    }
+    
+    // Нормализуем: если начинается с 8, заменяем на 7
+    if (digits.startsWith('8')) {
+      digits = '7' + digits.slice(1);
+    } else if (!digits.startsWith('7')) {
+      digits = '7' + digits;
+    }
+    
+    // Ограничиваем до 11 цифр
+    digits = digits.slice(0, 11);
+    
+    // Форматируем в +7 (XXX) XXX-XX-XX
+    let formatted = '+7';
+    if (digits.length > 1) {
+      formatted += ' (' + digits.slice(1, 4);
+    }
+    if (digits.length >= 4) {
+      formatted += ') ' + digits.slice(4, 7);
+    }
+    if (digits.length >= 7) {
+      formatted += '-' + digits.slice(7, 9);
+    }
+    if (digits.length >= 9) {
+      formatted += '-' + digits.slice(9, 11);
+    }
+    
     setFormData({...formData, phone: formatted});
   };
 
