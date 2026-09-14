@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
 
 const Contacts = () => {
-  const [formData, setFormData] = useState({ name: '', phone: '', service: '', car: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '+7', service: '', car: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { ref: heroRef, isInView: heroVisible } = useInView();
   const { ref: contentRef, isInView: contentVisible } = useInView();
@@ -11,7 +11,46 @@ const Contacts = () => {
     e.preventDefault();
     setFormSubmitted(true);
     setTimeout(() => setFormSubmitted(false), 4000);
-    setFormData({ name: '', phone: '', service: '', car: '', message: '' });
+    setFormData({ name: '', phone: '+7', service: '', car: '', message: '' });
+  };
+
+  const formatPhone = (value: string) => {
+    // Убираем все символы кроме цифр
+    const digits = value.replace(/\D/g, '');
+    
+    // Если начинается с 8, заменяем на 7
+    let normalizedDigits = digits;
+    if (digits.startsWith('8') && digits.length > 1) {
+      normalizedDigits = '7' + digits.slice(1);
+    } else if (!digits.startsWith('7') && digits.length > 0) {
+      normalizedDigits = '7' + digits;
+    }
+    
+    // Ограничиваем до 11 цифр
+    normalizedDigits = normalizedDigits.slice(0, 11);
+    
+    // Форматируем в +7 (XXX) XXX-XX-XX
+    let formatted = '+7';
+    if (normalizedDigits.length > 1) {
+      formatted += ' (' + normalizedDigits.slice(1, 4);
+    }
+    if (normalizedDigits.length >= 4) {
+      formatted += ') ' + normalizedDigits.slice(4, 7);
+    }
+    if (normalizedDigits.length >= 7) {
+      formatted += '-' + normalizedDigits.slice(7, 9);
+    }
+    if (normalizedDigits.length >= 9) {
+      formatted += '-' + normalizedDigits.slice(9, 11);
+    }
+    
+    return formatted;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const formatted = formatPhone(value);
+    setFormData({...formData, phone: formatted});
   };
 
 
@@ -66,9 +105,9 @@ const Contacts = () => {
                       type="tel"
                       required
                       value={formData.phone}
-                      onChange={e => setFormData({...formData, phone: e.target.value})}
+                      onChange={handlePhoneChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
-                      placeholder="+7 (999) 123-45-67"
+                      placeholder="+7 (___) ___-__-__"
                     />
                   </div>
                   <div>
