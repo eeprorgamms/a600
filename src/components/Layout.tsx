@@ -34,14 +34,8 @@ const Header = () => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-900 to-blue-700 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">А5</span>
-            </div>
-            <div>
-              <div className="text-xl font-bold text-gray-900">А<span className="text-blue-700">500</span></div>
-              <div className="text-xs text-gray-500 -mt-1">Автомойка · Детейлинг</div>
-            </div>
+          <Link to="/" className="text-2xl font-bold text-gray-900 hover:text-blue-700 transition-colors">
+            А<span className="text-blue-700">500</span>
           </Link>
 
           <nav className="hidden lg:flex items-center space-x-8">
@@ -49,13 +43,14 @@ const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-medium transition-colors relative group ${
                   isActive(item.path) 
                     ? 'text-blue-700' 
                     : 'text-gray-600 hover:text-blue-700'
                 }`}
               >
                 {item.label}
+                <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-700 transition-all duration-300 ${isActive(item.path) ? 'w-full' : 'group-hover:w-full'}`}></span>
               </Link>
             ))}
           </nav>
@@ -69,7 +64,7 @@ const Header = () => {
             </a>
             <Link 
               to="/contacts" 
-              className="px-5 py-2.5 bg-blue-700 text-white text-sm font-medium rounded-lg hover:bg-blue-800 transition-colors"
+              className="px-5 py-2.5 bg-blue-700 text-white text-sm font-medium rounded-lg hover:bg-blue-800 transition-all btn-hover"
             >
               Записаться
             </Link>
@@ -124,14 +119,8 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-700 to-blue-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">А5</span>
-              </div>
-              <div>
-                <div className="text-xl font-bold">А<span className="text-blue-400">500</span></div>
-                <div className="text-xs text-gray-400 -mt-1">Автомойка · Детейлинг</div>
-              </div>
+            <div className="text-2xl font-bold mb-4">
+              А<span className="text-blue-400">500</span>
             </div>
             <p className="text-sm text-gray-400">
               Автомойка и детейлинг-центр на Боровском шоссе. Профессиональный уход за вашим автомобилем.

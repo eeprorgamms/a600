@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useInView } from '../hooks/useInView';
 
 const Contacts = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', service: '', car: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const { ref: heroRef, isInView: heroVisible } = useInView();
+  const { ref: contentRef, isInView: contentVisible } = useInView();
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,8 +26,9 @@ const Contacts = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-gray-50 to-blue-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 py-16 relative overflow-hidden">
+        <div className="absolute bottom-10 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 blob"></div>
+        <div ref={heroRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 fade-in ${heroVisible ? 'visible' : ''}`}>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Контакты</h1>
           <p className="text-lg text-gray-600 max-w-3xl">
             Свяжитесь с нами любым удобным способом или оставьте заявку
@@ -34,14 +38,14 @@ const Contacts = () => {
 
       {/* Contact Content */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div ref={contentRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in ${contentVisible ? 'visible' : ''}`}>
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Form */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Оставить заявку</h2>
               
               {formSubmitted ? (
-                <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
+                <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center scale-in visible">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -59,7 +63,7 @@ const Contacts = () => {
                       required
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                       placeholder="Александр"
                     />
                   </div>
@@ -70,7 +74,7 @@ const Contacts = () => {
                       required
                       value={formData.phone}
                       onChange={e => setFormData({...formData, phone: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                       placeholder="+7 (999) 123-45-67"
                     />
                   </div>
@@ -79,7 +83,7 @@ const Contacts = () => {
                     <select
                       value={formData.service}
                       onChange={e => setFormData({...formData, service: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                     >
                       <option value="">Выберите услугу</option>
                       {services.map((s, i) => (
@@ -93,7 +97,7 @@ const Contacts = () => {
                       type="text"
                       value={formData.car}
                       onChange={e => setFormData({...formData, car: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
                       placeholder="Toyota Camry"
                     />
                   </div>
@@ -103,13 +107,13 @@ const Contacts = () => {
                       rows={3}
                       value={formData.message}
                       onChange={e => setFormData({...formData, message: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 resize-none"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all resize-none"
                       placeholder="Удобное время, пожелания..."
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full px-6 py-4 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition-colors"
+                    className="w-full px-6 py-4 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition-all btn-hover"
                   >
                     Отправить заявку
                   </button>
@@ -121,7 +125,7 @@ const Contacts = () => {
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Контактная информация</h2>
 
-              <div className="bg-gray-50 rounded-xl p-6">
+              <div className="bg-gray-50 rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,7 +140,7 @@ const Contacts = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6">
+              <div className="bg-gray-50 rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,7 +156,7 @@ const Contacts = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6">
+              <div className="bg-gray-50 rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,7 +171,7 @@ const Contacts = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6">
+              <div className="bg-gray-50 rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,7 +187,7 @@ const Contacts = () => {
               </div>
 
               {/* Map */}
-              <div className="rounded-xl overflow-hidden shadow-lg">
+              <div className="rounded-xl overflow-hidden shadow-lg card-hover">
                 <iframe
                   src="https://yandex.ru/map-widget/v1/?ll=37.402218%2C55.659749&z=17&pt=37.402218,55.659749,pm2blm"
                   width="100%"

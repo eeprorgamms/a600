@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useInView } from '../hooks/useInView';
 
 const Pricing = () => {
+  const { ref: heroRef, isInView: heroVisible } = useInView();
+  const { ref: packagesRef, isInView: packagesVisible } = useInView();
+
   const packages = [
     {
       name: 'Экспресс',
@@ -42,8 +46,9 @@ const Pricing = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-gray-50 to-blue-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 py-16 relative overflow-hidden">
+        <div className="absolute bottom-10 left-10 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 blob"></div>
+        <div ref={heroRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 fade-in ${heroVisible ? 'visible' : ''}`}>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Цены</h1>
           <p className="text-lg text-gray-600 max-w-3xl">
             Прозрачные цены без скрытых доплат. Точная стоимость зависит от класса автомобиля
@@ -53,7 +58,7 @@ const Pricing = () => {
 
       {/* Packages */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div ref={packagesRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in ${packagesVisible ? 'visible' : ''}`}>
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Комплексы мойки</h2>
             <p className="text-gray-600">Выберите подходящий пакет услуг</p>
@@ -63,11 +68,12 @@ const Pricing = () => {
             {packages.map((pkg, i) => (
               <div
                 key={i}
-                className={`rounded-xl p-6 border-2 transition-all hover:shadow-lg ${
+                className={`rounded-xl p-6 border-2 transition-all card-hover ${
                   pkg.popular
-                    ? 'border-blue-700 bg-blue-50 relative'
+                    ? 'border-blue-700 bg-blue-50 relative scale-105'
                     : 'border-gray-200 bg-white'
                 }`}
+                style={{ transitionDelay: `${i * 100}ms` }}
               >
                 {pkg.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-700 text-white px-4 py-1 rounded-full text-xs font-semibold">
@@ -91,7 +97,7 @@ const Pricing = () => {
                 </ul>
                 <Link
                   to="/contacts"
-                  className={`block text-center px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`block text-center px-4 py-3 rounded-lg font-medium transition-all btn-hover ${
                     pkg.popular
                       ? 'bg-blue-700 text-white hover:bg-blue-800'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -110,7 +116,7 @@ const Pricing = () => {
       </section>
 
       {/* Additional Services */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Дополнительные услуги</h2>
@@ -121,7 +127,7 @@ const Pricing = () => {
             {additionalServices.map((service, i) => (
               <div
                 key={i}
-                className={`flex items-center justify-between p-6 ${
+                className={`flex items-center justify-between p-6 hover:bg-gray-50 transition-colors ${
                   i !== additionalServices.length - 1 ? 'border-b border-gray-100' : ''
                 }`}
               >
@@ -143,13 +149,13 @@ const Pricing = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="tel:+79295884094"
-              className="px-8 py-4 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition-colors"
+              className="px-8 py-4 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition-all btn-hover"
             >
               Позвонить
             </a>
             <Link
               to="/contacts"
-              className="px-8 py-4 bg-white text-blue-700 font-medium rounded-lg border-2 border-blue-700 hover:bg-blue-50 transition-colors"
+              className="px-8 py-4 bg-white text-blue-700 font-medium rounded-lg border-2 border-blue-700 hover:bg-blue-50 transition-all"
             >
               Оставить заявку
             </Link>

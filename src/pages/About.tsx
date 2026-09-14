@@ -1,4 +1,11 @@
+import { useInView } from '../hooks/useInView';
+
 const About = () => {
+  const { ref: heroRef, isInView: heroVisible } = useInView();
+  const { ref: contentRef, isInView: contentVisible } = useInView();
+  const { ref: advantagesRef, isInView: advantagesVisible } = useInView();
+  const { ref: statsRef, isInView: statsVisible } = useInView();
+
   const advantages = [
     { title: 'Профессиональная химия', desc: 'Используем только проверенные специализированные средства, которые бережно удаляют загрязнения' },
     { title: 'Без царапин на ЛКП', desc: 'Наши сотрудники применяют приспособления, которые не оставляют царапин на лакокрасочном покрытии' },
@@ -11,8 +18,9 @@ const About = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-gray-50 to-blue-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 py-16 relative overflow-hidden">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 blob"></div>
+        <div ref={heroRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 fade-in ${heroVisible ? 'visible' : ''}`}>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">О нас</h1>
           <p className="text-lg text-gray-600 max-w-3xl">
             Автомойка и детейлинг-центр А500 — профессиональный уход за вашим автомобилем
@@ -22,7 +30,7 @@ const About = () => {
 
       {/* About Content */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div ref={contentRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in ${contentVisible ? 'visible' : ''}`}>
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
@@ -38,27 +46,28 @@ const About = () => {
                 Помимо мойки, здесь выполняют полировку, химчистку и чернение резины, а также предлагают услуги детейлинг-центра и обрабатывают кузов воском — всё для заботливых водителей!
               </p>
             </div>
-            <div>
+            <div className="relative">
               <img
                 src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=700&h=500&fit=crop"
                 alt="Автомойка А500"
-                className="rounded-2xl shadow-lg"
+                className="rounded-2xl shadow-lg card-hover"
               />
+              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-blue-700 rounded-2xl opacity-20 blur-xl"></div>
             </div>
           </div>
 
           {/* Advantages */}
-          <div className="mb-12">
+          <div ref={advantagesRef} className={`mb-12 fade-in ${advantagesVisible ? 'visible' : ''}`}>
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Почему выбирают нас</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {advantages.map((item, i) => (
-                <div key={i} className="bg-gray-50 rounded-xl p-6">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <div key={i} className="bg-gray-50 rounded-xl p-6 card-hover group" style={{ transitionDelay: `${i * 100}ms` }}>
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">{item.title}</h3>
                   <p className="text-sm text-gray-600">{item.desc}</p>
                 </div>
               ))}
@@ -68,8 +77,8 @@ const About = () => {
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-blue-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-gradient-to-r from-blue-700 to-blue-600 gradient-animate">
+        <div ref={statsRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in ${statsVisible ? 'visible' : ''}`}>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-white mb-2">14</div>
@@ -101,7 +110,7 @@ const About = () => {
 
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="space-y-6">
-              <div className="bg-gray-50 rounded-xl p-6">
+              <div className="bg-gray-50 rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,7 +126,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6">
+              <div className="bg-gray-50 rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,7 +141,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6">
+              <div className="bg-gray-50 rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,7 +157,7 @@ const About = () => {
               </div>
             </div>
 
-            <div className="rounded-xl overflow-hidden shadow-lg">
+            <div className="rounded-xl overflow-hidden shadow-lg card-hover">
               <iframe
                 src="https://yandex.ru/map-widget/v1/?ll=37.402218%2C55.659749&z=17&pt=37.402218,55.659749,pm2blm"
                 width="100%"
