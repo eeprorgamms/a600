@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import ScrollToTop from './ScrollToTop';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -177,6 +178,7 @@ const Footer = () => {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-white">
+      <ScrollToTop />
       <Header />
       <main className="pt-20">
         {children}

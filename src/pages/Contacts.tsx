@@ -80,16 +80,19 @@ const Contacts = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Услуга</label>
-                    <select
+                    <input
+                      type="text"
+                      list="services-list"
                       value={formData.service}
                       onChange={e => setFormData({...formData, service: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
-                    >
-                      <option value="">Выберите услугу</option>
+                      placeholder="Начните вводить или выберите из списка"
+                    />
+                    <datalist id="services-list">
                       {services.map((s, i) => (
-                        <option key={i} value={s}>{s}</option>
+                        <option key={i} value={s} />
                       ))}
-                    </select>
+                    </datalist>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Марка авто</label>
