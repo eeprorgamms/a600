@@ -120,7 +120,14 @@ const About = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Адрес</h3>
-                    <p className="text-gray-600">Москва, Боровское шоссе, 6к1</p>
+                    <a 
+                      href="https://yandex.ru/maps/?ll=37.402218%2C55.659749&z=16&pt=37.402218,55.659749"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-700 hover:text-blue-800 hover:underline transition-colors"
+                    >
+                      Москва, Боровское шоссе, 6к1
+                    </a>
                     <p className="text-sm text-gray-500 mt-1">ЗАО, район Солнцево</p>
                   </div>
                 </div>

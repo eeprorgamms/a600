@@ -73,13 +73,25 @@ const Contacts = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Услуга</label>
-                    <input
-                      type="text"
+                    <select
                       value={formData.service}
                       onChange={e => setFormData({...formData, service: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
-                      placeholder="Например: Ручная мойка, Химчистка, Полировка"
-                    />
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all appearance-none cursor-pointer"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23374151'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 0.75rem center',
+                        backgroundSize: '1.5rem'
+                      }}
+                    >
+                      <option value="" className="text-gray-900 bg-white">Выберите услугу</option>
+                      <option value="Ручная мойка" className="text-gray-900 bg-white">Ручная мойка</option>
+                      <option value="Химчистка салона" className="text-gray-900 bg-white">Химчистка салона</option>
+                      <option value="Полировка кузова" className="text-gray-900 bg-white">Полировка кузова</option>
+                      <option value="Обработка воском" className="text-gray-900 bg-white">Обработка воском</option>
+                      <option value="Детейлинг" className="text-gray-900 bg-white">Детейлинг</option>
+                      <option value="Чернение резины" className="text-gray-900 bg-white">Чернение резины</option>
+                    </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Марка авто</label>
@@ -140,7 +152,14 @@ const Contacts = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Адрес</h3>
-                    <p className="text-gray-600">Москва, Боровское шоссе, 6к1</p>
+                    <a 
+                      href="https://yandex.ru/maps/?ll=37.402218%2C55.659749&z=16&pt=37.402218,55.659749"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-700 hover:text-blue-800 hover:underline transition-colors"
+                    >
+                      Москва, Боровское шоссе, 6к1
+                    </a>
                     <p className="text-sm text-gray-500 mt-1">ЗАО, район Солнцево</p>
                   </div>
                 </div>

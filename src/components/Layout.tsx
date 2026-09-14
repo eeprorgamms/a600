@@ -155,7 +155,16 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-gray-400">
               <li><a href="tel:+79295884094" className="hover:text-blue-400 transition-colors">+7 (929) 588-40-94</a></li>
               <li><a href="tel:+79299555587" className="hover:text-blue-400 transition-colors">+7 (929) 955-55-87</a></li>
-              <li>Москва, Боровское шоссе, 6к1</li>
+              <li>
+                <a 
+                  href="https://yandex.ru/maps/?ll=37.402218%2C55.659749&z=16&pt=37.402218,55.659749"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-400 transition-colors"
+                >
+                  Москва, Боровское шоссе, 6к1
+                </a>
+              </li>
               <li>м. Говорово — 0.7 км</li>
               <li>Пн-Вс: 09:00 — 23:00</li>
             </ul>
