@@ -40,9 +40,6 @@ const Contacts = () => {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     
-    // Извлекаем только цифры из того, что ввёл пользователь
-    const inputDigits = inputValue.replace(/\D/g, '');
-    
     // Если поле полностью пустое — очищаем всё
     if (inputValue === '') {
       setRawDigits('');
@@ -50,12 +47,18 @@ const Contacts = () => {
       return;
     }
     
+    // Получаем предыдущее отформатированное значение
+    const prevFormatted = formData.phone;
+    
     // Определяем: пользователь ввёл или стёр?
-    if (inputDigits.length < rawDigits.length) {
-      // СТИРАНИЕ: берём первые N цифр из предыдущего значения
-      const newRaw = rawDigits.slice(0, inputDigits.length);
+    // Сравниваем длину строки (включая форматирование)
+    const isDeleting = inputValue.length < prevFormatted.length;
+    
+    if (isDeleting) {
+      // СТИРАНИЕ: убираем последнюю цифру из rawDigits
+      const newRaw = rawDigits.slice(0, -1);
       
-      // Если не осталось цифр — очищаем поле полностью
+      // Если не осталось цифр — очищаем полностью
       if (newRaw.length === 0) {
         setRawDigits('');
         setFormData({...formData, phone: ''});
@@ -67,7 +70,8 @@ const Contacts = () => {
       return;
     }
     
-    // ВВОД: добавляем новые цифры
+    // ВВОД: извлекаем цифры из inputValue
+    const inputDigits = inputValue.replace(/\D/g, '');
     let newDigits = inputDigits;
     
     // Нормализуем первую цифру
