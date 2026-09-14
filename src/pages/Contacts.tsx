@@ -1,79 +1,89 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
 
 const Contacts = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', service: '', car: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [rawDigits, setRawDigits] = useState(''); // "Чистые" цифры без форматирования
   const { ref: heroRef, isInView: heroVisible } = useInView();
   const { ref: contentRef, isInView: contentVisible } = useInView();
-  const prevPhoneRef = useRef('');
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
     setTimeout(() => setFormSubmitted(false), 4000);
     setFormData({ name: '', phone: '', service: '', car: '', message: '' });
-    prevPhoneRef.current = '';
+    setRawDigits('');
   };
 
-  const formatPhoneValue = (digits: string) => {
-    // Нормализуем: если начинается с 8, заменяем на 7
-    let normalized = digits;
-    if (normalized.startsWith('8')) {
-      normalized = '7' + normalized.slice(1);
-    } else if (!normalized.startsWith('7')) {
-      normalized = '7' + normalized;
-    }
+  // Форматирует чистые цифры в красивый вид
+  const formatDigits = (digits: string): string => {
+    if (digits.length === 0) return '';
     
-    // Ограничиваем до 11 цифр
-    normalized = normalized.slice(0, 11);
-    
-    // Форматируем в +7 (XXX) XXX-XX-XX
     let formatted = '+7';
-    if (normalized.length > 1) {
-      formatted += ' (' + normalized.slice(1, 4);
+    if (digits.length > 1) {
+      formatted += ' (' + digits.slice(1, 4);
     }
-    if (normalized.length >= 4) {
-      formatted += ') ' + normalized.slice(4, 7);
+    if (digits.length >= 4) {
+      formatted += ') ' + digits.slice(4, 7);
     }
-    if (normalized.length >= 7) {
-      formatted += '-' + normalized.slice(7, 9);
+    if (digits.length >= 7) {
+      formatted += '-' + digits.slice(7, 9);
     }
-    if (normalized.length >= 9) {
-      formatted += '-' + normalized.slice(9, 11);
+    if (digits.length >= 9) {
+      formatted += '-' + digits.slice(9, 11);
     }
     
     return formatted;
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const inputValue = e.target.value;
     
-    // Убираем все символы кроме цифр
-    const digits = value.replace(/\D/g, '');
+    // Извлекаем только цифры из того, что ввёл пользователь
+    const inputDigits = inputValue.replace(/\D/g, '');
     
-    // Если поле пустое, очищаем
-    if (digits.length === 0) {
+    // Если поле полностью пустое — очищаем всё
+    if (inputValue === '') {
+      setRawDigits('');
       setFormData({...formData, phone: ''});
-      prevPhoneRef.current = '';
       return;
     }
     
-    // Сравниваем с предыдущим значением
-    const prevDigits = prevPhoneRef.current.replace(/\D/g, '');
-    const isDeleting = digits.length < prevDigits.length;
-    
-    // Если стираем и осталось только "7" или меньше — очищаем полностью
-    if (isDeleting && digits.length <= 1) {
-      setFormData({...formData, phone: ''});
-      prevPhoneRef.current = '';
+    // Определяем: пользователь ввёл или стёр?
+    if (inputDigits.length < rawDigits.length) {
+      // СТИРАНИЕ: берём первые N цифр из предыдущего значения
+      const newRaw = rawDigits.slice(0, inputDigits.length);
+      
+      // Если не осталось цифр — очищаем поле полностью
+      if (newRaw.length === 0) {
+        setRawDigits('');
+        setFormData({...formData, phone: ''});
+        return;
+      }
+      
+      setRawDigits(newRaw);
+      setFormData({...formData, phone: formatDigits(newRaw)});
       return;
     }
     
-    // Форматируем значение
-    const formatted = formatPhoneValue(digits);
-    setFormData({...formData, phone: formatted});
-    prevPhoneRef.current = formatted;
+    // ВВОД: добавляем новые цифры
+    let newDigits = inputDigits;
+    
+    // Нормализуем первую цифру
+    if (newDigits.length > 0) {
+      if (newDigits[0] === '8') {
+        newDigits = '7' + newDigits.slice(1);
+      } else if (newDigits[0] !== '7') {
+        newDigits = '7' + newDigits;
+      }
+    }
+    
+    // Ограничиваем до 11 цифр
+    newDigits = newDigits.slice(0, 11);
+    
+    setRawDigits(newDigits);
+    setFormData({...formData, phone: formatDigits(newDigits)});
   };
 
 
