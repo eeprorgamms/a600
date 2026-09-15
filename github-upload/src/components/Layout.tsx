@@ -223,6 +223,9 @@ const Footer = () => {
             <a href="https://yandex.ru/maps/org/a500/73889912604/" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:text-blue-400 transition-colors">
               Яндекс.Карты
             </a>
+            <a href="#/admin" className="text-sm text-gray-500 hover:text-blue-400 transition-colors">
+              Админ-панель
+            </a>
           </div>
         </div>
       </div>

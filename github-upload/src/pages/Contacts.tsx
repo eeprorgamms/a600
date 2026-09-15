@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useInView } from '../hooks/useInView';
 import BookingCalendar from '../components/BookingCalendar';
+import { addBooking } from '../services/bookingService';
 
 const Contacts = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', service: '', car: '', message: '' });
@@ -37,6 +38,16 @@ const Contacts = () => {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Сохраняем заявку в базу данных
+    addBooking({
+      name: formData.name,
+      phone: formData.phone,
+      service: formData.service,
+      car: formData.car,
+      message: formData.message
+    });
+    
+    // Prepare message for Telegram
     const message = `🚗 Новая заявка с сайта А500\n\n` +
       `👤 Имя: ${formData.name}\n` +
       `📱 Телефон: ${formData.phone}\n` +
@@ -44,6 +55,7 @@ const Contacts = () => {
       `🚙 Автомобиль: ${formData.car}\n` +
       `💬 Сообщение: ${formData.message || 'Не указано'}`;
 
+    // Send to Telegram (replace with your bot token and chat ID)
     const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN';
     const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';
     

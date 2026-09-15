@@ -5,6 +5,7 @@ import Services from './pages/Services';
 import Pricing from './pages/Pricing';
 import About from './pages/About';
 import Contacts from './pages/Contacts';
+import AdminPanel from './pages/AdminPanel';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
           <Route path="/contacts" element={<Contacts />} />
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </Layout>
     </Router>
