@@ -56,12 +56,12 @@ const CostCalculator = () => {
         <label className="block text-sm font-medium text-gray-700 mb-3">
           Тип автомобиля
         </label>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
           {carTypes.map(car => (
             <button
               key={car.id}
               onClick={() => setCarType(car.id)}
-              className={`px-4 py-3 rounded-lg font-medium transition-all ${
+              className={`px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg font-medium text-sm sm:text-base transition-all ${
                 carType === car.id
                   ? 'bg-blue-700 text-white shadow-lg'
                   : 'bg-white text-gray-700 border border-gray-200 hover:border-blue-300'
