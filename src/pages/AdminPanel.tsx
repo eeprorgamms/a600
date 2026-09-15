@@ -1,27 +1,57 @@
 import { useState, useEffect } from 'react';
-import { getBookings, updateBookingStatus, deleteBooking, exportToCSV, type Booking } from '../services/bookingService';
+import { getBookings, updateBookingStatus, deleteBooking, exportToCSV } from '../services/bookingService';
+
+interface Booking {
+  id: string;
+  name: string;
+  phone: string;
+  service: string;
+  car: string;
+  message: string;
+  createdAt: string;
+  status: 'new' | 'in_progress' | 'completed' | 'cancelled';
+}
 
 const AdminPanel = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filter, setFilter] = useState<string>('all');
 
   useEffect(() => {
-    loadBookings();
+    try {
+      const data = getBookings();
+      setBookings(data);
+    } catch (error) {
+      console.error('Ошибка загрузки заявок:', error);
+      setBookings([]);
+    }
   }, []);
 
   const loadBookings = () => {
-    setBookings(getBookings());
+    try {
+      const data = getBookings();
+      setBookings(data);
+    } catch (error) {
+      console.error('Ошибка загрузки заявок:', error);
+    }
   };
 
   const handleStatusChange = (id: string, status: Booking['status']) => {
-    updateBookingStatus(id, status);
-    loadBookings();
+    try {
+      updateBookingStatus(id, status);
+      loadBookings();
+    } catch (error) {
+      console.error('Ошибка обновления статуса:', error);
+    }
   };
 
   const handleDelete = (id: string) => {
     if (confirm('Удалить заявку?')) {
-      deleteBooking(id);
-      loadBookings();
+      try {
+        deleteBooking(id);
+        loadBookings();
+      } catch (error) {
+        console.error('Ошибка удаления заявки:', error);
+      }
     }
   };
 
@@ -51,12 +81,23 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Панель управления заявками</h1>
-          <p className="text-gray-600">Управление заявками с сайта А500</p>
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Панель управления заявками</h1>
+            <p className="text-gray-600">Управление заявками с сайта А500</p>
+          </div>
+          <a 
+            href="/" 
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            На главную
+          </a>
         </div>
 
         {/* Stats */}
@@ -117,7 +158,14 @@ const AdminPanel = () => {
               </button>
             </div>
             <button
-              onClick={exportToCSV}
+              onClick={() => {
+                try {
+                  exportToCSV();
+                } catch (error) {
+                  console.error('Ошибка экспорта:', error);
+                  alert('Ошибка при экспорте заявок');
+                }
+              }}
               className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors flex items-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
