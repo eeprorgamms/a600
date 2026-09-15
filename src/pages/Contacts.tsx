@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useInView } from '../hooks/useInView';
 import BookingCalendar from '../components/BookingCalendar';
 
@@ -8,6 +8,31 @@ const Contacts = () => {
   const [rawDigits, setRawDigits] = useState(''); // "Чистые" цифры без форматирования
   const { ref: heroRef, isInView: heroVisible } = useInView();
   const { ref: contentRef, isInView: contentVisible } = useInView();
+
+  // Читаем данные из localStorage при загрузке страницы
+  useEffect(() => {
+    const bookingData = localStorage.getItem('a500_booking');
+    if (bookingData) {
+      try {
+        const data = JSON.parse(bookingData);
+        // Проверяем, что данные не устарели (не старше 1 часа)
+        if (data.timestamp && Date.now() - data.timestamp < 3600000) {
+          // Заполняем поле услуги списком выбранных услуг
+          if (data.services && data.services.length > 0) {
+            setFormData(prev => ({
+              ...prev,
+              service: data.services.join(', '),
+              message: `Расчёт из калькулятора: ${data.total.toLocaleString()} ₽`
+            }));
+          }
+        }
+        // Очищаем localStorage после использования
+        localStorage.removeItem('a500_booking');
+      } catch (error) {
+        console.error('Ошибка чтения данных из localStorage:', error);
+      }
+    }
+  }, []);
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,25 +210,13 @@ const Contacts = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Услуга</label>
-                    <select
+                    <textarea
                       value={formData.service}
                       onChange={e => setFormData({...formData, service: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all appearance-none cursor-pointer"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23374151'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'right 0.75rem center',
-                        backgroundSize: '1.5rem'
-                      }}
-                    >
-                      <option value="" className="text-gray-900 bg-white">Выберите услугу</option>
-                      <option value="Ручная мойка" className="text-gray-900 bg-white">Ручная мойка</option>
-                      <option value="Химчистка салона" className="text-gray-900 bg-white">Химчистка салона</option>
-                      <option value="Полировка кузова" className="text-gray-900 bg-white">Полировка кузова</option>
-                      <option value="Обработка воском" className="text-gray-900 bg-white">Обработка воском</option>
-                      <option value="Детейлинг" className="text-gray-900 bg-white">Детейлинг</option>
-                      <option value="Чернение резины" className="text-gray-900 bg-white">Чернение резины</option>
-                    </select>
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all resize-none"
+                      placeholder="Ручная мойка, Химчистка салона, Полировка кузова"
+                      rows={2}
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Марка авто</label>

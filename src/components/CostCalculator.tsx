@@ -109,12 +109,28 @@ const CostCalculator = () => {
           <span className="text-gray-600 font-medium">Итого:</span>
           <span className="text-3xl font-bold text-blue-700">{total.toLocaleString()} ₽</span>
         </div>
-        <Link
-          to="/contacts"
+        <button
+          onClick={() => {
+            // Сохраняем выбранные услуги в localStorage
+            const selectedServiceNames = selectedServices.map(id => {
+              const service = services.find(s => s.id === id);
+              return service?.name || '';
+            }).filter(Boolean);
+            
+            localStorage.setItem('a500_booking', JSON.stringify({
+              services: selectedServiceNames,
+              carType: carType,
+              total: total,
+              timestamp: Date.now()
+            }));
+            
+            // Переходим на страницу контактов
+            window.location.href = '/#/contacts';
+          }}
           className="block w-full text-center px-6 py-4 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-800 transition-colors"
         >
           Записаться с этими услугами
-        </Link>
+        </button>
       </div>
 
       {selectedServices.length === 0 && (
