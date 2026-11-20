@@ -9,6 +9,9 @@ import Privacy from './pages/Privacy';
 import Consent from './pages/Consent';
 import NotFound from './pages/NotFound';
 import PageMeta from './components/PageMeta';
+import {site} from './config/site';
+
+const legalPagesReady = site.leads.enabled && site.leads.endpoint.startsWith('https://') && Boolean(site.legal.operatorName && site.legal.contactEmail && site.legal.retentionDescription);
 
 export function SiteRoutes() {
   return (
@@ -19,8 +22,8 @@ export function SiteRoutes() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/consent" element={<Consent />} />
+        <Route path="/privacy" element={legalPagesReady ? <Privacy /> : <NotFound />} />
+        <Route path="/consent" element={legalPagesReady ? <Consent /> : <NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
