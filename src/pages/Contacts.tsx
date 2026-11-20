@@ -52,9 +52,9 @@ const Contacts = () => {
     if(formData.name.trim().length < 2 || digits.length !== 11 || digits[0] !== '7'){
       setSubmitError('Укажите имя и действительный номер телефона в формате +7.'); return;
     }
-    if(!formEnabled){setSubmitError('Электронные заявки пока не подключены. Позвоните нам.');return;}
+    if(!formEnabled)return;
     if(!consent){setSubmitError('Подтвердите согласие перед отправкой.');return;}
-    if(!site.legal.operatorName || !site.legal.contactEmail || !site.legal.retentionDescription){setSubmitError('Форма пока недоступна: сведения об операторе данных не заполнены. Позвоните нам.');return;}
+    if(!site.legal.operatorName || !site.legal.contactEmail || !site.legal.retentionDescription){setSubmitError('Не удалось обработать обращение. Пожалуйста, позвоните нам.');return;}
     if(submitting)return;
     setSubmitting(true);
     try{
@@ -63,7 +63,7 @@ const Contacts = () => {
         body:JSON.stringify({name:formData.name.trim(),phone:formData.phone,service:formData.service,car:formData.car,message:formData.message,preferredDate:preferred.date,preferredTime:preferred.time,consent,website:honeypot,startedAt})
       });
       const result = await response.json().catch(() => null);
-      if(!response.ok || result?.ok !== true) throw new Error(response.status===503 ? 'Приём заявок пока не подключён. Позвоните по телефону, указанному на сайте.' : 'Заявка не доставлена. Попробуйте позже или позвоните нам.');
+      if(!response.ok || result?.ok !== true) throw new Error(response.status===503 ? 'Сейчас не удалось отправить обращение. Пожалуйста, позвоните нам.' : 'Заявка не доставлена. Попробуйте позже или позвоните нам.');
       setFormSubmitted(true);
       setFormData({name:'',phone:'',service:'',car:'',message:''});
       setConsent(false);setRawDigits('');setPreferred({date:'',time:''});
@@ -155,7 +155,7 @@ const Contacts = () => {
         <div ref={heroRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 fade-in ${heroVisible ? 'visible' : ''}`}>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Контакты</h1>
           <p className="text-lg text-gray-600 max-w-3xl">
-            Свяжитесь с нами любым удобным способом или оставьте заявку
+            Позвоните нам, чтобы обсудить услуги, или постройте маршрут до центра
           </p>
         </div>
       </section>
@@ -166,15 +166,15 @@ const Contacts = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Booking Calendar */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Желаемое время посещения</h2>
-              {formEnabled ? <BookingCalendar onChange={setPreferred} /> : <div className="bg-blue-50 rounded-xl p-6"><p className="text-gray-700 mb-4">Уточните свободное время напрямую по телефону. Онлайн-запись подключается после согласования сервиса заявок.</p><a href={phoneHref(site.contacts.phone)} className="inline-block rounded-lg bg-blue-700 px-5 py-3 text-white font-medium">Позвонить {site.contacts.phone}</a></div>}
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">{formEnabled ? "Желаемое время посещения" : "Запись по телефону"}</h2>
+              {formEnabled ? <BookingCalendar onChange={setPreferred} /> : <div className="bg-blue-50 rounded-xl p-6"><p className="text-gray-700 mb-4">Уточните стоимость услуг и удобное время посещения по телефону. Мы подскажем, как подготовить автомобиль к выбранной процедуре.</p><a href={phoneHref(site.contacts.phone)} className="inline-block rounded-lg bg-blue-700 px-5 py-3 text-white font-medium">Позвонить {site.contacts.phone}</a></div>}
             </div>
 
             {/* Form */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Или оставьте заявку</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">{formEnabled ? "Оставить заявку" : "Как нас найти"}</h2>
               
-              {!formEnabled ? <div className="bg-gray-50 rounded-xl p-6"><p className="text-gray-700 mb-5">Форма пока не подключена к защищённому приёму заявок. Для связи используйте телефон.</p><a href={phoneHref(site.contacts.phone)} className="inline-flex rounded-lg bg-blue-700 px-5 py-3 text-white font-medium">Позвонить {site.contacts.phone}</a></div> : formSubmitted ? (
+              {!formEnabled ? <div className="bg-gray-50 rounded-xl p-6"><p className="text-gray-700 mb-3 font-medium">{site.contacts.address}</p><p className="text-gray-600 mb-5">Откройте Яндекс Карты, чтобы посмотреть расположение и построить удобный маршрут.</p><a href={site.contacts.mapUrl} target="_blank" rel="noopener noreferrer" className="inline-flex rounded-lg bg-blue-700 px-5 py-3 text-white font-medium">Построить маршрут</a></div> : formSubmitted ? (
                 <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center scale-in visible">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -248,7 +248,7 @@ const Contacts = () => {
                   <button type="submit" disabled={submitting} className="w-full px-6 py-4 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition-all btn-hover disabled:opacity-60">
                     {submitting ? 'Отправляем…' : 'Отправить заявку'}
                   </button>
-                  <p className="text-xs text-gray-500">Если форма недоступна, позвоните: <a className="text-blue-700 underline" href={phoneHref(site.contacts.phone)}>{site.contacts.phone}</a>. Отправка формы не означает подтверждения времени записи.</p>
+                  <p className="text-xs text-gray-500">Также можно позвонить: <a className="text-blue-700 underline" href={phoneHref(site.contacts.phone)}>{site.contacts.phone}</a>. Отправка формы не означает подтверждения времени записи.</p>
                 </form>
               )}
             </div>
