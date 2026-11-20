@@ -169,12 +169,12 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-sm text-gray-500">© {new Date().getFullYear()} {site.brand}. {site.pricesVerified ? "Все права защищены." : "Стоимость услуг уточняйте по телефону."}</p>
+          <p className="text-sm text-gray-500">© {new Date().getFullYear()} {site.brand}</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href={site.contacts.mapUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:text-blue-400 transition-colors">
               Яндекс.Карты
             </a>
-            <Link to="/privacy" className="text-sm text-gray-500 hover:text-blue-400 transition-colors">Политика обработки данных</Link>
+            {site.leads.enabled && site.leads.endpoint.startsWith("https://") && site.legal.operatorName && site.legal.contactEmail && site.legal.retentionDescription && <Link to="/privacy" className="text-sm text-gray-500 hover:text-blue-400 transition-colors">Политика обработки данных</Link>}
           </div>
         </div>
       </div>
