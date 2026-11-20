@@ -1,6 +1,6 @@
 import { useInView } from '../hooks/useInView';
 import FAQ from '../components/FAQ';
-import AnimatedCounter from '../components/AnimatedCounter';
+import {site} from '../config/site';
 
 const About = () => {
   const { ref: heroRef, isInView: heroVisible } = useInView();
@@ -8,14 +8,7 @@ const About = () => {
   const { ref: advantagesRef, isInView: advantagesVisible } = useInView();
   const { ref: statsRef, isInView: statsVisible } = useInView();
 
-  const advantages = [
-    { title: 'Профессиональная химия', desc: 'Используем только проверенные специализированные средства, которые бережно удаляют загрязнения' },
-    { title: 'Без царапин на ЛКП', desc: 'Наши сотрудники применяют приспособления, которые не оставляют царапин на лакокрасочном покрытии' },
-    { title: 'Опытные мастера', desc: 'Команда профессионалов с многолетним опытом работы в сфере детейлинга' },
-    { title: 'Удобное расположение', desc: 'м. Говорово — 0.7 км, удобная парковка, работаем до 23:00 без выходных' },
-    { title: 'Гарантия качества', desc: 'Мы уверены в результате и гарантируем качество выполненных работ' },
-    { title: 'Индивидуальный подход', desc: 'Поможем подобрать оптимальный уход для вашего автомобиля' },
-  ];
+  const advantages = site.advantages;
 
   return (
     <div>
@@ -25,7 +18,7 @@ const About = () => {
         <div ref={heroRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 fade-in ${heroVisible ? 'visible' : ''}`}>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">О нас</h1>
           <p className="text-lg text-gray-600 max-w-3xl">
-            Автомойка и детейлинг-центр А500 — профессиональный уход за вашим автомобилем
+            Автомойка и детейлинг-центр {site.brand} — профессиональный уход за вашим автомобилем
           </p>
         </div>
       </section>
@@ -39,10 +32,10 @@ const About = () => {
                 Чистота и забота о вашем авто
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                <strong className="text-gray-900">А500</strong> — это автомойка и детейлинг-центр на Боровском шоссе. Мы используем специализированные средства, которые бережно удаляют соль, химические реагенты, пыль, смолу и другие виды загрязнений.
+                <strong className="text-gray-900">{site.brand}</strong> — это автомойка и детейлинг-центр на Боровском шоссе. Мы используем специализированные средства, которые бережно удаляют соль, химические реагенты, пыль, смолу и другие виды загрязнений.
               </p>
               <p className="text-lg text-gray-600 mb-6">
-                Наши сотрудники применяют приспособления, которые <strong className="text-gray-900">не оставляют царапин на ЛКП</strong>. Мы поможем подобрать автохимию для защиты кузова от выгорания краски, сколов и коррозии.
+                Мы обсуждаем особенности покрытия и желаемый результат перед началом работ. Уточните перечень услуг и подходящие материалы у администратора.
               </p>
               <p className="text-lg text-gray-600">
                 Помимо мойки, здесь выполняют полировку, химчистку и чернение резины, а также предлагают услуги детейлинг-центра и обрабатывают кузов воском — всё для заботливых водителей!
@@ -50,8 +43,8 @@ const About = () => {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=700&h=500&fit=crop"
-                alt="Автомойка А500"
+                src={site.images.about} onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src=site.images.fallback}}
+                alt={`Автомойка ${site.brand}`} loading="lazy" decoding="async"
                 className="rounded-2xl shadow-lg card-hover"
               />
               <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-blue-700 rounded-2xl opacity-20 blur-xl"></div>
@@ -78,37 +71,14 @@ const About = () => {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-16 bg-gradient-to-r from-blue-700 to-blue-600 gradient-animate">
-        <div ref={statsRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in ${statsVisible ? 'visible' : ''}`}>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-white mb-2">
-                <AnimatedCounter end={14} suffix="" />
-              </div>
-              <div className="text-blue-200">Часов работы в день</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-white mb-2">
-                <AnimatedCounter end={7} suffix="" />
-              </div>
-              <div className="text-blue-200">Дней в неделю</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-white mb-2">
-                <AnimatedCounter end={500} suffix="+" />
-              </div>
-              <div className="text-blue-200">Довольных клиентов</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-white mb-2">
-                <AnimatedCounter end={4} suffix=".0" />
-              </div>
-              <div className="text-blue-200">Рейтинг на картах</div>
-            </div>
-          </div>
+      <section className="py-12 bg-gradient-to-r from-blue-700 to-blue-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl text-white font-bold mb-3">Уход за автомобилем без лишних хлопот</h2>
+          <p className="text-blue-100">Выберите услугу, узнайте стоимость и свяжитесь с нами удобным способом.</p>
         </div>
       </section>
+
+      {site.images.gallery.length > 0 && <section className="py-16 bg-white"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><h2 className="text-3xl font-bold text-center mb-8">Фотогалерея</h2><div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">{site.images.gallery.map((image,i)=><img key={i} src={image.url} alt={image.alt} loading="lazy" decoding="async" className="w-full h-64 object-cover rounded-xl" />)}</div></div></section>}
 
       {/* FAQ Section */}
       <section className="py-20 bg-white">
@@ -142,14 +112,14 @@ const About = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Адрес</h3>
                     <a 
-                      href="https://yandex.ru/maps/org/a500/73889912604/"
+                      href={site.contacts.mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-700 hover:text-blue-800 hover:underline transition-colors"
                     >
-                      Москва, Боровское шоссе, 6к1
+                      {site.contacts.address}
                     </a>
-                    <p className="text-sm text-gray-500 mt-1">ЗАО, район Солнцево</p>
+                    <p className="text-sm text-gray-500 mt-1">{site.contacts.district}</p>
                   </div>
                 </div>
               </div>
@@ -163,8 +133,8 @@ const About = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Режим работы</h3>
-                    <p className="text-gray-600">Пн — Вс: 09:00 — 23:00</p>
-                    <p className="text-sm text-gray-500 mt-1">Без выходных и перерывов</p>
+                    <p className="text-gray-600">{site.contacts.hours}</p>
+                    <p className="text-sm text-gray-500 mt-1">График уточняйте по телефону</p>
                   </div>
                 </div>
               </div>
@@ -178,7 +148,7 @@ const About = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Как добраться</h3>
-                    <p className="text-gray-600">м. Говорово — 0.7 км</p>
+                    <p className="text-gray-600">{site.contacts.landmark}</p>
                     <p className="text-sm text-gray-500 mt-1">Удобная парковка рядом</p>
                   </div>
                 </div>
@@ -187,13 +157,13 @@ const About = () => {
 
             <div className="rounded-xl overflow-hidden shadow-lg card-hover relative group">
               <a 
-                href="https://yandex.ru/maps/org/a500/73889912604/"
+                href={site.contacts.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"
               >
                 <iframe
-                  src="https://yandex.ru/map-widget/v1/?ll=37.402218%2C55.659749&z=17&pt=37.402218,55.659749,pm2blm"
+                  src={site.contacts.mapEmbed}
                   width="100%"
                   height="400"
                   frameBorder="0"
@@ -208,7 +178,7 @@ const About = () => {
               </a>
             </div>
             <a 
-              href="https://yandex.ru/maps/org/a500/73889912604/"
+              href={site.contacts.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="block text-center text-blue-700 hover:text-blue-800 hover:underline transition-colors font-medium text-sm"
