@@ -1,56 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
+import {site, priceLabel, phoneHref} from '../config/site';
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const { ref: heroRef, isInView: heroVisible } = useInView();
   const { ref: servicesRef, isInView: servicesVisible } = useInView();
 
-  const services = [
-    {
-      title: 'Ручная мойка',
-      description: 'Бережная ручная мойка кузова специализированными средствами. Удаляем соль, реагенты, пыль, смолу без царапин на ЛКП.',
-      features: ['Двухфазная мойка', 'Бесконтактная пена', 'Безопасные губки', 'Сушка микрофиброй'],
-      price: 'от 500 ₽',
-      duration: '20-40 мин'
-    },
-    {
-      title: 'Химчистка салона',
-      description: 'Глубокая очистка всех поверхностей салона. Работаем с кожей, тканью, алькантарой. Удаление пятен и запахов.',
-      features: ['Чистка сидений', 'Потолок и двери', 'Багажник', 'Удаление запахов'],
-      price: 'от 4 000 ₽',
-      duration: '3-5 часов'
-    },
-    {
-      title: 'Полировка кузова',
-      description: 'Восстановление блеска лакокрасочного покрытия. Удаление мелких царапин, «паутинки» и потускнений.',
-      features: ['Абразивная полировка', 'Финишная полировка', 'Восстановление блеска', 'Защитный слой'],
-      price: 'от 5 000 ₽',
-      duration: '3-6 часов'
-    },
-    {
-      title: 'Обработка воском',
-      description: 'Защитное восковое покрытие кузова. Защита от выгорания краски, сколов и коррозии. Эффект гидрофобности.',
-      features: ['Защита ЛКП', 'Гидрофобный эффект', 'Блеск и глубина цвета', 'Защита на 2-3 месяца'],
-      price: 'от 1 000 ₽',
-      duration: '30-60 мин'
-    },
-    {
-      title: 'Детейлинг',
-      description: 'Комплексный уход за автомобилем с применением профессиональных составов. Полная очистка и защита всех поверхностей.',
-      features: ['Детальная мойка', 'Очистка глиной', 'Обработка пластика', 'Защита резины'],
-      price: 'от 3 000 ₽',
-      duration: '2-4 часа'
-    },
-    {
-      title: 'Чернение резины',
-      description: 'Обработка шин и резиновых элементов специальным составом для насыщенного чёрного цвета и защиты.',
-      features: ['Насыщенный цвет', 'Защита от растрескивания', 'Долгий эффект', 'Уход за пластиком'],
-      price: 'от 300 ₽',
-      duration: '10-15 мин'
-    }
-  ];
+  const services = site.services.map(item => ({...item, price: priceLabel(item.price, true)}));
 
   return (
     <div>
@@ -72,15 +30,15 @@ const Services = () => {
             {services.map((service, i) => (
               <div
                 key={i}
-                className="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-all cursor-pointer border-2 border-transparent hover:border-blue-200 card-hover group"
-                onClick={() => setSelectedService(selectedService === i ? null : i)}
+                className="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-all border-2 border-transparent hover:border-blue-200 card-hover group"
+                
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors">{service.title}</h3>
+                <button type="button" className="text-left text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors" aria-expanded={selectedService === i} onClick={() => setSelectedService(selectedService === i ? null : i)}>{service.title} <span aria-hidden="true">{selectedService === i ? "−" : "+"}</span></button>
                 <p className="text-sm text-gray-600 mb-4">{service.description}</p>
                 
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-blue-700 font-semibold text-lg">{service.price}</span>
+                  <span className="text-blue-700 font-semibold text-lg">{site.pricesVerified ? service.price : "Цена по запросу"}</span>
                   <span className="text-xs text-gray-500">{service.duration}</span>
                 </div>
 
@@ -105,6 +63,7 @@ const Services = () => {
               </div>
             ))}
           </div>
+          {site.verifiedExtraServices.length > 0 && <><h2 className="text-2xl font-bold text-gray-900 mt-12 mb-6">Кузовные работы</h2><div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">{site.verifiedExtraServices.map(extra=><article key={extra.title} className="rounded-xl p-6 bg-blue-50"><h3 className="text-lg font-semibold mb-3">{extra.title}</h3><p className="text-gray-700 text-sm mb-5">{extra.description}</p><Link to="/contacts" className="text-blue-700 underline">Узнать стоимость</Link></article>)}</div></>}
         </div>
       </section>
 
@@ -116,13 +75,13 @@ const Services = () => {
             Позвоните нам — мы поможем подобрать оптимальную услугу для вашего автомобиля
           </p>
           <a 
-            href="tel:+79295884094" 
+            href={phoneHref(site.contacts.phone)} 
             className="inline-flex items-center space-x-2 px-8 py-4 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition-all btn-hover"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            <span>+7 (929) 588-40-94</span>
+            <span>{site.contacts.phone}</span>
           </a>
         </div>
       </section>

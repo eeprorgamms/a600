@@ -6,7 +6,7 @@
   }
   
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 }
 
@@ -177,4 +177,16 @@
   .parallax-container:hover .parallax-image {
     transform: translateY(-20px) scale(1.02);
   }
+}
+
+/* Branding tokens — dynamically overridden from src/config/site.ts */
+:root { --brand-primary: #1d4ed8; --brand-strong: #1e40af; }
+.bg-blue-700 { background-color: var(--brand-primary); }
+.text-blue-700 { color: var(--brand-primary); }
+.border-blue-700 { border-color: var(--brand-primary); }
+.hover\:bg-blue-800:hover { background-color: var(--brand-strong); }
+:where(a,button,input,select,textarea):focus-visible { outline: 3px solid var(--brand-primary); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+ *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+ .fade-in, .fade-in-left, .fade-in-right, .scale-in { opacity: 1 !important; transform: none !important; }
 }

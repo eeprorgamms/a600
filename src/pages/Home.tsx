@@ -1,25 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useInView } from '../hooks/useInView';
-import AnimatedCounter from '../components/AnimatedCounter';
+import {site, phoneHref, priceLabel} from '../config/site';
 
 const Home = () => {
   const { ref: heroRef, isInView: heroVisible } = useInView();
   const { ref: servicesRef, isInView: servicesVisible } = useInView();
   const { ref: advantagesRef, isInView: advantagesVisible } = useInView();
 
-  const services = [
-    { title: 'Ручная мойка', price: 'от 500 ₽', icon: '🚿' },
-    { title: 'Химчистка салона', price: 'от 4 000 ₽', icon: '🧽' },
-    { title: 'Полировка кузова', price: 'от 5 000 ₽', icon: '✨' },
-    { title: 'Обработка воском', price: 'от 1 000 ₽', icon: '🛡️' },
-  ];
-
-  const advantages = [
-    { title: 'Профессиональная химия', desc: 'Используем только проверенные средства' },
-    { title: 'Без царапин', desc: 'Бережный уход за лакокрасочным покрытием' },
-    { title: 'Опытные мастера', desc: 'Команда с многолетним опытом работы' },
-    { title: 'Удобное расположение', desc: 'м. Говорово, 0.7 км, удобная парковка' },
-  ];
+  const services = site.services.slice(0,4).map(item => ({title:item.title, price:priceLabel(item.price,true),icon:item.icon}));
+  const advantages = site.advantages;
 
   return (
     <div>
@@ -33,17 +22,17 @@ const Home = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                Автомойка и детейлинг <span className="text-blue-700">А500</span>
+                Автомойка, детейлинг и PDR <span className="text-blue-700">{site.brand}</span>
               </h1>
               <p className="text-lg text-gray-600 mb-8">
-                Профессиональный уход за вашим автомобилем. Ручная мойка, химчистка, полировка и обработка воском с применением качественной автохимии.
+                Уход за автомобилем, полировка кузова и удаление вмятин без покраски. Позвоните, чтобы уточнить стоимость и свободное время.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
                   to="/contacts" 
                   className="px-8 py-4 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition-all btn-hover shimmer text-center"
                 >
-                  Записаться на мойку
+                  Уточнить запись
                 </Link>
                 <Link 
                   to="/services" 
@@ -55,8 +44,8 @@ const Home = () => {
             </div>
             <div className="relative parallax-container">
               <img
-                src="https://image.qwenlm.ai/generated-images/2d30b727-802a-43ec-ae48-8538f2cf3f35/_result.png"
-                alt="Lamborghini Aventador — детейлинг премиум автомобилей в А500"
+                src={site.images.hero} onError={(e)=>{ e.currentTarget.onerror=null; e.currentTarget.src=site.images.fallback; }}
+                alt={`Уход за автомобилем — ${site.brand}`} loading="eager" decoding="async"
                 className="rounded-2xl shadow-2xl card-hover w-full h-auto object-cover parallax-image"
                 style={{ transform: 'translateY(0)' }}
               />
@@ -75,11 +64,11 @@ const Home = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {services.map((service, i) => (
-              <div key={i} className="bg-gray-50 rounded-xl p-6 card-hover cursor-pointer group" style={{ transitionDelay: `${i * 100}ms` }}>
+              <Link key={i} to="/services" className="block bg-gray-50 rounded-xl p-6 card-hover group" style={{ transitionDelay: `${i * 100}ms` }}>
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">{service.icon}</div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">{service.title}</h3>
-                <p className="text-blue-700 font-semibold">{service.price}</p>
-              </div>
+                <p className="text-blue-700 font-semibold">{site.pricesVerified ? service.price : "Цена по запросу"}</p>
+              </Link>
             ))}
           </div>
 
@@ -97,6 +86,13 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Подтверждённые дополнительные услуги без выдуманных цен */}
+      {site.verifiedExtraServices.length > 0 && <section className="py-16 bg-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Дополнительные работы с кузовом</h2>
+          <div className="grid gap-5 md:grid-cols-3">{site.verifiedExtraServices.map(item => <article key={item.title} className="bg-white rounded-xl p-6 shadow-sm"><h3 className="font-semibold text-lg mb-3">{item.title}</h3><p className="text-gray-600 mb-5">{item.description}</p><Link className="text-blue-700 underline" to="/contacts">Уточнить стоимость</Link></article>)}</div>
+        </div>
+      </section>}
       {/* Advantages */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div ref={advantagesRef} className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in ${advantagesVisible ? 'visible' : ''}`}>
@@ -121,77 +117,13 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Reviews Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Отзывы клиентов</h2>
-            <p className="text-lg text-gray-600">Нажмите на отзыв, чтобы увидеть все на Яндекс.Картах</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                name: 'Артём К.',
-                car: 'Toyota Camry',
-                text: 'Моемся тут регулярно уже полгода. Всегда качественно, быстро и недорого. Ребята знают своё дело!',
-                rating: 5
-              },
-              {
-                name: 'Елена М.',
-                car: 'Kia Sportage',
-                text: 'Делала химчистку салона после зимы. Результат потрясающий! Все пятна убрали, салон пахнет свежестью.',
-                rating: 5
-              },
-              {
-                name: 'Сергей В.',
-                car: 'Hyundai Tucson',
-                text: 'Отличный сервис! Полировка вернула машине заводской блеск. Цены адекватные, работают аккуратно.',
-                rating: 5
-              }
-            ].map((review, i) => (
-              <a
-                key={i}
-                href="https://yandex.ru/maps/org/a500/73889912604/reviews/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-50 rounded-xl p-6 card-hover group cursor-pointer block"
-                style={{ transitionDelay: `${i * 100}ms` }}
-              >
-                <div className="flex items-center space-x-1 mb-3">
-                  {[...Array(review.rating)].map((_, j) => (
-                    <svg key={j} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-4 text-sm leading-relaxed">"{review.text}"</p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-semibold text-gray-900 text-sm">{review.name}</div>
-                    <div className="text-xs text-gray-500">{review.car}</div>
-                  </div>
-                  <svg className="w-5 h-5 text-gray-400 group-hover:text-blue-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </div>
-              </a>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <a
-              href="https://yandex.ru/maps/org/a500/73889912604/reviews/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 text-blue-700 font-medium hover:text-blue-800 transition-colors group"
-            >
-              <span>Все отзывы на Яндекс.Картах</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-          </div>
+      {/* Отзывы выводятся только по подтвержденным данным клиента. */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Отзывы клиентов</h2>
+          <p className="text-gray-600 mb-6">Посмотрите реальные оценки и отзывы на независимой площадке.</p>
+          {site.reviewUrl && <a href={site.reviewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex rounded-lg bg-blue-700 px-6 py-3 text-white hover:bg-blue-800">Читать отзывы на Яндекс Картах</a>}
+          {site.verifiedReviews.length > 0 && <div className="grid gap-5 md:grid-cols-3 mt-8">{site.verifiedReviews.map((review,i) => <article key={i} className="bg-gray-50 rounded-xl p-5 text-left"><p className="text-gray-700 mb-3">«{review.text}»</p><p className="font-semibold">{review.name} · {review.rating}/5</p></article>)}</div>}
         </div>
       </section>
 
@@ -219,38 +151,15 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Chemistry Section */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* Подтверждённые бренды химии добавляются только после проверки. */}
+      {site.verifiedBrands.length > 0 && <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Используемая химия</h2>
-            <p className="text-lg text-gray-600">Работаем только с проверенными профессиональными брендами</p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            {[
-              { name: 'Koch Chemie', desc: 'Профессиональная автохимия из Германии' },
-              { name: 'Meguiar\'s', desc: 'Премиальные средства для ухода' },
-              { name: '3D', desc: 'Инновационные составы для детейлинга' },
-              { name: 'Labocosmetica', desc: 'Итальянская косметика для авто' },
-            ].map((brand, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-xl p-6 text-center card-hover group"
-                style={{ transitionDelay: `${i * 100}ms` }}
-              >
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <span className="text-2xl font-bold text-blue-700">{brand.name[0]}</span>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
-                  {brand.name}
-                </h3>
-                <p className="text-sm text-gray-600">{brand.desc}</p>
-              </div>
-            ))}
+          <h2 className="text-3xl font-bold mb-8 text-center">Используемая автохимия</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {site.verifiedBrands.map(b => <article key={b.name} className="bg-white rounded-xl p-6 text-center"><h3 className="font-bold mb-2">{b.name}</h3><p className="text-sm text-gray-600">{b.desc}</p></article>)}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-700 to-blue-600 gradient-animate">
@@ -263,10 +172,10 @@ const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="tel:+79295884094" 
+              href={phoneHref(site.contacts.phone)} 
               className="px-8 py-4 bg-white text-blue-700 font-medium rounded-lg hover:bg-gray-100 transition-all btn-hover"
             >
-              Позвонить: +7 (929) 588-40-94
+              Позвонить: {site.contacts.phone}
             </a>
             <Link 
               to="/contacts" 
