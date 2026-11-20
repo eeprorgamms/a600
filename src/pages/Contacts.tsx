@@ -1,18 +1,28 @@
 import { useState, useEffect } from 'react';
 import { useInView } from '../hooks/useInView';
-import BookingCalendar from '../components/BookingCalendar';
-import { addBooking } from '../services/bookingService';
+import BookingCalendar, { type PreferredSlot } from '../components/BookingCalendar';
+import {Link} from 'react-router-dom';
+import {site,phoneHref} from '../config/site';
+import MapEmbed from '../components/MapEmbed';
 
 const Contacts = () => {
+  const [preferred, setPreferred] = useState<PreferredSlot>({date:'',time:''});
+  const formEnabled = site.leads.enabled && site.leads.endpoint.startsWith('https://') && Boolean(site.legal.operatorName && site.legal.contactEmail && site.legal.retentionDescription);
   const [formData, setFormData] = useState({ name: '', phone: '', service: '', car: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [submitting,setSubmitting] = useState(false);
+  const [submitError,setSubmitError] = useState('');
+  const [consent,setConsent] = useState(false);
+  const [honeypot,setHoneypot] = useState('');
+  const [startedAt] = useState(() => Date.now());
   const [rawDigits, setRawDigits] = useState(''); // "Чистые" цифры без форматирования
   const { ref: heroRef, isInView: heroVisible } = useInView();
   const { ref: contentRef, isInView: contentVisible } = useInView();
 
-  // Читаем данные из localStorage при загрузке страницы
+  // Перенос только выбранных услуг (без персональных данных) из калькулятора
   useEffect(() => {
-    const bookingData = localStorage.getItem('a500_booking');
+    let bookingData: string | null = null;
+    try { bookingData = sessionStorage.getItem('a500_booking'); } catch { /* sandbox preview or disabled browser storage */ }
     if (bookingData) {
       try {
         const data = JSON.parse(bookingData);
@@ -28,7 +38,7 @@ const Contacts = () => {
           }
         }
         // Очищаем localStorage после использования
-        localStorage.removeItem('a500_booking');
+        try { sessionStorage.removeItem('a500_booking'); } catch { /* preview */ }
       } catch (error) {
         console.error('Ошибка чтения данных из localStorage:', error);
       }
@@ -37,48 +47,28 @@ const Contacts = () => {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Сохраняем заявку в базу данных
-    addBooking({
-      name: formData.name,
-      phone: formData.phone,
-      service: formData.service,
-      car: formData.car,
-      message: formData.message
-    });
-    
-    // Prepare message for Telegram
-    const message = `🚗 Новая заявка с сайта А500\n\n` +
-      `👤 Имя: ${formData.name}\n` +
-      `📱 Телефон: ${formData.phone}\n` +
-      `🔧 Услуга: ${formData.service}\n` +
-      `🚙 Автомобиль: ${formData.car}\n` +
-      `💬 Сообщение: ${formData.message || 'Не указано'}`;
-
-    // Send to Telegram (replace with your bot token and chat ID)
-    const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN';
-    const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';
-    
-    try {
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: message,
-          parse_mode: 'HTML'
-        })
-      });
-    } catch (error) {
-      console.log('Telegram notification skipped (demo mode)');
+    setSubmitError('');
+    const digits=formData.phone.replace(/\D/g,'');
+    if(formData.name.trim().length < 2 || digits.length !== 11 || digits[0] !== '7'){
+      setSubmitError('Укажите имя и действительный номер телефона в формате +7.'); return;
     }
-
-    setFormSubmitted(true);
-    setTimeout(() => setFormSubmitted(false), 4000);
-    setFormData({ name: '', phone: '', service: '', car: '', message: '' });
-    setRawDigits('');
+    if(!formEnabled){setSubmitError('Электронные заявки пока не подключены. Позвоните нам.');return;}
+    if(!consent){setSubmitError('Подтвердите согласие перед отправкой.');return;}
+    if(!site.legal.operatorName || !site.legal.contactEmail || !site.legal.retentionDescription){setSubmitError('Форма пока недоступна: сведения об операторе данных не заполнены. Позвоните нам.');return;}
+    if(submitting)return;
+    setSubmitting(true);
+    try{
+      const response=await fetch(site.leads.endpoint, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({name:formData.name.trim(),phone:formData.phone,service:formData.service,car:formData.car,message:formData.message,preferredDate:preferred.date,preferredTime:preferred.time,consent,website:honeypot,startedAt})
+      });
+      const result = await response.json().catch(() => null);
+      if(!response.ok || result?.ok !== true) throw new Error(response.status===503 ? 'Приём заявок пока не подключён. Позвоните по телефону, указанному на сайте.' : 'Заявка не доставлена. Попробуйте позже или позвоните нам.');
+      setFormSubmitted(true);
+      setFormData({name:'',phone:'',service:'',car:'',message:''});
+      setConsent(false);setRawDigits('');setPreferred({date:'',time:''});
+    }catch(error){setSubmitError(error instanceof Error ? error.message : 'Не удалось отправить заявку. Позвоните нам.');}
+    finally{setSubmitting(false);}
   };
 
   // Форматирует чистые цифры в красивый вид
@@ -176,15 +166,15 @@ const Contacts = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Booking Calendar */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Онлайн-запись</h2>
-              <BookingCalendar />
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Желаемое время посещения</h2>
+              {formEnabled ? <BookingCalendar onChange={setPreferred} /> : <div className="bg-blue-50 rounded-xl p-6"><p className="text-gray-700 mb-4">Уточните свободное время напрямую по телефону. Онлайн-запись подключается после согласования сервиса заявок.</p><a href={phoneHref(site.contacts.phone)} className="inline-block rounded-lg bg-blue-700 px-5 py-3 text-white font-medium">Позвонить {site.contacts.phone}</a></div>}
             </div>
 
             {/* Form */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Или оставьте заявку</h2>
               
-              {formSubmitted ? (
+              {!formEnabled ? <div className="bg-gray-50 rounded-xl p-6"><p className="text-gray-700 mb-5">Форма пока не подключена к защищённому приёму заявок. Для связи используйте телефон.</p><a href={phoneHref(site.contacts.phone)} className="inline-flex rounded-lg bg-blue-700 px-5 py-3 text-white font-medium">Позвонить {site.contacts.phone}</a></div> : formSubmitted ? (
                 <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center scale-in visible">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -192,68 +182,73 @@ const Contacts = () => {
                     </svg>
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">Заявка отправлена!</h3>
-                  <p className="text-gray-600">Мы свяжемся с вами в ближайшее время</p>
+                  <p className="text-gray-600">Мы получили обращение. Время посещения согласовывается отдельно.</p>
+                  <button type="button" onClick={()=>setFormSubmitted(false)} className="mt-5 text-blue-700 underline">Отправить ещё одно обращение</button>
                 </div>
               ) : (
                 <form onSubmit={handleFormSubmit} className="space-y-5">
+                  <div className="hidden" aria-hidden="true"><label>Сайт<input type="text" autoComplete="off" tabIndex={-1} value={honeypot} onChange={e=>setHoneypot(e.target.value)} /></label></div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Ваше имя</label>
+                    <label htmlFor="lead-name" className="block text-sm font-medium text-gray-700 mb-2">Ваше имя</label>
                     <input
-                      type="text"
+                      id="lead-name" type="text"
                       required
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
-                      placeholder="Александр"
+                      placeholder="Александр" maxLength={60} autoComplete="name"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Телефон</label>
+                    <label htmlFor="lead-phone" className="block text-sm font-medium text-gray-700 mb-2">Телефон</label>
                     <input
-                      type="tel"
+                      id="lead-phone" type="tel"
                       required
                       value={formData.phone}
                       onChange={handlePhoneChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
-                      placeholder="Введите номер телефона"
+                      placeholder="Введите номер телефона" inputMode="tel" autoComplete="tel" maxLength={18}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Услуга</label>
-                    <textarea
+                    <label htmlFor="lead-service" className="block text-sm font-medium text-gray-700 mb-2">Услуга</label>
+                    <textarea id="lead-service"
                       value={formData.service}
                       onChange={e => setFormData({...formData, service: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all resize-none"
-                      placeholder="Ручная мойка, Химчистка салона, Полировка кузова"
+                      placeholder="Ручная мойка, химчистка, полировка" maxLength={150}
                       rows={2}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Марка авто</label>
+                    <label htmlFor="lead-car" className="block text-sm font-medium text-gray-700 mb-2">Марка авто</label>
                     <input
-                      type="text"
+                      id="lead-car" type="text"
                       value={formData.car}
                       onChange={e => setFormData({...formData, car: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all"
-                      placeholder="Toyota Camry"
+                      placeholder="Toyota Camry" maxLength={80}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Комментарий</label>
-                    <textarea
+                    <label htmlFor="lead-message" className="block text-sm font-medium text-gray-700 mb-2">Комментарий</label>
+                    <textarea id="lead-message"
                       rows={3}
                       value={formData.message}
                       onChange={e => setFormData({...formData, message: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 bg-white focus:outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition-all resize-none"
-                      placeholder="Удобное время, пожелания..."
+                      placeholder="Удобное время, пожелания..." maxLength={1000}
                     />
                   </div>
-                  <button
-                    type="submit"
-                    className="w-full px-6 py-4 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition-all btn-hover"
-                  >
-                    Отправить заявку
+                  <label className="flex items-start gap-3 text-sm text-gray-700 cursor-pointer">
+                    <input type="checkbox" required checked={consent} onChange={e=>setConsent(e.target.checked)} className="mt-1 h-4 w-4" />
+                    <span>Даю согласие на обработку данных в целях ответа на обращение на условиях <Link to="/consent" className="text-blue-700 underline">согласия</Link>. Ознакомлен(а) с <Link to="/privacy" className="text-blue-700 underline">политикой обработки данных</Link>.</span>
+                  </label>
+                  <div role="alert" aria-live="polite" className="text-sm text-red-700">{submitError}</div>
+                  <button type="submit" disabled={submitting} className="w-full px-6 py-4 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition-all btn-hover disabled:opacity-60">
+                    {submitting ? 'Отправляем…' : 'Отправить заявку'}
                   </button>
+                  <p className="text-xs text-gray-500">Если форма недоступна, позвоните: <a className="text-blue-700 underline" href={phoneHref(site.contacts.phone)}>{site.contacts.phone}</a>. Отправка формы не означает подтверждения времени записи.</p>
                 </form>
               )}
             </div>
@@ -271,8 +266,8 @@ const Contacts = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Телефоны</h3>
-                    <a href="tel:+79295884094" className="block text-gray-600 hover:text-blue-700 transition-colors">+7 (929) 588-40-94</a>
-                    <a href="tel:+79299555587" className="block text-gray-600 hover:text-blue-700 transition-colors">+7 (929) 955-55-87</a>
+                    <a href={phoneHref(site.contacts.phone)} className="block text-gray-600 hover:text-blue-700 transition-colors">{site.contacts.phone}</a>
+                    {site.contacts.phone2 && <a href={phoneHref(site.contacts.phone2)} className="block text-gray-600 hover:text-blue-700 transition-colors">{site.contacts.phone2}</a>}
                   </div>
                 </div>
               </div>
@@ -288,12 +283,12 @@ const Contacts = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Адрес</h3>
                     <a 
-                      href="https://yandex.ru/maps/org/a500/73889912604/"
+                      href={site.contacts.mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-700 hover:text-blue-800 hover:underline transition-colors"
                     >
-                      Москва, Боровское шоссе, 6к1
+                      {site.contacts.address}
                     </a>
                     <p className="text-sm text-gray-500 mt-1">ЗАО, район Солнцево</p>
                   </div>
@@ -309,8 +304,8 @@ const Contacts = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Режим работы</h3>
-                    <p className="text-gray-600">Пн — Вс: 09:00 — 23:00</p>
-                    <p className="text-sm text-gray-500 mt-1">Без выходных и перерывов</p>
+                    <p className="text-gray-600">{site.contacts.hours}</p>
+                    <p className="text-sm text-gray-500 mt-1">Актуальный режим работы уточняйте перед поездкой.</p>
                   </div>
                 </div>
               </div>
@@ -324,42 +319,21 @@ const Contacts = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Как добраться</h3>
-                    <p className="text-gray-600">м. Говорово — 0.7 км</p>
-                    <p className="text-sm text-gray-500 mt-1">Удобная парковка рядом</p>
+                    <p className="text-gray-600">{site.contacts.landmark}</p>
+                    <p className="text-sm text-gray-500 mt-1">Маршрут можно построить через Яндекс Карты.</p>
                   </div>
                 </div>
               </div>
 
-              {/* Map */}
-              <div className="rounded-xl overflow-hidden shadow-lg card-hover relative group">
-                <a 
-                  href="https://yandex.ru/maps/org/a500/73889912604/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <iframe
-                    src="https://yandex.ru/map-widget/v1/?ll=37.402218%2C55.659749&z=17&pt=37.402218,55.659749,pm2blm"
-                    width="100%"
-                    height="250"
-                    frameBorder="0"
-                    style={{ border: 0, pointerEvents: 'none' }}
-                    title="А500 на карте"
-                  ></iframe>
-                  <div className="absolute inset-0 bg-blue-700/0 group-hover:bg-blue-700/10 transition-colors flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white px-4 py-2 rounded-lg shadow-lg font-medium text-blue-700 text-sm">
-                      Открыть в Яндекс.Картах →
-                    </div>
-                  </div>
-                </a>
-              </div>
+              {/* Карта загружается после действия посетителя, без скрытых запросов при открытии страницы */}
+              <MapEmbed />
               <a 
-                href="https://yandex.ru/maps/org/a500/73889912604/"
+                href={site.contacts.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-center text-blue-700 hover:text-blue-800 hover:underline transition-colors font-medium text-sm"
               >
-                Открыть страницу А500 в Яндекс.Картах →
+                Открыть страницу автомойки в Яндекс.Картах →
               </a>
             </div>
           </div>
