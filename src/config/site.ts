@@ -29,28 +29,28 @@ export const site = {
     telegram: '',
   },
   images: {
-    // DEMO: перед коммерческим запуском документально проверить право использовать изображения.
-    hero: 'https://image.qwenlm.ai/generated-images/2d30b727-802a-43ec-ae48-8538f2cf3f35/_result.png', // ЗАМЕНИТЬ на лицензированное локальное фото до продажи
+    // Внешние изображения рекомендуется заменить локальными фото с надлежащими правами на использование.
+    hero: 'https://image.qwenlm.ai/generated-images/2d30b727-802a-43ec-ae48-8538f2cf3f35/_result.png', // Временный URL изображения; заменить локальным фото для стабильности
     fallback: carFallback,
     gallery: [] as Array<{url:string;alt:string}>,
     about: 'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=700&h=500&fit=crop',
   },
   description: 'Автомойка, детейлинг и удаление вмятин без покраски (PDR).',
   seo: {
-    // Укажите реальный домен клиента до публикации, например https://example.ru
+    // Публичный адрес установки сайта задаётся через VITE_PUBLIC_SITE_URL
     baseUrl: import.meta.env.VITE_PUBLIC_SITE_URL || 'https://a600-tzk3.vercel.app',
     titleSuffix: 'Автомойка и детейлинг',
   },
   // Данные оператора заполняются только по подтверждённой информации от клиента.
   legal: { operatorName: '', inn: '', address: '', contactEmail: '', retentionDescription: '', processingProvider: '' },
-  // Демонстрационная форма НЕ отправляет данные, пока нет серверного обработчика.
+  // Форма включается только при настройке защищённого серверного приёма заявок.
   leads: { endpoint: import.meta.env.VITE_LEAD_ENDPOINT || '', enabled: import.meta.env.VITE_LEAD_FORM_ENABLED === 'true' },
   reviewUrl: 'https://yandex.ru/maps/org/udaleniye_vmyatin_bez_pokraski/44612503769/reviews/',
   verifiedReviews: [] as Array<{name:string; text:string; rating:number; car?:string}>,
   verifiedBrands: [] as Array<{name:string;desc:string}>,
   faq: [
     {question:'Сколько времени занимает мойка?',answer:'Ориентировочное время указано для каждой услуги. Точное время уточняется при согласовании.'},
-    {question:'Нужна ли предварительная запись?',answer:'Лучше заранее позвонить и уточнить свободное время. Отправка заявки сама по себе не подтверждает запись.'},
+    {question:'Нужна ли предварительная запись?',answer:'Да, лучше позвонить заранее. Администратор подскажет доступное время и уточнит детали услуги.'},
     {question:'Сколько стоит мойка внедорожника?',answer:'Цена зависит от типа автомобиля и объёма работ. Актуальную стоимость уточняйте у администратора.'},
     {question:'Как добраться?',answer:'Адрес и ссылка на маршрут указаны на странице контактов.'},
   ],
@@ -68,7 +68,7 @@ export const site = {
     { id: 'detailing', title: 'Детейлинг', icon: '🚘', price: 3000, duration: '2–4 часа', description: 'Комплексные работы по уходу за автомобилем.', features: ['Детальная мойка', 'Обработка элементов', 'Финальная проверка'] },
     { id: 'tires', title: 'Чернение резины', icon: '⚫', price: 300, duration: '10–15 мин', description: 'Восстановление ухоженного вида шин.', features: ['Очистка', 'Защитный состав', 'Уход'] },
   ],
-  // Цены ниже оставлены из исходного демо: клиент должен подтвердить их перед публикацией.
+  // Прайс скрыт, пока фактические цены не заданы.
   pricesVerified: false,
   verifiedExtraServices: [
     { title: 'Удаление вмятин без покраски (PDR)', description: 'Точная стоимость после оценки повреждения.' },
