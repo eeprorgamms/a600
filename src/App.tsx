@@ -10,24 +10,24 @@ import Consent from './pages/Consent';
 import NotFound from './pages/NotFound';
 import PageMeta from './components/PageMeta';
 
-function App() {
+export function SiteRoutes() {
   return (
-    <Router>
-      <PageMeta />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/consent" element={<Consent />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/consent" element={<Consent />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Layout>
   );
 }
 
+function App() {
+  return <Router><PageMeta /><SiteRoutes /></Router>;
+}
 export default App;
