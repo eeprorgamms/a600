@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import ScrollToTop from './ScrollToTop';
-import Loader from './Loader';
+import {site,phoneHref} from '../config/site';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -37,7 +37,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="text-2xl font-bold text-gray-900 hover:text-blue-700 transition-colors">
-            А<span className="text-blue-700">500</span>
+            {site.brand}
           </Link>
 
           <nav className="hidden lg:flex items-center space-x-8">
@@ -58,11 +58,11 @@ const Header = () => {
           </nav>
 
           <div className="hidden lg:flex items-center space-x-4">
-            <a href="tel:+79295884094" className="flex items-center space-x-2 text-sm text-gray-600 hover:text-blue-700 transition-colors">
+            <a href={phoneHref(site.contacts.phone)} className="flex items-center space-x-2 text-sm text-gray-600 hover:text-blue-700 transition-colors">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              <span>+7 (929) 588-40-94</span>
+              <span>{site.contacts.phone}</span>
             </a>
             <Link 
               to="/contacts" 
@@ -72,7 +72,7 @@ const Header = () => {
             </Link>
           </div>
 
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden p-2 text-gray-600">
+          <button type="button" aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"} aria-expanded={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden p-2 text-gray-600">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -101,11 +101,11 @@ const Header = () => {
               </Link>
             ))}
             <div className="pt-2 border-t border-gray-100">
-              <a href="tel:+79295884094" className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-600">
+              <a href={phoneHref(site.contacts.phone)} className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span>+7 (929) 588-40-94</span>
+                <span>{site.contacts.phone}</span>
               </a>
             </div>
           </div>
@@ -122,21 +122,17 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="text-2xl font-bold mb-4">
-              А<span className="text-blue-400">500</span>
+              {site.brand}
             </div>
             <p className="text-sm text-gray-400">
-              Автомойка и детейлинг-центр на Боровском шоссе. Профессиональный уход за вашим автомобилем.
+              {site.description}
             </p>
           </div>
 
           <div>
             <h4 className="font-semibold mb-4">Услуги</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Ручная мойка</Link></li>
-              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Химчистка</Link></li>
-              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Полировка</Link></li>
-              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Обработка воском</Link></li>
-              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Детейлинг</Link></li>
+              {site.services.slice(0,5).map(item=><li key={item.id}><Link to="/services" className="hover:text-blue-400 transition-colors">{item.title}</Link></li>)}
             </ul>
           </div>
 
@@ -154,33 +150,31 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Контакты</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="tel:+79295884094" className="hover:text-blue-400 transition-colors">+7 (929) 588-40-94</a></li>
-              <li><a href="tel:+79299555587" className="hover:text-blue-400 transition-colors">+7 (929) 955-55-87</a></li>
+              <li><a href={phoneHref(site.contacts.phone)} className="hover:text-blue-400 transition-colors">{site.contacts.phone}</a></li>
+              {site.contacts.phone2 && <li><a href={phoneHref(site.contacts.phone2)} className="hover:text-blue-400 transition-colors">{site.contacts.phone2}</a></li>}
               <li>
                 <a 
-                  href="https://yandex.ru/maps/org/a500/73889912604/"
+                  href={site.contacts.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-400 transition-colors"
                 >
-                  Москва, Боровское шоссе, 6к1
+                  {site.contacts.address}
                 </a>
               </li>
-              <li>м. Говорово — 0.7 км</li>
-              <li>Пн-Вс: 09:00 — 23:00</li>
+              <li>{site.contacts.landmark}</li>
+              <li>{site.contacts.hours}</li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-sm text-gray-500">© 2024 А500. Все права защищены.</p>
+          <p className="text-sm text-gray-500">© {new Date().getFullYear()} {site.brand}. {site.pricesVerified ? "Все права защищены." : "Стоимость услуг уточняйте по телефону."}</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="https://yandex.ru/maps/org/a500/73889912604/" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:text-blue-400 transition-colors">
+            <a href={site.contacts.mapUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:text-blue-400 transition-colors">
               Яндекс.Карты
             </a>
-            <a href="#/admin" className="text-sm text-gray-500 hover:text-blue-400 transition-colors">
-              Админ-панель
-            </a>
+            <Link to="/privacy" className="text-sm text-gray-500 hover:text-blue-400 transition-colors">Политика обработки данных</Link>
           </div>
         </div>
       </div>
@@ -203,8 +197,8 @@ const FloatingButtons = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col space-y-3">
-      <a
-        href="https://wa.me/79295884094?text=Здравствуйте!%20Хочу%20записаться%20на%20мойку"
+      {site.contacts.whatsapp && <a
+        href={site.contacts.whatsapp}
         target="_blank"
         rel="noopener noreferrer"
         className="group relative w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:scale-110 transition-all"
@@ -216,9 +210,9 @@ const FloatingButtons = () => {
         <span className="absolute right-full mr-3 px-3 py-1.5 bg-gray-900 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
           Написать в WhatsApp
         </span>
-      </a>
+      </a>}
       <a
-        href="tel:+79295884094"
+        href={phoneHref(site.contacts.phone)}
         className="group relative w-14 h-14 bg-blue-700 rounded-full flex items-center justify-center shadow-lg shadow-blue-700/30 hover:scale-110 transition-all"
         title="Позвонить"
       >
@@ -236,7 +230,6 @@ const FloatingButtons = () => {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-white">
-      <Loader />
       <ScrollToTop />
       <Header />
       <main className="pt-20">

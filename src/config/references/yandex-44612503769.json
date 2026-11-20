@@ -1,0 +1,26 @@
+{
+  "status": "candidate_unconfirmed_relation_to_A500",
+  "name": "Удаление вмятин без покраски",
+  "category": ["Детейлинг", "Кузовной ремонт", "Удаление вмятин без покраски"],
+  "phone": "+7 (915) 002-08-09",
+  "address": "Москва, Боровское шоссе, 6к1, этаж 1",
+  "metro": "Говорово",
+  "yandexMapsUrl": "https://yandex.ru/maps/org/udaleniye_vmyatin_bez_pokraski/44612503769/",
+  "ratingSnapshot": {"value":4.9,"count":19,"collectedOn":"2026-11-20"},
+  "associatedWebsiteShownInMaps": "https://remont-kuzovnoi.ru/",
+  "websiteDifferentPhone": "+7 (993) 608-86-84",
+  "websiteDifferentWorkingHours": "ежедневно 10:00–22:00",
+  "workingHours": null,
+  "legalEntity": null,
+  "notes": [
+    "Это другая карточка организации, а не подтвержденная карточка A500.",
+    "Нельзя автоматически заменять ей телефоны, режим работы и название сайта A500.",
+    "Контакты и юридические реквизиты нужно подтвердить у владельца.",
+    "Фотографии и тексты отзывов не копировать из Яндекс Карт без проверки прав использования.",
+    "Временные показатели рейтинга не фиксировать как постоянные утверждения."
+  ],
+  "sources": [
+    "https://yandex.com/maps/org/udaleniye_vmyatin_bez_pokraski/44612503769/",
+    "https://remont-kuzovnoi.ru/"
+  ]
+}

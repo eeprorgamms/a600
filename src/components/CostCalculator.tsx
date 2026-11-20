@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {site} from '../config/site';
 
 interface Service {
   id: string;
@@ -8,23 +9,12 @@ interface Service {
 }
 
 const CostCalculator = () => {
+  const navigate = useNavigate();
   const [carType, setCarType] = useState('sedan');
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
-  const carTypes = [
-    { id: 'sedan', name: 'Седан', multiplier: 1 },
-    { id: 'suv', name: 'Внедорожник', multiplier: 1.3 },
-    { id: 'minivan', name: 'Минивэн', multiplier: 1.4 },
-  ];
-
-  const services: Service[] = [
-    { id: 'wash', name: 'Ручная мойка', price: 500 },
-    { id: 'interior', name: 'Химчистка салона', price: 4000 },
-    { id: 'polish', name: 'Полировка кузова', price: 5000 },
-    { id: 'wax', name: 'Обработка воском', price: 1000 },
-    { id: 'detailing', name: 'Детейлинг', price: 3000 },
-    { id: 'tires', name: 'Чернение резины', price: 300 },
-  ];
+  const carTypes = site.carTypes;
+  const services: Service[] = site.services.map(item=>({id:item.id,name:item.title,price:item.price}));
 
   const toggleService = (serviceId: string) => {
     setSelectedServices(prev =>
@@ -117,15 +107,15 @@ const CostCalculator = () => {
               return service?.name || '';
             }).filter(Boolean);
             
-            localStorage.setItem('a500_booking', JSON.stringify({
+            try { sessionStorage.setItem('a500_booking', JSON.stringify({
               services: selectedServiceNames,
               carType: carType,
               total: total,
               timestamp: Date.now()
-            }));
+            })); } catch { /* Приватный режим: переход без сохранения выбора */ }
             
             // Переходим на страницу контактов
-            window.location.href = '/#/contacts';
+            navigate('/contacts');
           }}
           className="block w-full text-center px-6 py-4 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-800 transition-colors"
         >
