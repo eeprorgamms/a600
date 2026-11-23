@@ -17,7 +17,7 @@ export default function About() {
     <section className="a-section a-cream">
       <div className="a-shell">
         <div className="a-split-head">
-          <div><div className="a-overline">Наш подход</div><h2 className="a-h2" style={{marginTop:26}}>Хорошая работа<br />видна <span className="a-accent" style={{color:'#7c8a27'}}>вблизи.</span></h2></div>
+          <div><div className="a-overline">Наш подход</div><h2 className="a-h2" style={{marginTop:26}}>Хорошая работа<br />видна <span className="a-accent" style={{color:'#246BFD'}}>вблизи.</span></h2></div>
           <p className="a-lead">Уход за автомобилем — это последовательность точных действий, от оценки состояния поверхности до финальной проверки.</p>
         </div>
         <div className="a-feature-list">
