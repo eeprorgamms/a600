@@ -55,7 +55,7 @@ function Footer() {
       <div className="a-footer__grid">
         <div>
           <Link to="/" aria-label="А500 — главная"><Brand /></Link>
-          <p style={{ maxWidth: 310, color: '#c3c9bb', lineHeight: 1.7, fontSize: 14, marginTop: 27 }}>{site.tagline}. Уход за автомобилем с вниманием к деталям.</p>
+          <p style={{ maxWidth: 310, color: '#B7C2D4', lineHeight: 1.7, fontSize: 14, marginTop: 27 }}>{site.tagline}. Уход за автомобилем с вниманием к деталям.</p>
         </div>
         <div>
           <div className="a-footer__heading">Навигация</div>
