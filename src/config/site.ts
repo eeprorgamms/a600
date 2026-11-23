@@ -14,28 +14,28 @@ export const carFallback = 'data:image/svg+xml;charset=UTF-8,' + encodeURICompon
 
 export const site = {
   brand: 'А500',
-  tagline: 'Автомойка, детейлинг и PDR',
+  tagline: 'Автомойка и детейлинг в Солнцево',
   color: { primary: '#246BFD', strong: '#1555D7' },
   contacts: {
-    phone: '+7 (915) 002-08-09',
+    phone: '+7 (929) 588-40-94',
     phone2: '',
     address: 'Москва, Боровское шоссе, 6к1',
     district: 'Район Солнцево',
-    landmark: 'м. Говорово — 0,7 км',
+    landmark: 'Рядом с метро Говорово',
     hours: 'График работы уточняйте по телефону',
-    mapUrl: 'https://yandex.ru/maps/org/udaleniye_vmyatin_bez_pokraski/44612503769/',
+    mapUrl: 'https://yandex.ru/maps/org/a500/73889912604/',
     mapEmbed: 'https://yandex.ru/map-widget/v1/?ll=37.402218%2C55.659749&z=17&pt=37.402218,55.659749,pm2blm',
     whatsapp: '',
     telegram: '',
   },
   images: {
     // Внешние изображения рекомендуется заменить локальными фото с надлежащими правами на использование.
-    hero: 'https://image.qwenlm.ai/generated-images/2d30b727-802a-43ec-ae48-8538f2cf3f35/_result.png', // Временный URL изображения; заменить локальным фото для стабильности
+    hero: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=85&fit=crop', // Временный URL изображения; заменить локальным фото для стабильности
     fallback: carFallback,
     gallery: [] as Array<{url:string;alt:string}>,
     about: 'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=700&h=500&fit=crop',
   },
-  description: 'Автомойка, детейлинг и удаление вмятин без покраски (PDR).',
+  description: 'Автомойка А500 в Москве. Мойка кузова, химчистка салона и уход за автомобилем.',
   seo: {
     // Публичный адрес установки сайта задаётся через VITE_PUBLIC_SITE_URL
     baseUrl: import.meta.env.VITE_PUBLIC_SITE_URL || 'https://a600-tzk3.vercel.app',
@@ -45,7 +45,7 @@ export const site = {
   legal: { operatorName: '', inn: '', address: '', contactEmail: '', retentionDescription: '', processingProvider: '' },
   // Форма включается только при настройке защищённого серверного приёма заявок.
   leads: { endpoint: import.meta.env.VITE_LEAD_ENDPOINT || '', enabled: import.meta.env.VITE_LEAD_FORM_ENABLED === 'true' },
-  reviewUrl: 'https://yandex.ru/maps/org/udaleniye_vmyatin_bez_pokraski/44612503769/reviews/',
+  reviewUrl: 'https://yandex.ru/maps/org/a500/73889912604/reviews/',
   verifiedReviews: [] as Array<{name:string; text:string; rating:number; car?:string}>,
   verifiedBrands: [] as Array<{name:string;desc:string}>,
   faq: [
@@ -70,6 +70,7 @@ export const site = {
   ],
   // Прайс скрыт, пока фактические цены не заданы.
   pricesVerified: false,
+  verifiedPackage: { title: 'Комплексная мойка автомобиля', price: 1800, unit: 'от' },
   verifiedExtraServices: [
     { title: 'Удаление вмятин без покраски (PDR)', description: 'Точная стоимость после оценки повреждения.' },
     { title: 'Полировка стёкол', description: 'Условия и стоимость уточняйте по телефону.' },
