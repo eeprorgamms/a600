@@ -21,7 +21,7 @@ export default function Home() {
       <Photo src={site.images.hero} alt="Автомобиль — детали кузова и профессиональный уход" className="a-hero__image" />
       <div className="a-contours" aria-hidden="true" />
       <div className="a-shell a-hero__content">
-        <div className="a-overline" style={{ color: '#d1d8c5' }}>Автомойка / Детейлинг / PDR</div>
+        <div className="a-overline" style={{ color: '#CDD7E5' }}>Автомойка / Детейлинг / PDR</div>
         <h1 id="home-headline" className="a-h1">Внимание<br />к каждой<br /><span className="a-accent">детали.</span></h1>
         <p className="a-lead">Уход за кузовом и салоном, полировка и удаление вмятин без покраски. Точная работа начинается с внимания к автомобилю.</p>
         <div className="a-hero__actions">
@@ -35,7 +35,7 @@ export default function Home() {
     <section className="a-section a-cream" aria-labelledby="services-headline">
       <div className="a-shell">
         <div className="a-split-head">
-          <div><div className="a-overline">01 / Что мы делаем</div><h2 id="services-headline" className="a-h2" style={{ marginTop: 25 }}>Уход, которому<br />можно доверить<br /><span className="a-accent" style={{ color: '#7c8a27' }}>детали.</span></h2></div>
+          <div><div className="a-overline">01 / Что мы делаем</div><h2 id="services-headline" className="a-h2" style={{ marginTop: 25 }}>Уход, которому<br />можно доверить<br /><span className="a-accent" style={{ color: '#246BFD' }}>детали.</span></h2></div>
           <p className="a-lead">От базовой мойки до точной работы с кузовом. Подбираем подходящий формат ухода под задачу и состояние автомобиля.</p>
         </div>
         <div className="a-service-grid">
@@ -66,7 +66,7 @@ export default function Home() {
     <section className="a-section a-cream" aria-labelledby="process-heading">
       <div className="a-shell">
         <div className="a-overline">03 / Подход</div>
-        <h2 id="process-heading" className="a-h2" style={{ maxWidth: 860, marginTop: 25 }}>Всё начинается<br />с <span className="a-accent" style={{ color: '#7c8a27' }}>понимания.</span></h2>
+        <h2 id="process-heading" className="a-h2" style={{ maxWidth: 860, marginTop: 25 }}>Всё начинается<br />с <span className="a-accent" style={{ color: '#246BFD' }}>понимания.</span></h2>
         <div className="a-steps">
           {[['Консультация','Обсуждаем вашу задачу, особенности автомобиля и желаемый результат.'],['Оценка','Определяем объём работ, подходящие методы и ориентировочную стоимость.'],['Работа с авто','Выполняем согласованные процедуры и проверяем результат.']].map((item,i) => <div className="a-step" key={i}>
             <span className="a-step__num">{String(i + 1).padStart(2,'0')} / 03</span>
