@@ -6,7 +6,7 @@ export default function Contacts() {
     <section className="a-intro a-cream">
       <div className="a-shell">
         <span className="a-eyebrow">Связаться с нами</span>
-        <h1 className="a-h1">Контакты<br /><span className="a-accent" style={{color:'#246BFD'}}>на связи.</span></h1>
+        <h1 className="a-h1">Контакты<br /><span className="a-accent" style={{color:'#246BFD'}}>A500.</span></h1>
         <p className="a-lead">Обсудим услуги, стоимость и удобное время посещения. Позвоните нам или найдите нас на карте.</p>
       </div>
     </section>
@@ -55,7 +55,7 @@ export default function Contacts() {
     </section>
     <section className="a-section a-cream"><div className="a-shell">
       <div className="a-split-head">
-        <div><span className="a-eyebrow">Перед посещением</span><h2 className="a-h2 a-h2--compact" style={{marginTop:24}}>Обсудим<br />вашу задачу.</h2></div>
+        <div><span className="a-eyebrow">Перед посещением</span><h2 className="a-h2 a-h2--compact" style={{marginTop:24}}>Запишитесь<br />по телефону.</h2></div>
         <div><p className="a-lead">Подскажем, какие работы могут подойти для вашего автомобиля, и согласуем удобный способ связи.</p><Link to="/services" className="a-text-link" style={{display:'inline-block',marginTop:15}}>Посмотреть услуги ↗</Link></div>
       </div>
     </div></section>
