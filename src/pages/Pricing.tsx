@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { site, phoneHref } from '../config/site';
 
 const services = [
-  { title: 'Ручная мойка', detail: 'Наружная очистка кузова', price: null },
+  { title: 'Мойка кузова', detail: 'Опубликованный диапазон стоимости мойки кузова', price: '1 000–3 000 ₽' },
   { title: 'Химчистка салона', detail: 'Чистка сидений, пластика и текстиля', price: null },
   { title: 'Полировка кузова', detail: 'Коррекция и восстановление блеска ЛКП', price: null },
   { title: 'Детейлинг', detail: 'Комплексный уход за автомобилем', price: null },
@@ -25,12 +25,12 @@ export default function Pricing() {
             <div><span className="a-eyebrow">Мойка автомобиля</span><h2>Комплексная мойка</h2><p>Наружная и внутренняя уборка. Состав работ согласовывается при обращении.</p></div>
             <div className="a-pricing-feature__side"><span>от <strong>1 800 ₽</strong></span><a href={phoneHref(site.contacts.phone)} className="a-btn a-btn--lime">Уточнить и записаться ↗</a></div>
           </div>
-          <p className="a-pricing-note">Начальная стоимость комплексной мойки — по карточке А500 в Яндекс Картах. Остальные услуги оцениваются индивидуально.</p>
+          <p className="a-pricing-note">Начальная стоимость комплексной мойки — по карточке А500 в Яндекс Картах. Мойка кузова — 1 000–3 000 ₽ по информации из карточки А500; другие услуги оцениваются индивидуально.</p>
           <div className="a-prices a-reveal">
             {services.map(item => (
               <div className="a-price-row" key={item.title}>
                 <div><h3>{item.title}</h3><p>{item.detail}</p></div>
-                <span className="a-price-row__price">По запросу</span>
+                <span className="a-price-row__price">{item.price ?? 'По запросу'}</span>
                 <a className="a-btn a-btn--dark" href={phoneHref(site.contacts.phone)}>Уточнить ↗</a>
               </div>
             ))}
