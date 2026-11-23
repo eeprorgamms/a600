@@ -8,13 +8,13 @@ export default function Services() {
   return <>
     <section className="a-intro a-cream"><div className="a-shell">
       <div className="a-eyebrow">Наши направления</div>
-      <h1 className="a-h1">Услуги<br /><span className="a-accent" style={{color:'#246BFD'}}>деталями.</span></h1>
+      <h1 className="a-h1">Услуги<br /><span className="a-accent" style={{color:'#246BFD'}}>A500.</span></h1>
       <p className="a-lead">Мойка, уход за салоном, полировка и кузовные работы. Выбирайте нужную услугу — подробности и стоимость уточняйте по телефону.</p>
     </div></section>
     <section className="a-section a-sage">
       <div className="a-shell">
         <div className="a-eyebrow">Что входит в услуги</div>
-        <h2 className="a-h2 a-h2--compact" style={{margin:'23px 0 55px'}}>Бережный подход.<br />Точный результат.</h2>
+        <h2 className="a-h2 a-h2--compact" style={{margin:'23px 0 55px'}}>Мойка, уход<br />и полировка.</h2>
         <div className="a-service-grid">
           {site.services.map((service,index) => <div className="a-service" key={service.id}>
             
@@ -36,7 +36,7 @@ export default function Services() {
     <section className="a-section a-olive">
       <div className="a-shell">
         <div className="a-eyebrow">Кузов и защита</div>
-        <h2 className="a-h2" style={{margin:'24px 0 54px'}}>Больше, чем<br /><span className="a-accent">мойка.</span></h2>
+        <h2 className="a-h2" style={{margin:'24px 0 54px'}}>PDR и защита<br /><span className="a-accent">кузова.</span></h2>
         <div className="a-feature-list" style={{borderColor:'#48546A'}}>
           {extra.map((item,i)=><div className="a-feature" key={item.title} style={{borderColor:'#48546A'}}>
             
