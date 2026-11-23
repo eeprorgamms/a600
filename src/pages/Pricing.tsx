@@ -9,7 +9,7 @@ export default function Pricing() {
   return <>
     <section className="a-intro a-cream"><div className="a-shell">
       <span className="a-overline">02 / Стоимость работ</span>
-      <h1 className="a-h1">Чёткий<br /><span className="a-accent" style={{color:'#7c8a27'}}>подход.</span></h1>
+      <h1 className="a-h1">Чёткий<br /><span className="a-accent" style={{color:'#246BFD'}}>подход.</span></h1>
       <p className="a-lead">Стоимость зависит от состояния автомобиля и объёма работ. Точную цену уточним после обсуждения вашей задачи.</p>
     </div></section>
     <section className="a-section a-cream">
