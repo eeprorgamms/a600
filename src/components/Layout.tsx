@@ -85,5 +85,5 @@ function Footer() {
 }
 
 export default function Layout({ children }: {children: React.ReactNode}) {
-  return <div className="a-page"><ScrollToTop /><Header /><main id="main-content">{children}</main><Footer /></div>;
+  return <div className="a-page"><a className="a-skip-link" href="#main-content">К содержимому</a><ScrollToTop /><Header /><main id="main-content" tabIndex={-1}>{children}</main><Footer /></div>;
 }
