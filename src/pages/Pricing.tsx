@@ -1,11 +1,39 @@
-import {Link} from 'react-router-dom';
-import CostCalculator from '../components/CostCalculator';
-import {site, phoneHref, priceLabel} from '../config/site';
+import { site, phoneHref } from '../config/site';
+import { Link } from 'react-router-dom';
 
-export default function Pricing(){
- return <div>
-  <section className="bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 py-16"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Цены</h1><p className="text-lg text-gray-600 max-w-3xl">Стоимость работ зависит от типа автомобиля, загрязнений и объёма услуги. Уточните точный расчёт перед посещением.</p></div></section>
-  {!site.pricesVerified && <section className="py-16 bg-white"><div className="max-w-5xl mx-auto px-4 sm:px-6"><div role="status" className="bg-blue-50 border-l-4 border-blue-700 px-6 py-5 rounded-lg mb-10"><h2 className="font-semibold text-gray-900 mb-2">Стоимость уточняйте перед посещением</h2><p className="text-gray-700">Стоимость зависит от услуги и состояния автомобиля. Позвоните нам для индивидуального расчёта.</p></div><h2 className="text-2xl font-bold text-gray-900 mb-6">Услуги и стоимость</h2><div className="grid sm:grid-cols-2 gap-4">{[...site.services.map(x=>({title:x.title,description:x.description})),...site.verifiedExtraServices].map(s=><article key={s.title} className="rounded-xl bg-gray-50 p-6 border border-gray-100"><h3 className="text-lg font-semibold text-gray-900 mb-2">{s.title}</h3><p className="text-sm text-gray-600 mb-4">{s.description}</p><p className="text-blue-700 font-semibold">Цена по запросу</p></article>)}</div><div className="mt-10 flex flex-wrap gap-4"><a href={phoneHref(site.contacts.phone)} className="inline-flex rounded-lg bg-blue-700 px-6 py-3 text-white font-medium">Позвонить {site.contacts.phone}</a><Link to="/contacts" className="inline-flex rounded-lg border border-blue-700 px-6 py-3 text-blue-700 font-medium">Контакты и маршрут</Link></div></div></section>}
-  {site.pricesVerified && <><section className="py-16 bg-white"><div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><h2 className="text-3xl font-bold text-center mb-10">Комплексы мойки</h2><div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">{site.packages.map(pkg=><article key={pkg.name} className="bg-gray-50 rounded-xl p-6 border border-gray-200"><h3 className="text-xl font-semibold mb-3">{pkg.name}</h3><p className="text-blue-700 text-2xl font-bold mb-3">{priceLabel(pkg.price)}</p><p className="text-sm text-gray-500 mb-4">{pkg.duration}</p><ul className="list-disc list-inside text-sm text-gray-700 space-y-2 mb-6">{pkg.features.map(f=><li key={f}>{f}</li>)}</ul><Link to="/contacts" className="inline-flex bg-blue-700 text-white px-5 py-2 rounded-lg">Уточнить запись</Link></article>)}</div></div></section><section className="py-16 bg-blue-50"><div className="max-w-3xl mx-auto px-4 sm:px-6"><CostCalculator /></div></section></>}
- </div>;
+export default function Pricing() {
+  const items = [
+    ...site.services.map(service => ({title:service.title,description:service.description,price:service.price})),
+    ...site.verifiedExtraServices.map(service => ({title:service.title,description:service.description,price:null as number | null})),
+  ];
+  return <>
+    <section className="a-intro a-cream"><div className="a-shell">
+      <span className="a-overline">02 / Стоимость работ</span>
+      <h1 className="a-h1">Чёткий<br /><span className="a-accent" style={{color:'#7c8a27'}}>подход.</span></h1>
+      <p className="a-lead">Стоимость зависит от состояния автомобиля и объёма работ. Точную цену уточним после обсуждения вашей задачи.</p>
+    </div></section>
+    <section className="a-section a-cream">
+      <div className="a-shell">
+        <div className="a-split-head">
+          <h2 className="a-h2 a-h2--compact">Услуги<br />и стоимость.</h2>
+          <p className="a-lead">Ознакомьтесь с направлениями работ. Для индивидуального расчёта свяжитесь с нами по телефону.</p>
+        </div>
+        <div className="a-prices">
+          {items.map((item,index) => <div className="a-price-row" key={item.title}>
+            <span className="a-service__number">{String(index+1).padStart(2,'0')}</span>
+            <div><h3>{item.title}</h3><p>{item.description}</p></div>
+            <span className="a-price-row__price">{site.pricesVerified && item.price !== null ? 'от ' + item.price.toLocaleString('ru-RU') + ' ₽' : 'По запросу'}</span>
+            <a className="a-btn a-btn--dark" href={phoneHref(site.contacts.phone)} style={{minHeight:43,padding:'10px 15px',fontSize:10}}>Уточнить ↗</a>
+          </div>)}
+        </div>
+      </div>
+    </section>
+    <section className="a-section a-olive a-final"><div className="a-shell a-final__inner">
+      <div><div className="a-overline">Индивидуальный расчёт</div><h2 className="a-h2 a-h2--compact" style={{margin:'24px 0'}}>Обсудим<br /><span className="a-accent">ваш автомобиль.</span></h2><p className="a-lead">Поможем определиться с услугой, временем и стоимостью.</p></div>
+      <div style={{display:'flex',flexWrap:'wrap',gap:12}}>
+        <a className="a-btn a-btn--lime" href={phoneHref(site.contacts.phone)}>Позвонить <span className="a-arrow">↗</span></a>
+        <Link className="a-btn a-btn--outline" to="/contacts">Контакты <span className="a-arrow">→</span></Link>
+      </div>
+    </div></section>
+  </>;
 }
