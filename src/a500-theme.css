@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap');
 
 /* A500 — editorial automotive design system */
 :root{--a-olive:#111318;--a-black:#111318;--a-cream:#E9EDF2;--a-sage:#FFFFFF;--a-moss:#246BFD;--a-lime:#246BFD;--a-muted:#B7C2D4;--a-line:#404A5C;--a-text:#111318;--a-wrap:1280px}
@@ -128,3 +129,38 @@ a.a-service:hover{background:#EDF3FF}
 .a-hero .a-accent,.a-olive .a-accent,.a-black .a-accent{color:#79A4FF}
 .a-hero__bottom{color:#C1CAD7}
 .a-service__title,.a-feature h3,.a-price-row h3{color:inherit}
+
+/* Clear editorial typography, Cyrillic-compatible. No italic marketing flourishes. */
+:root{--a-font-body:'Manrope','Segoe UI',Arial,sans-serif;--a-font-display:'Oswald','Arial Narrow',Arial,sans-serif}
+body{font-family:var(--a-font-body);font-weight:500}
+.a-h1,.a-h2,.a-display{font-family:var(--a-font-display);font-weight:600;letter-spacing:-.018em;line-height:1.08;font-stretch:normal}
+.a-h1{font-size:clamp(53px,7.4vw,113px);max-width:15ch}
+.a-h2{font-size:clamp(39px,5.1vw,70px)}
+.a-h2--compact{font-size:clamp(35px,4vw,59px)}
+.a-accent{font-family:inherit;font-weight:600;font-style:normal;text-transform:inherit;letter-spacing:inherit;color:#246BFD}
+.a-hero .a-accent,.a-olive .a-accent,.a-black .a-accent{color:#70A1FF}
+.a-lead{font-family:var(--a-font-body);font-weight:500;line-height:1.65}
+.a-btn,.a-nav a,.a-service__foot,.a-footer__heading,.a-eyebrow{font-family:var(--a-font-body);font-weight:800}
+.a-overline{display:none}
+.a-eyebrow{display:block;font-size:12px;font-weight:800;letter-spacing:.075em;text-transform:uppercase;color:inherit;opacity:.85}
+.a-eyebrow:before,.a-eyebrow:after{display:none!important}
+.a-service__number,.a-feature__number,.a-step__num{display:none}
+.a-service__title{margin:30px 0 12px;font-family:var(--a-font-display);letter-spacing:0;font-weight:600;font-size:clamp(24px,2.4vw,31px)}
+.a-feature h3,.a-price-row h3,.a-step h3{font-family:var(--a-font-display);font-weight:600;letter-spacing:0}
+.a-logo{font-family:var(--a-font-body);font-weight:800;letter-spacing:-.08em}
+.a-hero--home{min-height:calc(100svh - 90px);display:flex;flex-direction:column}
+.a-hero--home .a-hero__content{min-height:0;flex:1;padding-top:65px;padding-bottom:55px}
+.a-hero--home .a-hero__bottom{margin-top:auto}
+.a-hero--home .a-h1{max-width:15ch;margin:25px 0}
+.a-hero--home .a-lead{max-width:560px}
+.a-hero__route{text-decoration:underline;text-underline-offset:4px}
+.a-hero__route:hover{color:#70A1FF}
+.a-feature{grid-template-columns:minmax(0,1fr) 1.5fr}
+.a-feature p{grid-column:auto}
+.a-price-row{grid-template-columns:minmax(0,1fr) 180px 130px}
+.a-service{min-height:250px}
+.a-service__title{margin-top:auto}
+.a-intro .a-h1{margin-top:24px}
+.a-contact-block strong{font-family:var(--a-font-display);font-weight:600;letter-spacing:0}
+@media(max-width:850px){.a-hero--home{min-height:calc(100svh - 74px)}.a-feature{grid-template-columns:minmax(0,1fr)}.a-feature p{grid-column:auto}.a-price-row{grid-template-columns:minmax(0,1fr) 140px}.a-price-row .a-btn{grid-column:1/-1}.a-hero--home .a-hero__content{min-height:0}}
+@media(max-width:610px){.a-h1{font-size:clamp(46px,11.3vw,65px)}.a-h2{font-size:clamp(36px,9vw,58px)}.a-hero--home .a-hero__content{padding-top:52px;padding-bottom:48px}.a-hero--home .a-h1{font-size:clamp(43px,10.3vw,60px)}.a-hero--home .a-lead{font-size:14px}.a-price-row{grid-template-columns:1fr}.a-price-row__price,.a-price-row .a-btn{grid-column:1}.a-service__title{margin:22px 0 12px}}
