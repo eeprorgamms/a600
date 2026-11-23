@@ -409,3 +409,9 @@ a,button,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulati
 }
 @media(hover:none){.a-home-offer:hover{transform:none;box-shadow:none}}
 @media(prefers-reduced-motion:reduce){.a-route-enter,.a-reveal,.a-mobile-nav{animation:none!important}.a-home-offer,.a-home-offer:after,.a-btn--lime{transition:none!important}}
+
+/* Menu overlay stays attached to viewport in Safari, Chrome and Firefox. */
+.a-header{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(17,19,24,.985)}
+.a-mobile-nav{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.a-menu-backdrop{touch-action:auto}
+.a-reveal.a-visible{opacity:1}
