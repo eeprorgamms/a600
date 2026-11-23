@@ -31,12 +31,12 @@ button{font:inherit}
 .a-btn:focus-visible,.a-nav a:focus-visible,.a-service:focus-visible,.a-menu-btn:focus-visible{outline:3px solid var(--a-lime);outline-offset:4px}
 .a-btn--lime{color:#FFFFFF;background:var(--a-lime)}
 .a-btn--lime:hover{background:#4C86FF}
-.a-btn--outline{color:inherit;background:transparent;border-color:rgba(221,225,210,.55)}
+.a-btn--outline{color:inherit;background:transparent;border-color:rgba(233,237,242,.55)}
 .a-btn--outline:hover{border-color:var(--a-lime);color:var(--a-lime)}
 .a-btn--dark{color:var(--a-cream);background:var(--a-olive)}
 .a-btn--dark:hover{background:var(--a-black)}
 .a-arrow{font-size:20px;font-weight:400;line-height:.7}
-.a-header{position:relative;z-index:50;background:var(--a-olive);color:var(--a-cream);border-bottom:1px solid rgba(221,225,210,.16)}
+.a-header{position:relative;z-index:50;background:var(--a-olive);color:var(--a-cream);border-bottom:1px solid rgba(233,237,242,.16)}
 .a-header__inner{height:90px;display:flex;align-items:center;justify-content:space-between;gap:30px}
 .a-logo{font-weight:950;font-size:33px;letter-spacing:-.095em;white-space:nowrap;line-height:1}
 .a-logo span{color:var(--a-lime)}
@@ -54,7 +54,7 @@ button{font:inherit}
 .a-hero .a-h1{max-width:12ch;margin:30px 0 30px;position:relative}
 .a-hero .a-lead{max-width:490px}
 .a-hero__actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
-.a-hero__bottom{display:flex;justify-content:space-between;gap:15px;position:relative;z-index:3;border-top:1px solid rgba(221,225,210,.24);padding:19px 0;font-size:11px;text-transform:uppercase;letter-spacing:.17em;color:#B7C2D4}
+.a-hero__bottom{display:flex;justify-content:space-between;gap:15px;position:relative;z-index:3;border-top:1px solid rgba(233,237,242,.24);padding:19px 0;font-size:11px;text-transform:uppercase;letter-spacing:.17em;color:#B7C2D4}
 .a-contours{position:absolute;pointer-events:none;inset:0;opacity:.2;background-image:repeating-radial-gradient(ellipse 32% 37% at 94% 38%,transparent 0,transparent 15px,rgba(210,224,246,.16) 16px,transparent 17px);mask-image:linear-gradient(to right,transparent 15%,black)}
 .a-split-head{display:flex;justify-content:space-between;align-items:end;gap:35px;margin-bottom:55px}
 .a-split-head .a-lead{max-width:360px;margin:0}
