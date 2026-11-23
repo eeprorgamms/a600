@@ -30,7 +30,7 @@ export const site = {
   },
   images: {
     // Внешние изображения рекомендуется заменить локальными фото с надлежащими правами на использование.
-    hero: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=85&fit=crop', // Временный URL изображения; заменить локальным фото для стабильности
+    hero: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800&q=85&fit=crop', // Временный URL изображения; заменить локальным фото для стабильности
     fallback: carFallback,
     gallery: [] as Array<{url:string;alt:string}>,
     about: 'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=700&h=500&fit=crop',
