@@ -67,7 +67,7 @@ function Footer() {
           <div className="a-footer__links">
             <Link to="/services">Автомойка</Link>
             <Link to="/services">Детейлинг</Link>
-            <Link to="/services">PDR</Link>
+            <Link to="/services">Химчистка салона</Link>
             <Link to="/services">Полировка</Link>
           </div>
         </div>
