@@ -6,7 +6,7 @@ export default function Contacts() {
     <section className="a-intro a-cream">
       <div className="a-shell">
         <span className="a-overline">04 / Связаться с нами</span>
-        <h1 className="a-h1">Давайте<br /><span className="a-accent" style={{color:'#7c8a27'}}>на связи.</span></h1>
+        <h1 className="a-h1">Давайте<br /><span className="a-accent" style={{color:'#246BFD'}}>на связи.</span></h1>
         <p className="a-lead">Обсудим услуги, стоимость и удобное время посещения. Позвоните нам или найдите нас на карте.</p>
       </div>
     </section>
@@ -17,19 +17,19 @@ export default function Contacts() {
             <div className="a-contact-block">
               <span>01 / Телефон</span>
               <a href={phoneHref(site.contacts.phone)}>{site.contacts.phone}</a>
-              <p className="a-small" style={{color:'#667063',marginTop:15}}>Для консультации, оценки стоимости и согласования посещения.</p>
+              <p className="a-small" style={{color:'#667487',marginTop:15}}>Для консультации, оценки стоимости и согласования посещения.</p>
             </div>
             <div className="a-contact-block">
               <span>02 / Адрес</span>
               <strong>{site.contacts.address}</strong>
-              <p className="a-small" style={{color:'#667063',marginTop:15}}>{site.contacts.district}. {site.contacts.landmark}</p>
+              <p className="a-small" style={{color:'#667487',marginTop:15}}>{site.contacts.district}. {site.contacts.landmark}</p>
             </div>
           </div>
           <div>
             <div className="a-contact-block">
               <span>03 / Режим работы</span>
               <strong>{site.contacts.hours}</strong>
-              <p className="a-small" style={{color:'#667063',marginTop:15}}>Перед посещением рекомендуем уточнить время по телефону.</p>
+              <p className="a-small" style={{color:'#667487',marginTop:15}}>Перед посещением рекомендуем уточнить время по телефону.</p>
             </div>
             <div className="a-contact-block">
               <span>04 / Маршрут</span>
