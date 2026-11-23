@@ -15,7 +15,7 @@ export const carFallback = 'data:image/svg+xml;charset=UTF-8,' + encodeURICompon
 export const site = {
   brand: 'А500',
   tagline: 'Автомойка, детейлинг и PDR',
-  color: { primary: '#1d4ed8', strong: '#1e40af' },
+  color: { primary: '#246BFD', strong: '#1555D7' },
   contacts: {
     phone: '+7 (915) 002-08-09',
     phone2: '',
