@@ -20,7 +20,7 @@ export default function Services() {
             <h3 className="a-service__title">{service.title}</h3>
             <p className="a-service__desc">{service.description}</p>
             <div className="a-service__foot">
-              <span>{service.id === 'wash' ? '1 000–3 000 ₽' : 'Стоимость по запросу'}</span>
+              <span>{service.id === 'wash' ? 'Ориентир: 1 000–3 000 ₽' : 'Стоимость по запросу'}</span>
               <button type="button" aria-expanded={opened === service.id} onClick={() => setOpened(opened === service.id ? null : service.id)}
                 style={{border:0,background:'none',fontSize:12,fontWeight:850,textTransform:'uppercase',letterSpacing:'.08em',cursor:'pointer'}}>{opened===service.id ? 'Скрыть −' : 'Состав +'}</button>
             </div>
