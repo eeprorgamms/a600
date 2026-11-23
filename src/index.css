@@ -180,7 +180,7 @@
 }
 
 /* Branding tokens — dynamically overridden from src/config/site.ts */
-:root { --brand-primary: #1d4ed8; --brand-strong: #1e40af; }
+:root { --brand-primary: #246BFD; --brand-strong: #1555D7; }
 .bg-blue-700 { background-color: var(--brand-primary); }
 .text-blue-700 { color: var(--brand-primary); }
 .border-blue-700 { border-color: var(--brand-primary); }
