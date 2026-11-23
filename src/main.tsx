@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "./a500-theme.css";
 import App from "./App.tsx";
 
 const root = document.getElementById('root')!;
