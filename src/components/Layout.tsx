@@ -42,6 +42,7 @@ function Header() {
         </button>
       </div>
     </div>
+    {open && <button type="button" className="a-menu-backdrop" aria-label="Закрыть меню" onClick={() => setOpen(false)} />}
     {open && <nav id="a500-mobile-nav" className="a-mobile-nav" aria-label="Мобильная навигация">
       {nav.map(item => <Link key={item.to} to={item.to} aria-current={location.pathname === item.to ? 'page' : undefined}>{item.label}</Link>)}
       <a className="a-btn a-btn--lime" href={phoneHref(site.contacts.phone)}>Позвонить <span className="a-arrow" aria-hidden="true">↗</span></a>
@@ -85,5 +86,47 @@ function Footer() {
 }
 
 export default function Layout({ children }: {children: React.ReactNode}) {
-  return <div className="a-page"><a className="a-skip-link" href="#main-content">К содержимому</a><ScrollToTop /><Header /><main id="main-content" tabIndex={-1}>{children}</main><Footer /></div>;
+  const location = useLocation();
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(100, Math.max(0, window.scrollY / max * 100)) : 0);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const items = document.querySelectorAll<HTMLElement>('.a-reveal');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach(node => node.classList.add('a-visible'));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('a-visible');
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { rootMargin: '0px 0px -30px 0px', threshold: 0.08 });
+    items.forEach(node => observer.observe(node));
+    return () => observer.disconnect();
+  }, [location.pathname]);
+
+  return <div className="a-page">
+    <a className="a-skip-link" href="#main-content">К содержимому</a>
+    <div className="a-scroll-progress" aria-hidden="true" style={{ width: progress + '%' }} />
+    <ScrollToTop />
+    <Header />
+    <main id="main-content" className="a-route-enter" key={location.pathname} tabIndex={-1}>{children}</main>
+    <Footer />
+  </div>;
 }
