@@ -11,8 +11,9 @@ export default function About() {
       </div>
     </section>
     <section className="a-photo-band">
-      <img src={site.images.about} alt="Автомобиль в процессе ухода" loading="lazy" decoding="async"
+      <img src={site.images.about} alt="Иллюстративная фотография мойки автомобиля" loading="lazy" decoding="async"
         onError={event=>{event.currentTarget.onerror=null;event.currentTarget.src=site.images.fallback;}} />
+      <p className="a-photo-band__credit">Иллюстративное изображение. Фотографии A500 можно посмотреть на Яндекс Картах.</p>
     </section>
     <section className="a-section a-cream">
       <div className="a-shell">
