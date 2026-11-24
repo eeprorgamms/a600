@@ -10,17 +10,6 @@ export default function About() {
         <p className="a-lead">А500 — автомойка и детейлинг-центр на Боровском шоссе в Москве. Мы уделяем внимание состоянию кузова и салона, а также особенностям каждого автомобиля.</p>
       </div>
     </section>
-    <section className="a-section--tight a-cream" aria-label="Фирменный блок А500">
-      <div className="a-shell">
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:'24px',padding:'clamp(28px,5vw,56px)',border:'1px solid #CED6E2',borderRadius:'10px',background:'#FFFFFF'}}>
-          <div>
-            <span className="a-eyebrow" style={{color:'#687589',marginBottom:'14px'}}>Фирменный стиль</span>
-            <div style={{fontFamily:'var(--a-body)',fontSize:'clamp(56px,9vw,108px)',lineHeight:1,fontWeight:800,letterSpacing:'-.075em',color:'#111318'}}>А<span style={{color:'#246BFD'}}>500</span></div>
-          </div>
-          <p style={{maxWidth:'330px',margin:0,fontSize:'clamp(15px,1.5vw,19px)',lineHeight:1.65,color:'#414D5C'}}>Внимание к деталям.<br />Чистота в каждом решении.</p>
-        </div>
-      </div>
-    </section>
     <section className="a-section a-cream">
       <div className="a-shell">
         <div className="a-split-head">
