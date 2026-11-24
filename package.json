@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-seo.mjs && vite build && node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "build": "npm run check && node scripts/generate-seo.mjs && vite build && node scripts/prerender.mjs",
+    "preview": "vite preview",
+    "check": "tsc --noEmit && node scripts/site-audit.mjs",
+    "audit:deps": "npm audit --omit=dev --audit-level=moderate"
   },
   "dependencies": {
     "react": "^18.3.1",
