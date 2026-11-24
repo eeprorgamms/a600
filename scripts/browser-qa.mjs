@@ -74,8 +74,13 @@ for (const [engine, device, width, height] of cases) {
     assert(await page.locator('.a-mobile-nav').isVisible(), device + ': menu opens');
     await page.keyboard.press('Escape');
     assert((await page.locator('.a-mobile-nav').count()) === 0, device + ': menu closes');
-    await page.getByRole('button', {name:'Увеличить фото: Мойка автомобиля'}).click();
+    for (let i = 1; i <= 4; i++) {
+      const photo = await page.request.get(base + '/gallery/a500-' + i + '.webp');
+      assert(photo.ok() && photo.headers()['content-type']?.includes('image/webp'), device + ': local photo ' + i);
+    }
+    await page.getByRole('button', {name:'Открыть фотографию: Мойка автомобиля'}).click();
     assert(await page.getByRole('dialog').isVisible(), device + ': gallery lightbox');
+    assert(await page.getByRole('dialog').locator('img').evaluate(img => img.complete && img.naturalWidth > 0), device + ': gallery image actually loaded');
     await page.keyboard.press('ArrowRight');
     assert((await page.getByRole('dialog').innerText()).includes('2 из 4'), device + ': gallery navigation');
     await page.keyboard.press('Escape');
@@ -83,6 +88,7 @@ for (const [engine, device, width, height] of cases) {
   } catch (error) {
     failed++; console.error('FAIL', device, 'interactions', String(error));
   }
+  try { await page.goto(base + '/services', {waitUntil:'domcontentloaded'}); await page.waitForURL('**/pricing', {timeout:5000}); assert(new URL(page.url()).pathname === '/pricing', device + ': legacy services redirect'); } catch (e) {failed++; console.error('FAIL',device,'redirect',String(e));}
   if (pageErrors.length) {
     failed++; console.error('FAIL', device, 'JavaScript', pageErrors.slice(0, 5));
   }

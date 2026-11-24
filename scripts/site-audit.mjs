@@ -31,7 +31,8 @@ assert(!read('src/pages/Home.tsx').includes('a-home-tag'), 'Remove distracting h
 assert(read('src/components/Layout.tsx').includes('Услуги и цены'), 'Single services and prices navigation missing');
 assert(vercel.redirects?.some(route => route.source === '/services' && route.destination === '/pricing'), 'Old services path must redirect');
 assert(!config.includes('images.unsplash.com'), 'Photo URLs should be local, not dependent on Unsplash');
-assert(read('src/components/Gallery.tsx').includes('Реальные фотографии на Яндекс Картах'), 'Official photo link missing');
+for (let i = 1; i <= 4; i++) assert(existsSync(new URL('../public/gallery/a500-' + i + '.webp', import.meta.url)), 'Missing local photo ' + i);
+assert(read('src/components/Gallery.tsx').includes('Фото A500 на Яндекс Картах'), 'Official photo link missing');
 assert(read('src/a500-theme.css').includes('.a-header{position:fixed'), 'Fixed navigation is missing');
 assert(!/dangerouslySetInnerHTML\s*=/.test(read('src/components/Gallery.tsx')), 'Untrusted HTML must not be rendered');
 
