@@ -23,6 +23,7 @@ export default async function handler(req, res){
  const allowedOrigin=process.env.SITE_ORIGIN;
  if(!target || !allowedOrigin || !process.env.LEAD_WEBHOOK_SECRET)return json(res,503,{ok:false,error:'Приём заявок не настроен'});
  if(req.headers.origin!==allowedOrigin)return json(res,403,{ok:false,error:'Недопустимый источник'});
+ if(!String(req.headers['content-type']||'').toLowerCase().startsWith('application/json'))return json(res,415,{ok:false,error:'Ожидается JSON'});
  const length=Number(req.headers['content-length']||0);
  if(!Number.isFinite(length) || length>4096)return json(res,413,{ok:false,error:'Слишком большой запрос'});
  let data=req.body;
@@ -39,9 +40,13 @@ export default async function handler(req, res){
  if(preferredDate && !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate))return json(res,400,{ok:false,error:'Неверная дата'});
  if(preferredTime && !/^([01]\d|2[0-3]):[0-5]\d$/.test(preferredTime))return json(res,400,{ok:false,error:'Неверное время'});
  if(!Number.isFinite(data.startedAt)||Date.now()-data.startedAt<2500||Date.now()-data.startedAt>86_400_000)return json(res,400,{ok:false,error:'Обновите страницу и повторите'});
- const ip=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim();
+ // Forwarded headers are trusted only from an explicitly configured reverse proxy.
+ const remoteIp=String(req.socket?.remoteAddress||'unknown');
+ const trustedProxies=new Set(String(process.env.TRUSTED_PROXY_IPS||'').split(',').map(value=>value.trim()).filter(Boolean));
+ const forwardedIp=String(req.headers['x-forwarded-for']||'').split(',')[0].trim();
+ const ip=trustedProxies.has(remoteIp) && /^[0-9a-fA-F:.]+$/.test(forwardedIp) ? forwardedIp : remoteIp;
  const now=Date.now();for(const [key,time] of recent){if(now-time>60_000)recent.delete(key)}
- if(recent.has(ip))return json(res,429,{ok:false,error:'Повторите через минуту'});
+ if(recent.has(ip) || recent.size>=10_000)return json(res,429,{ok:false,error:'Повторите через минуту'});
  recent.set(ip,now);
  try{
   const url=new URL(target);
