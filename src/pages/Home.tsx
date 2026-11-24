@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { site, phoneHref, priceLabel } from '../config/site';
+import Gallery from '../components/Gallery';
 
 const offers = [
   {title: 'Комплексная мойка', description: 'Уход за кузовом и салоном', price: priceLabel(site.pricing.complexWashFrom, true), link: '/pricing'},
-  {title: 'Детейлинг', description: 'Внимание к каждой поверхности', price: 'Индивидуально', link: '/services'},
-  {title: 'Полировка кузова', description: 'Блеск и уход за лакокрасочным покрытием', price: 'Индивидуально', link: '/services'},
+  {title: 'Химчистка салона', description: 'Очистка обивки и элементов салона', price: 'Цена по запросу', link: '/services'},
+  {title: 'Полировка кузова', description: 'Уход за лакокрасочным покрытием', price: 'Цена по запросу', link: '/services'},
 ];
 
 export default function Home() {
@@ -51,6 +52,7 @@ export default function Home() {
         </div>
       </div>
     </section>
+    <Gallery />
     <section className="a-home-cta a-olive a-reveal">
       <div className="a-shell a-home-cta__inner">
         <div><span className="a-eyebrow">Как добраться</span><h2 className="a-h2 a-h2--compact">Загляните<br />к нам.</h2><p>{site.contacts.address}</p></div>
