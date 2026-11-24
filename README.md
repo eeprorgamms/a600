@@ -15,7 +15,7 @@ npm run dev
 npm run check
 npm run build
 npm run preview
-npm audit --omit=dev --audit-level=moderate
+npm audit --audit-level=moderate
 \`\`\`
 
 Команда \`npm run check\` проверяет типы TypeScript и критические настройки сайта/безопасности без дополнительных пакетов. \`npm run build\` запускает эту проверку перед сборкой и генерацией HTML для пяти страниц.
