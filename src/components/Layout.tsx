@@ -37,7 +37,7 @@ function Header() {
         <a className="a-header__phone" href={phoneHref(site.contacts.phone)}>{site.contacts.phone}</a>
         <a className="a-btn a-btn--lime" href={phoneHref(site.contacts.phone)}>Позвонить <span className="a-arrow" aria-hidden="true">↗</span></a>
         <button type="button" className="a-menu-btn" onClick={() => setOpen(prev => !prev)}
-          aria-expanded={open} aria-controls="a500-mobile-nav" aria-label={open ? 'Закрыть меню' : 'Открыть меню'}>
+          aria-expanded={open} aria-controls={open ? "a500-mobile-nav" : undefined} aria-label={open ? 'Закрыть меню' : 'Открыть меню'}>
           {open ? '✕' : '☰'}
         </button>
       </div>
@@ -109,6 +109,7 @@ export default function Layout({ children }: {children: React.ReactNode}) {
       items.forEach(node => node.classList.add('a-visible'));
       return;
     }
+    document.documentElement.dataset.motion = 'enabled';
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
@@ -118,7 +119,10 @@ export default function Layout({ children }: {children: React.ReactNode}) {
       }
     }, { rootMargin: '0px 0px -30px 0px', threshold: 0.08 });
     items.forEach(node => observer.observe(node));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      delete document.documentElement.dataset.motion;
+    };
   }, [location.pathname]);
 
   return <div className="a-page">
