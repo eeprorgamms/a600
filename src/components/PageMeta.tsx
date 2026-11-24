@@ -2,11 +2,11 @@ import {useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import {site} from '../config/site';
 const pages: Record<string, {title:string;description:string}> = {
-  '/': {title:'Главная',description:'Услуги автомойки и детейлинга, цены и запись.'},
-  '/services': {title:'Услуги',description:'Ручная мойка, химчистка, полировка и уход за автомобилем.'},
-  '/pricing': {title:'Цены',description:'Информация о стоимости услуг и расчёт по запросу.'},
-  '/about': {title:'О компании',description:'Информация об автомойке и её услугах.'},
-  '/contacts': {title:'Контакты',description:'Адрес, график работы, телефон и маршрут до центра.'},
+  '/': {title:'Главная',description:'А500 — автомойка в Солнцево. Услуги, ориентировочные цены и контакты.'},
+  '/services': {title:'Услуги',description:'Мойка кузова, химчистка салона, полировка и детейлинг.'},
+  '/pricing': {title:'Цены',description:'Ориентировочные цены на мойку и стоимость других услуг по запросу.'},
+  '/about': {title:'О компании',description:'А500 на Боровском шоссе: направления ухода за автомобилем.'},
+  '/contacts': {title:'Контакты',description:'Телефон А500, Боровское шоссе, 6к1 и маршрут на карте.'},
   '/privacy': {title:'Персональные данные',description:'Сведения об обработке персональных данных.'},
   '/consent': {title:'Согласие на обработку данных',description:'Текст согласия на обработку персональных данных.'}
 };
