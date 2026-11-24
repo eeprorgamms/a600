@@ -32,7 +32,7 @@ export default function Pricing() {
               <a href={phone} className="a-btn a-btn--lime">Позвонить и уточнить ↗</a>
             </div>
           </div>
-          <div className="a-pricing-note">{site.pricing.note}</div>
+          <div className="a-pricing-note">{site.pricing.note} <a href={site.pricing.sourceUrl} target="_blank" rel="noopener noreferrer" className="a-source-link">Источник: Яндекс Карты</a> (проверено 24.11.2026).</div>
           <div className="a-prices a-reveal" aria-label="Перечень услуг">
             {site.services.map(service => (
               <div className="a-price-row" key={service.id}>
