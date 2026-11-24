@@ -1,19 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { type SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { carFallback, site } from '../config/site';
 
 const photos = site.images.gallery;
-const imageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+const imageError = (event: SyntheticEvent<HTMLImageElement>) => {
   event.currentTarget.onerror = null;
   event.currentTarget.src = carFallback;
 };
 
 export default function Gallery() {
   const [selected, setSelected] = useState<number | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (selected === null) return;
-    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const oldOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     closeButtonRef.current?.focus();
@@ -41,7 +41,7 @@ export default function Gallery() {
     return () => {
       window.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = oldOverflow;
-      previousFocus?.focus();
+      if (selected !== null) triggerRef.current?.focus();
     };
   }, [selected]);
 
@@ -61,7 +61,7 @@ export default function Gallery() {
               type="button"
               key={photo.url}
               className={'a-gallery-tile a-gallery-tile--' + (index + 1)}
-              onClick={() => setSelected(index)}
+              onClick={(event) => { triggerRef.current = event.currentTarget; setSelected(index); }}
               aria-label={'Увеличить фото: ' + photo.title}
             >
               <img src={photo.url} alt={photo.alt} loading="lazy" decoding="async" onError={imageError} />
