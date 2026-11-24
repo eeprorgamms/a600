@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { site, phoneHref } from '../config/site';
+import { site, phoneHref, priceLabel } from '../config/site';
 
 const offers = [
-  {title: 'Комплексная мойка', description: 'Уход за кузовом и салоном', price: 'от 1 800 ₽', link: '/pricing'},
+  {title: 'Комплексная мойка', description: 'Уход за кузовом и салоном', price: priceLabel(site.pricing.complexWashFrom, true), link: '/pricing'},
   {title: 'Детейлинг', description: 'Внимание к каждой поверхности', price: 'Индивидуально', link: '/services'},
   {title: 'Полировка кузова', description: 'Блеск и уход за лакокрасочным покрытием', price: 'Индивидуально', link: '/services'},
 ];
@@ -30,8 +30,8 @@ export default function Home() {
           <h2 className="a-h2 a-h2--compact" id="home-about-heading">Ваш автомобиль.<br /><span className="a-accent">Наше внимание.</span></h2>
         </div>
         <div className="a-home-about__copy">
-          <p>Мы находимся в Солнцево, на Боровском шоссе. Занимаемся мойкой автомобилей, уходом за салоном и полировкой кузова.</p>
-          <p>Обсудим подходящую услугу, уточним стоимость и согласуем время посещения.</p>
+          <p>А500 находится в Солнцево, на Боровском шоссе. Основные направления — мойка кузова, химчистка салона и полировка.</p>
+          <p>Позвоните, чтобы выбрать услугу, уточнить стоимость и договориться о посещении.</p>
           <Link className="a-text-link" to="/about">Подробнее об А500 ↗</Link>
         </div>
       </div>
@@ -40,7 +40,7 @@ export default function Home() {
       <div className="a-shell">
         <div className="a-home-services__head a-reveal">
           <div><span className="a-eyebrow">Что мы делаем</span><h2 className="a-h2 a-h2--compact" id="home-services-heading">Услуги и цены</h2></div>
-          <Link className="a-text-link" to="/pricing">Весь прайс ↗</Link>
+          <Link className="a-text-link" to="/pricing">Стоимость услуг ↗</Link>
         </div>
         <div className="a-home-services__cards">
           {offers.map(item=><Link key={item.title} to={item.link} className="a-home-offer a-reveal">
@@ -53,7 +53,7 @@ export default function Home() {
     </section>
     <section className="a-home-cta a-olive a-reveal">
       <div className="a-shell a-home-cta__inner">
-        <div><span className="a-eyebrow">Ждём вас в А500</span><h2 className="a-h2 a-h2--compact">Загляните<br />к нам.</h2><p>{site.contacts.address}</p></div>
+        <div><span className="a-eyebrow">Как добраться</span><h2 className="a-h2 a-h2--compact">Загляните<br />к нам.</h2><p>{site.contacts.address}</p></div>
         <div className="a-home-cta__actions"><a href={phoneHref(site.contacts.phone)} className="a-btn a-btn--lime">Позвонить ↗</a><a href={site.contacts.mapUrl} target="_blank" rel="noopener noreferrer" className="a-btn a-btn--outline">Открыть карту ↗</a></div>
       </div>
     </section>
