@@ -1,43 +1,57 @@
 import { Link } from 'react-router-dom';
-import { site, phoneHref } from '../config/site';
+import { site, phoneHref, priceLabel } from '../config/site';
 
-const services = [
-  { title: 'Мойка кузова', detail: 'Ориентировочная стоимость мойки кузова', price: '1 000–3 000 ₽' },
-  { title: 'Химчистка салона', detail: 'Чистка сидений, пластика и текстиля', price: null },
-  { title: 'Полировка кузова', detail: 'Коррекция и восстановление блеска ЛКП', price: null },
-  { title: 'Детейлинг', detail: 'Комплексный уход за автомобилем', price: null },
-  { title: 'Обработка воском', detail: 'Защитная обработка кузова', price: null },
-] as const;
+const detailById: Record<string, string> = {
+  wash: 'Мойка наружных поверхностей автомобиля.',
+  interior: 'Очистка сидений и элементов интерьера.',
+  polish: 'Уход за лакокрасочным покрытием.',
+  detailing: 'Комплексный уход за кузовом и салоном.',
+};
 
 export default function Pricing() {
+  const phone = phoneHref(site.contacts.phone);
   return (
     <div className="a-page-section">
       <section className="a-intro a-cream a-intro--compact">
         <div className="a-shell">
-          <span className="a-eyebrow">Прайс-лист</span>
+          <span className="a-eyebrow">Стоимость</span>
           <h1 className="a-h1">Цены <span className="a-accent">на услуги</span></h1>
-          <p className="a-lead">Стоимость зависит от типа автомобиля и выбранных работ. Для точного расчёта позвоните нам.</p>
+          <p className="a-lead">Выберите подходящую услугу. Точную цену и время выполнения работ уточните по телефону.</p>
         </div>
       </section>
       <section className="a-section a-cream a-section--prices">
         <div className="a-shell">
           <div className="a-pricing-feature a-reveal">
-            <div><span className="a-eyebrow">Мойка автомобиля</span><h2>Комплексная мойка</h2><p>Наружная и внутренняя уборка. Состав работ согласовывается при обращении.</p></div>
-            <div className="a-pricing-feature__side"><span>от <strong>1 800 ₽</strong></span><a href={phoneHref(site.contacts.phone)} className="a-btn a-btn--lime">Уточнить и записаться ↗</a></div>
+            <div>
+              <span className="a-eyebrow">Мойка автомобиля</span>
+              <h2>Комплексная мойка</h2>
+              <p>Уход за кузовом и салоном. Программа работ и стоимость зависят от автомобиля.</p>
+            </div>
+            <div className="a-pricing-feature__side">
+              <span>ориентировочно от <strong>{priceLabel(site.pricing.complexWashFrom)}</strong></span>
+              <a href={phone} className="a-btn a-btn--lime">Позвонить и уточнить ↗</a>
+            </div>
           </div>
-          <p className="a-pricing-note">Указанные цены являются ориентирами и зависят от категории и состояния автомобиля. Итоговая стоимость подтверждается при обращении.</p>
-          <div className="a-prices a-reveal">
-            {services.map(item => (
-              <div className="a-price-row" key={item.title}>
-                <div><h3>{item.title}</h3><p>{item.detail}</p></div>
-                <span className="a-price-row__price">{item.price ?? 'По запросу'}</span>
-                <a className="a-btn a-btn--dark" href={phoneHref(site.contacts.phone)}>Уточнить ↗</a>
+          <div className="a-pricing-note">{site.pricing.note}</div>
+          <div className="a-prices a-reveal" aria-label="Перечень услуг">
+            {site.services.map(service => (
+              <div className="a-price-row" key={service.id}>
+                <div>
+                  <h3>{service.title}</h3>
+                  <p>{detailById[service.id] ?? service.description}</p>
+                </div>
+                <span className="a-price-row__price">
+                  {service.id === 'wash'
+                    ? `${priceLabel(site.pricing.bodyWashMin)}–${priceLabel(site.pricing.bodyWashMax)}`
+                    : 'По запросу'}
+                </span>
+                <a className="a-btn a-btn--dark" href={phone} aria-label={`Уточнить стоимость: ${service.title}`}>Уточнить ↗</a>
               </div>
             ))}
           </div>
-          <div className="a-pricing-foot a-reveal">
-            <div><h2 className="a-h2 a-h2--compact">Нужен расчёт?</h2><p className="a-lead">Обсудим автомобиль и стоимость подходящих работ.</p></div>
-            <Link className="a-btn a-btn--dark" to="/contacts">Контакты и маршрут ↗</Link>
+          <div className="a-pricing-foot">
+            <p className="a-lead">Не уверены, какая услуга нужна? Обсудите состояние автомобиля по телефону.</p>
+            <Link to="/contacts" className="a-btn a-btn--dark">Телефон и маршрут ↗</Link>
           </div>
         </div>
       </section>
