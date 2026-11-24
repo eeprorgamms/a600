@@ -1,4 +1,4 @@
-import {Link, Navigate} from 'react-router-dom';
+import {Link, Navigate} from 'react-router';
 import {site} from '../config/site';
 export default function Privacy(){
  const l=site.legal;

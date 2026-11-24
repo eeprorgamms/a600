@@ -1,2 +1,2 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 export default function NotFound(){return <section className="min-h-[55vh] flex flex-col items-center justify-center px-4 text-center"><p className="text-blue-700 font-bold text-xl">404</p><h1 className="text-4xl font-bold my-4">Страница не найдена</h1><p className="text-gray-600 mb-8">Проверьте адрес или перейдите на главную страницу.</p><Link to="/" className="bg-blue-700 text-white px-6 py-3 rounded-lg">На главную</Link></section>}

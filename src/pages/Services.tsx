@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { site, phoneHref, priceLabel } from '../config/site';
 
 export default function Services() {

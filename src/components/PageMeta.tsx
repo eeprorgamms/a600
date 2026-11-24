@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router';
 import {site} from '../config/site';
 const pages: Record<string, {title:string;description:string}> = {
   '/': {title:'Главная',description:'А500 — автомойка в Солнцево. Услуги, ориентировочные цены и контакты.'},
