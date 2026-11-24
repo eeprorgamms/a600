@@ -30,7 +30,8 @@ a,button,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulati
 .a-section{padding-block:clamp(72px,8vw,116px)}
 .a-section--tight{padding-block:clamp(50px,6.5vw,85px)}
 .a-intro{padding-block:clamp(65px,8vw,115px) clamp(48px,6vw,80px);position:relative}
-.a-intro--compact{padding-bottom:clamp(36px,4vw,60px)}
+.a-intro--compact{padding-bottom:clamp(18px,2vw,32px)}
+.a-section--prices{padding-top:clamp(10px,2.5vw,30px)}
 .a-h1,.a-h2,.a-display{font-family:var(--a-display);font-weight:600;line-height:1.07;letter-spacing:-.015em;text-transform:uppercase;margin:0;text-wrap:balance;overflow-wrap:anywhere}
 .a-h1{font-size:clamp(58px,7.7vw,116px);max-width:14ch}
 .a-h2{font-size:clamp(44px,5.2vw,78px)}
