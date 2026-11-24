@@ -287,3 +287,8 @@ html[data-motion="enabled"] .a-reveal.a-visible{opacity:1;transform:none}
  .a-price-row--expandable>.a-price-row__price{padding-top:0}
  .a-services-pricing-head{margin-top:35px}
 }
+
+/* Place the gallery dialog above page transitions and fixed navigation. */
+.a-lightbox{z-index:1000;overscroll-behavior:contain}
+.a-lightbox__panel{min-width:0}
+@media(max-width:480px){.a-lightbox__foot{gap:7px}.a-lightbox__control{padding:8px 10px}.a-lightbox__bar{gap:10px}}

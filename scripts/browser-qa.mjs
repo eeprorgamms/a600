@@ -80,6 +80,8 @@ for (const [engine, device, width, height] of cases) {
     }
     await page.getByRole('button', {name:'Открыть фотографию: Мойка автомобиля'}).click();
     assert(await page.getByRole('dialog').isVisible(), device + ': gallery lightbox');
+    assert(await page.locator('body > .a-lightbox').count() === 1, device + ': lightbox portal attached to body');
+    assert(await page.locator('.a-lightbox').evaluate(node => { const rect=node.getBoundingClientRect(); return rect.top >= -2 && rect.left >= -2 && rect.width >= window.innerWidth-2 && rect.height >= window.innerHeight-2; }), device + ': lightbox fully covers the current viewport');
     assert(await page.getByRole('dialog').locator('img').evaluate(img => img.complete && img.naturalWidth > 0), device + ': gallery image actually loaded');
     await page.keyboard.press('ArrowRight');
     assert((await page.getByRole('dialog').innerText()).includes('2 из 4'), device + ': gallery navigation');

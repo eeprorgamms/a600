@@ -1,5 +1,5 @@
 /** Единая конфигурация заказчика. Один клиент = отдельная копия проекта/деплой. */
-// Локальный иллюстративный fallback, если внешняя фотография недоступна.
+// Локальный иллюстративный fallback, если изображение недоступно.
 export const carFallback = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="740" viewBox="0 0 1080 740">
 <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#091525"/><stop offset="1" stop-color="#1e3a70"/></linearGradient><linearGradient id="hood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#8ca9d4"/><stop offset="0.5" stop-color="#364c6b"/><stop offset="1" stop-color="#0d1726"/></linearGradient><radialGradient id="glow"><stop stop-color="#8ac7ff" stop-opacity=".65"/><stop offset="1" stop-color="#8ac7ff" stop-opacity="0"/></radialGradient></defs>
 <rect width="1080" height="740" fill="url(#bg)"/><path d="M0 610 1080 610M0 660 1080 660" stroke="#86b5ef" stroke-opacity=".17" stroke-width="2"/>
