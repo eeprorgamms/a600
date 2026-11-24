@@ -267,3 +267,23 @@ html[data-motion="enabled"] .a-reveal.a-visible{opacity:1;transform:none}
   *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
   html[data-motion="enabled"] .a-reveal:not(.a-visible){opacity:1;transform:none}
 }
+
+/* Single services + pricing page, with accessible expandable details. */
+.a-services-pricing-head{margin:clamp(38px,5vw,68px) 0 22px}
+.a-services-pricing-head .a-h2{margin:11px 0 0}
+.a-price-row__main{min-width:0}
+.a-price-row__details{margin-top:13px}
+.a-price-row__details summary{display:inline-flex;align-items:center;min-height:40px;cursor:pointer;font:800 12px/1.4 var(--a-body);color:#1555D7;letter-spacing:.015em}
+.a-price-row__details summary:hover{color:#003FAE}
+.a-price-row__details ul{padding:0 0 0 18px;margin:8px 0 10px;font-size:13px;line-height:1.8;color:#4F6175}
+.a-price-row--expandable{align-items:start}
+.a-price-row--expandable>.a-price-row__price{padding-top:6px;white-space:normal}
+.a-price-row--expandable>.a-btn{margin-top:0}
+.a-gallery-tile{isolation:isolate}
+.a-gallery-tile:focus-visible{outline-offset:4px}
+.a-lightbox__panel{max-height:calc(100dvh - 35px)}
+@media(max-width:480px){
+ .a-price-row--expandable{padding:22px 0}
+ .a-price-row--expandable>.a-price-row__price{padding-top:0}
+ .a-services-pricing-head{margin-top:35px}
+}

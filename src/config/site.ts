@@ -29,15 +29,15 @@ export const site = {
     telegram: '',
   },
   images: {
-    hero: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800&q=85&fit=crop',
+    hero: '/gallery/a500-4.webp',
     fallback: carFallback,
     gallery: [
-      { url: 'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=1200&q=82&fit=crop', title: 'Мойка автомобиля', alt: 'Автомобиль во время мойки' },
-      { url: 'https://images.unsplash.com/photo-1507136566006-cfc505b114fc?w=1200&q=82&fit=crop', title: 'Уход за кузовом', alt: 'Автомобиль и уход за кузовом' },
-      { url: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=1200&q=82&fit=crop', title: 'Детали кузова', alt: 'Кузов автомобиля крупным планом' },
-      { url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=82&fit=crop', title: 'Автомобильный стиль', alt: 'Спортивный автомобиль' },
+      { url: '/gallery/a500-1.webp', title: 'Мойка автомобиля', alt: 'Автомобиль во время мойки' },
+      { url: '/gallery/a500-2.webp', title: 'Уход за кузовом', alt: 'Автомобиль и уход за кузовом' },
+      { url: '/gallery/a500-3.webp', title: 'Детали кузова', alt: 'Кузов автомобиля крупным планом' },
+      { url: '/gallery/a500-4.webp', title: 'Автомобильный стиль', alt: 'Спортивный автомобиль' },
     ],
-    about: 'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=700&h=500&fit=crop',
+    about: '/gallery/a500-1.webp',
   },
   description: 'Автомойка А500 в Москве. Мойка кузова, химчистка салона и уход за автомобилем.',
   seo: {

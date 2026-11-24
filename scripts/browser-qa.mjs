@@ -25,7 +25,7 @@ const cases = [
   ['webkit', 'ipad-820', 820, 1180],
   ['firefox', 'linux-1366', 1366, 768],
 ];
-const routes = ['/', '/services', '/pricing', '/about', '/contacts'];
+const routes = ['/', '/pricing', '/about', '/contacts'];
 let passed = 0, failed = 0;
 
 const assert = (condition, message) => {

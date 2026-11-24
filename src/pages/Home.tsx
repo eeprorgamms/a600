@@ -4,8 +4,8 @@ import Gallery from '../components/Gallery';
 
 const offers = [
   {title: 'Комплексная мойка', description: 'Уход за кузовом и салоном', price: priceLabel(site.pricing.complexWashFrom, true), link: '/pricing'},
-  {title: 'Химчистка салона', description: 'Очистка обивки и элементов салона', price: 'Цена по запросу', link: '/services'},
-  {title: 'Полировка кузова', description: 'Уход за лакокрасочным покрытием', price: 'Цена по запросу', link: '/services'},
+  {title: 'Химчистка салона', description: 'Очистка обивки и элементов салона', price: 'Цена по запросу', link: '/pricing'},
+  {title: 'Полировка кузова', description: 'Уход за лакокрасочным покрытием', price: 'Цена по запросу', link: '/pricing'},
 ];
 
 export default function Home() {
@@ -14,11 +14,10 @@ export default function Home() {
       <img src={site.images.hero} alt="Спортивный автомобиль" className="a-hero__image"
         decoding="async" onError={e => {e.currentTarget.onerror=null;e.currentTarget.src=site.images.fallback;}} />
       <div className="a-shell a-hero__content">
-        <p className="a-eyebrow a-home-tag">А500 · Автомойка и детейлинг · Москва</p>
         <h1 id="home-headline" className="a-h1 a-home-title">ЧИСТОТА.<br /><span className="a-accent">В ДЕТАЛЯХ.</span></h1>
         <p className="a-lead">Комплексная мойка, уход за салоном и полировка кузова. Боровское шоссе, 6к1.</p>
         <div className="a-hero__actions">
-          <Link className="a-btn a-btn--lime" to="/services">Посмотреть услуги <span className="a-arrow" aria-hidden="true">→</span></Link>
+          <Link className="a-btn a-btn--lime" to="/pricing">Услуги и цены <span className="a-arrow" aria-hidden="true">→</span></Link>
           <a className="a-btn a-btn--outline" href={phoneHref(site.contacts.phone)}>Записаться по телефону <span className="a-arrow" aria-hidden="true">↗</span></a>
         </div>
       </div>

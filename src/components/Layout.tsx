@@ -5,8 +5,7 @@ import ScrollToTop from './ScrollToTop';
 
 const nav = [
   { to: '/', label: 'Главная' },
-  { to: '/services', label: 'Услуги' },
-  { to: '/pricing', label: 'Цены' },
+  { to: '/pricing', label: 'Услуги и цены' },
   { to: '/about', label: 'О компании' },
   { to: '/contacts', label: 'Контакты' },
 ];
@@ -65,10 +64,10 @@ function Footer() {
         <div>
           <div className="a-footer__heading">Направления</div>
           <div className="a-footer__links">
-            <Link to="/services">Автомойка</Link>
-            <Link to="/services">Детейлинг</Link>
-            <Link to="/services">Химчистка салона</Link>
-            <Link to="/services">Полировка</Link>
+            <Link to="/pricing">Автомойка</Link>
+            <Link to="/pricing">Детейлинг</Link>
+            <Link to="/pricing">Химчистка салона</Link>
+            <Link to="/pricing">Полировка</Link>
           </div>
         </div>
         <div>

@@ -1,7 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import Services from './pages/Services';
 import Pricing from './pages/Pricing';
 import About from './pages/About';
 import Contacts from './pages/Contacts';
@@ -18,7 +17,7 @@ export function SiteRoutes() {
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/services" element={<Services />} />
+        <Route path="/services" element={<Navigate to="/pricing" replace />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} />

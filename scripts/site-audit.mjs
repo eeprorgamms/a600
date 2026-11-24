@@ -20,13 +20,17 @@ assert(config.includes("complexWashFrom: 1800"), 'Missing published complex wash
 assert(config.includes("bodyWashMin: 1000") && config.includes("bodyWashMax: 3000"), 'Missing published wash price band');
 assert(!/^\s*packages:\s*\[/m.test(config), 'Invented legacy pricing packages must not be kept');
 assert(!/^\s*verifiedReviews:/m.test(config), 'Do not publish invented reviews');
-for (const path of ['src/pages/Home.tsx', 'src/pages/Services.tsx', 'src/pages/Pricing.tsx', 'src/pages/About.tsx', 'src/pages/Contacts.tsx']) {
+for (const path of ['src/pages/Home.tsx', 'src/pages/Pricing.tsx', 'src/pages/About.tsx', 'src/pages/Contacts.tsx']) {
   assert(existsSync(new URL('../' + path, import.meta.url)), 'Missing page: ' + path);
 }
-for (const path of ['src/pages/Home.tsx', 'src/pages/Services.tsx', 'src/pages/Pricing.tsx']) {
+for (const path of ['src/pages/Home.tsx', 'src/pages/Pricing.tsx']) {
   assert(read(path).includes('site.pricing.'), 'Price values should be centralized in: ' + path);
 }
 assert(read('src/pages/Home.tsx').includes('<Gallery />'), 'Homepage gallery is missing');
+assert(!read('src/pages/Home.tsx').includes('a-home-tag'), 'Remove distracting hero overline');
+assert(read('src/components/Layout.tsx').includes('Услуги и цены'), 'Single services and prices navigation missing');
+assert(vercel.redirects?.some(route => route.source === '/services' && route.destination === '/pricing'), 'Old services path must redirect');
+assert(!config.includes('images.unsplash.com'), 'Photo URLs should be local, not dependent on Unsplash');
 assert(read('src/components/Gallery.tsx').includes('Реальные фотографии на Яндекс Картах'), 'Official photo link missing');
 assert(read('src/a500-theme.css').includes('.a-header{position:fixed'), 'Fixed navigation is missing');
 assert(!/dangerouslySetInnerHTML\s*=/.test(read('src/components/Gallery.tsx')), 'Untrusted HTML must not be rendered');

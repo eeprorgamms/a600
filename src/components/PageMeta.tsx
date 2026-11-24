@@ -3,8 +3,7 @@ import {useLocation} from 'react-router';
 import {site} from '../config/site';
 const pages: Record<string, {title:string;description:string}> = {
   '/': {title:'Главная',description:'А500 — автомойка в Солнцево. Услуги, ориентировочные цены и контакты.'},
-  '/services': {title:'Услуги',description:'Мойка кузова, химчистка салона, полировка и детейлинг.'},
-  '/pricing': {title:'Цены',description:'Ориентировочные цены на мойку и стоимость других услуг по запросу.'},
+  '/pricing': {title:'Услуги и цены',description:'Комплексная мойка, мойка кузова, химчистка, полировка и детейлинг. Ориентировочные цены.'},
   '/about': {title:'О компании',description:'А500 на Боровском шоссе: направления ухода за автомобилем.'},
   '/contacts': {title:'Контакты',description:'Телефон А500, Боровское шоссе, 6к1 и маршрут на карте.'},
   '/privacy': {title:'Персональные данные',description:'Сведения об обработке персональных данных.'},
