@@ -40,7 +40,7 @@ for (const [engine, device, width, height] of cases) {
   page.on('pageerror', e => pageErrors.push(e.message));
   for (const route of routes) {
     try {
-      const response = await page.goto(base + route, {waitUntil:'domcontentloaded',timeout:20_000});
+      const response = await page.goto(base + route, {waitUntil:'load',timeout:20_000});
       const info = await page.evaluate(() => {
         const header = document.querySelector('.a-header');
         const menu = document.querySelector('.a-menu-btn');
@@ -69,7 +69,7 @@ for (const [engine, device, width, height] of cases) {
     }
   }
   try {
-    await page.goto(base + '/', {waitUntil:'domcontentloaded'});
+    await page.goto(base + '/', {waitUntil:'load'});
     await page.locator('.a-menu-btn').click();
     assert(await page.locator('.a-mobile-nav').isVisible(), device + ': menu opens');
     await page.keyboard.press('Escape');
@@ -88,7 +88,7 @@ for (const [engine, device, width, height] of cases) {
   } catch (error) {
     failed++; console.error('FAIL', device, 'interactions', String(error));
   }
-  try { await page.goto(base + '/services', {waitUntil:'domcontentloaded'}); await page.waitForURL('**/pricing', {timeout:5000}); assert(new URL(page.url()).pathname === '/pricing', device + ': legacy services redirect'); } catch (e) {failed++; console.error('FAIL',device,'redirect',String(e));}
+  try { await page.goto(base + '/services', {waitUntil:'load'}); await page.waitForURL('**/pricing', {timeout:5000}); assert(new URL(page.url()).pathname === '/pricing', device + ': legacy services redirect'); } catch (e) {failed++; console.error('FAIL',device,'redirect',String(e));}
   if (pageErrors.length) {
     failed++; console.error('FAIL', device, 'JavaScript', pageErrors.slice(0, 5));
   }

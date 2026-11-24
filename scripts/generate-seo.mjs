@@ -2,7 +2,7 @@ import {writeFileSync,mkdirSync} from 'node:fs';
 const origin=process.env.VITE_PUBLIC_SITE_URL||'https://a600-tzk3.vercel.app';
 const url=new URL(origin);
 if(url.protocol!=='https:'||url.pathname!=='/'||url.search||url.hash)throw Error('VITE_PUBLIC_SITE_URL must be an HTTPS origin ending in /');
-const pages=['/','/services','/pricing','/about','/contacts'];
+const pages=['/','/pricing','/about','/contacts'];
 const esc=s=>s.replace(/&/g,'&amp;');
 mkdirSync('public',{recursive:true});
 const preview=process.env.VERCEL_ENV==='preview';
