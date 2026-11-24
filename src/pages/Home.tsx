@@ -12,7 +12,7 @@ export default function Home() {
   return <>
     <section className="a-hero a-hero--home" aria-labelledby="home-headline">
       <img src={site.images.hero} alt="Спортивный автомобиль" className="a-hero__image"
-        decoding="async" fetchPriority="high" onError={e => {e.currentTarget.onerror=null;e.currentTarget.src=site.images.fallback;}} />
+        decoding="async" onError={e => {e.currentTarget.onerror=null;e.currentTarget.src=site.images.fallback;}} />
       <div className="a-shell a-hero__content">
         <p className="a-eyebrow a-home-tag">А500 · Автомойка и детейлинг · Москва</p>
         <h1 id="home-headline" className="a-h1 a-home-title">ЧИСТОТА.<br /><span className="a-accent">В ДЕТАЛЯХ.</span></h1>
