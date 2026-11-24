@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { site, phoneHref } from '../config/site';
 
 export default function Contacts() {
@@ -53,11 +52,5 @@ export default function Contacts() {
         </div>
       </div>
     </section>
-    <section className="a-section a-cream"><div className="a-shell">
-      <div className="a-split-head">
-        <div><span className="a-eyebrow">Перед посещением</span><h2 className="a-h2 a-h2--compact" style={{marginTop:24}}>Запишитесь<br />по телефону.</h2></div>
-        <div><p className="a-lead">Подскажем, какие работы могут подойти для вашего автомобиля, и согласуем удобный способ связи.</p><Link to="/services" className="a-text-link" style={{display:'inline-block',marginTop:15}}>Посмотреть услуги ↗</Link></div>
-      </div>
-    </div></section>
   </>;
 }
