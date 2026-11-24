@@ -51,7 +51,7 @@ export default function Gallery() {
         <div className="a-gallery-heading">
           <div>
             <span className="a-eyebrow">Автомобили в деталях</span>
-            <h2 id="gallery-heading" className="a-h2 a-h2--compact">Чистые линии.<br /><span className="a-accent">Яркие детали.</span></h2>
+            <h2 id="gallery-heading" className="a-h2 a-h2--compact">ЧИСТЫЕ ЛИНИИ.<br /><span className="a-accent">ЯРКИЕ ДЕТАЛИ.</span></h2>
           </div>
           <p>Подборка автомобильных фотографий, передающих настроение и стиль ухода за машиной.</p>
         </div>

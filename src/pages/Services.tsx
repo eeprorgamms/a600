@@ -7,13 +7,13 @@ export default function Services() {
   return <>
     <section className="a-intro a-cream"><div className="a-shell">
       <div className="a-eyebrow">Наши направления</div>
-      <h1 className="a-h1">Услуги<br /><span className="a-accent" style={{color:'#246BFD'}}>A500.</span></h1>
+      <h1 className="a-h1">УСЛУГИ<br /><span className="a-accent" style={{color:'#246BFD'}}>A500.</span></h1>
       <p className="a-lead">Мойка кузова, химчистка салона, полировка и детейлинг. Уточните стоимость и время выполнения работ по телефону.</p>
     </div></section>
     <section className="a-section a-sage">
       <div className="a-shell">
         <div className="a-eyebrow">Что входит в услуги</div>
-        <h2 className="a-h2 a-h2--compact" style={{margin:'23px 0 55px'}}>Мойка, уход<br />и полировка.</h2>
+        <h2 className="a-h2 a-h2--compact" style={{margin:'23px 0 55px'}}>МОЙКА, УХОД<br />И ПОЛИРОВКА.</h2>
         <div className="a-service-grid">
           {site.services.map((service) => <div className="a-service" key={service.id}>
             
@@ -36,7 +36,7 @@ export default function Services() {
       <div className="a-shell a-final__inner">
         <div className="a-reveal">
           <span className="a-eyebrow">А500 · Москва</span>
-          <h2 className="a-h2 a-h2--compact" style={{margin:'22px 0'}}>Комплексная мойка<br /><span className="a-accent">{priceLabel(site.pricing.complexWashFrom, true)}</span></h2>
+          <h2 className="a-h2 a-h2--compact" style={{margin:'22px 0'}}>КОМПЛЕКСНАЯ МОЙКА<br /><span className="a-accent">{priceLabel(site.pricing.complexWashFrom, true)}</span></h2>
           <p className="a-lead">Уточните программу мойки и свободное время по телефону.</p>
         </div>
         <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>

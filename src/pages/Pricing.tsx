@@ -15,7 +15,7 @@ export default function Pricing() {
       <section className="a-intro a-cream a-intro--compact">
         <div className="a-shell">
           <span className="a-eyebrow">Стоимость</span>
-          <h1 className="a-h1">Цены <span className="a-accent">на услуги</span></h1>
+          <h1 className="a-h1">ЦЕНЫ <span className="a-accent">НА УСЛУГИ</span></h1>
           <p className="a-lead">Выберите подходящую услугу. Точную цену и время выполнения работ уточните по телефону.</p>
         </div>
       </section>
@@ -24,11 +24,11 @@ export default function Pricing() {
           <div className="a-pricing-feature a-reveal">
             <div>
               <span className="a-eyebrow">Мойка автомобиля</span>
-              <h2>Комплексная мойка</h2>
+              <h2>КОМПЛЕКСНАЯ МОЙКА</h2>
               <p>Уход за кузовом и салоном. Программа работ и стоимость зависят от автомобиля.</p>
             </div>
             <div className="a-pricing-feature__side">
-              <span>ориентировочно от <strong>{priceLabel(site.pricing.complexWashFrom)}</strong></span>
+              <span>Ориентировочно от <strong>{priceLabel(site.pricing.complexWashFrom)}</strong></span>
               <a href={phone} className="a-btn a-btn--lime">Позвонить и уточнить ↗</a>
             </div>
           </div>
